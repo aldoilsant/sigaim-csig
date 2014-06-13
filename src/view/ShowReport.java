@@ -4,7 +4,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.GridLayout;
+import java.util.List;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -14,35 +16,38 @@ import javax.swing.JTextArea;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import dataobject.Report;
+import dataobject.SnomedConcept;
 
 import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Style;
+import javax.swing.text.StyledDocument;
 
-public class Dictation extends JPanel {
+public class ShowReport extends JPanel {
 
 	private JFrame frame;
 	private Report report;
 	private ViewController controller;
-	private JTextArea txtUnbiased;
-	private JTextArea txtBiased;
-	private JTextArea txtImpression;
-	private JTextArea txtPlan;
+	
+	private boolean edited = false; //Is any concept edited?
 	
 	//String constants
 	static String strAskSave = "¿Quiere guardar los cambios realizados en el informe antes de cerrarlo?";
 	static String strNewVersion = "Esto creará una nueva versión del informe"; 
 	static String strTitleAskSave = "Confirme antes de cerrar el informe";
-	static String strTitleNew = "Dictando nuevo informe";
-	static String strTitleEdit = "Revisando informe";
+	static String strTitle = "Ver informe";
+	private JTextPane txtUnbiased;
+	private JTextPane txtBiased;
+	private JTextPane txtImpression;
+	private JTextPane txtPlan;
 	
 	/**
 	 * Create the panel.
 	 */
-	public Dictation(Report r, ViewController _controller) {
+	public ShowReport(Report r, ViewController _controller) {
 		frame = new JFrame();
-		if(r != null)
-			frame.setTitle(strTitleEdit);
-		else
-			frame.setTitle(strTitleNew);
+		frame.setTitle(strTitle);
 		controller = _controller;
 		report = r;
 		initialize();
@@ -51,10 +56,10 @@ public class Dictation extends JPanel {
 	}
 	
 	private void updateReportView(Report r) {
-		txtBiased.setText(r.getDictationBiased());
-		txtUnbiased.setText(r.getDictationUnbiased());
-		txtPlan.setText(r.getDictationPlan());
-		txtImpression.setText(r.getDictationImpressions());
+		setTextPane(txtUnbiased, r.getUnbiased());
+		setTextPane(txtBiased, r.getBiased());
+		setTextPane(txtImpression, r.getImpressions());
+		setTextPane(txtPlan, r.getPlan());
 	}
 	private void showSaveDialog(){
 		int response;
@@ -81,38 +86,44 @@ public class Dictation extends JPanel {
 		//TODO: implement
 	}
 	
+	private void setTextPane(JTextPane pane, List<Object>content){
+		pane.setText("");
+		StyledDocument doc = pane.getStyledDocument();
+		try{
+			for(Object o : content) {
+				if(o instanceof String) {
+					doc.insertString(doc.getLength(), (String) o, null);
+				} else if (o instanceof SnomedConcept) {
+					pane.insertComponent(createConceptLabel((SnomedConcept)o), doc.getFont(null));
+				} else
+					throw new IllegalStateException("Soip containing Object that is not String nor SnomeConcept");
+			}
+		} catch(BadLocationException ble) {
+			throw new IllegalStateException("Trying to append text to JTextPane", ble);
+		}
+	}
+	
+	private JLabel createConceptLabel(SnomedConcept concept) {
+		JLabel rtn = new JLabel(concept.toString());
+		//TODO bind click to concept view
+		return rtn;
+	}
+
 	private void initialize() {
 		//On exit ask saving if content changed
 		frame.addWindowListener(new java.awt.event.WindowAdapter() {
 		    @Override
 		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-		    	boolean askSave = false;
-		        if(report != null) {
-		        	if( (!report.getBiased().equals(txtBiased.getText())) ||
-		        		(!report.getUnbiased().equals(txtUnbiased.getText())) ||
-		        		(!report.getPlan().equals(txtPlan.getText())) ||
-		        		(!report.getImpressions().equals(txtImpression.getText())) )
-		        		askSave = true;
-		        } else {
-		        	if( (!txtBiased.getText().isEmpty()) ||
-	        			(!txtUnbiased.getText().isEmpty()) ||
-	        			(!txtPlan.getText().isEmpty()) ||
-	        			(!txtImpression.getText().isEmpty()) )
-		        		askSave = true;
-		        }
-		        if(askSave)
+		        if(edited)
 		        	showSaveDialog();
 		        else
 		        	frame.dispose();
 		    }
 		});
-		//frame.setTitle("Informes");
 		frame.setBounds(100, 100, 812, 554);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.getContentPane().removeAll();
 		
-		/*JPanel pnlDictation = new JPanel();		
-		frame.getContentPane().add(pnlDictation);*/
 		JPanel pnlVistaInformes = new JPanel();
 		frame.getContentPane().add(pnlVistaInformes);
 		pnlVistaInformes.setLayout(new GridLayout(4, 1, 5, 5));
@@ -142,8 +153,7 @@ public class Dictation extends JPanel {
 					.addContainerGap())
 		);
 		
-		txtUnbiased = new JTextArea();
-		txtUnbiased.setLineWrap(true);
+		txtUnbiased = new JTextPane();
 		scrUnbiased.setViewportView(txtUnbiased);
 		pnlUnbiased.setLayout(gl_pnlUnbiased);
 		
@@ -172,8 +182,8 @@ public class Dictation extends JPanel {
 					.addContainerGap())
 		);
 		
-		txtBiased = new JTextArea();
-		txtBiased.setLineWrap(true);
+		txtBiased = new JTextPane();
+		txtBiased.setEditable(false);
 		scrBiased.setViewportView(txtBiased);
 		pnlBiased.setLayout(gl_pnlBiased);
 		
@@ -202,8 +212,7 @@ public class Dictation extends JPanel {
 					.addContainerGap())
 		);
 		
-		txtImpression = new JTextArea();
-		txtImpression.setLineWrap(true);
+		txtImpression = new JTextPane();
 		scrImpression.setViewportView(txtImpression);
 		pnlImpression.setLayout(gl_pnlImpression);
 		
@@ -232,11 +241,9 @@ public class Dictation extends JPanel {
 					.addContainerGap())
 		);
 		
-		txtPlan = new JTextArea();
-		txtPlan.setLineWrap(true);
+		txtPlan = new JTextPane();
 		scrPlan.setViewportView(txtPlan);
 		pnlPlan.setLayout(gl_pnlPlan);
 		frame.setVisible(true);
 	}
-	
 }

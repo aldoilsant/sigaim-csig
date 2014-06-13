@@ -5,7 +5,39 @@ import java.util.Date;
 import java.util.List;
 
 public class Report {
+	
+	private ArrayList<Object> biased;
+	private ArrayList<Object> unbiased;
+	private ArrayList<Object> impressions;
+	private ArrayList<Object> plan;
+	private Date creation;
+	private int versionNumber;
+	private ArrayList<Report> versions;
+	private String patient;
+	private String facultative;
+	
+	private String dictationBiased;
+	private String dictationUnbiased;
+	private String dictationImpressions;
+	private String dictationPlan;
 
+	public String getDictationBiased() {
+		return dictationBiased;
+	}
+
+	private ArrayList<Object> copySoip(ArrayList<Object> list) {
+		ArrayList<Object> rtn = new ArrayList<Object>(list.size());
+		for(Object o : list){
+			if(o instanceof String)
+				rtn.add(o);
+			else if (o instanceof SnomedConcept)
+				rtn.add((new SnomedConcept( (SnomedConcept)o )));
+			else
+				throw new IllegalStateException("Soip containing Object that is not String nor SnomeConcept");
+		}
+		return rtn;
+	}
+	
 	public Report() {
 		versionNumber = 1;
 		creation = new Date();
@@ -16,37 +48,37 @@ public class Report {
 		versionNumber = prev.versionNumber + 1;
 		creation = new Date();
 		versions = prev.versions;
-		biased = prev.biased;
-		unbiased = prev.unbiased;
-		impressions = prev.impressions;
-		plan = prev.plan;
+		biased = copySoip(prev.biased);
+		unbiased = copySoip(prev.unbiased);
+		impressions = copySoip(prev.impressions);
+		plan = copySoip(prev.plan);
 		patient = prev.patient;
 		facultative = prev.facultative;
 		versions.add(this);
 	}
 	
-	public String getBiased() {
+	public ArrayList<Object> getBiased() {
 		return biased;
 	}
-	public void setBiased(String biased) {
+	public void setBiased(ArrayList<Object> biased) {
 		this.biased = biased;
 	}
-	public String getUnbiased() {
+	public ArrayList<Object> getUnbiased() {
 		return unbiased;
 	}
-	public void setUnbiased(String unbiased) {
+	public void setUnbiased(ArrayList<Object> unbiased) {
 		this.unbiased = unbiased;
 	}
-	public String getImpressions() {
+	public ArrayList<Object> getImpressions() {
 		return impressions;
 	}
-	public void setImpressions(String impressions) {
+	public void setImpressions(ArrayList<Object> impressions) {
 		this.impressions = impressions;
 	}
-	public String getPlan() {
+	public ArrayList<Object> getPlan() {
 		return plan;
 	}
-	public void setPlan(String plan) {
+	public void setPlan(ArrayList<Object> plan) {
 		this.plan = plan;
 	}
 	public Date getCreation() {
@@ -58,16 +90,7 @@ public class Report {
 	public String getFullText() {
 		return "S: "+getBiased()+ "\n\nO: "+getUnbiased()+ "\n\nI: "+getImpressions()+ "\n\nP: "+getPlan();
 	}
-
-	private String biased;
-	private String unbiased;
-	private String impressions;
-	private String plan;
-	private Date creation;
-	private int versionNumber;
-	private ArrayList<Report> versions;
-	private String patient;
-	private String facultative;
+	
 	public String getPatient() {
 		return patient;
 	}
@@ -82,4 +105,31 @@ public class Report {
 		this.facultative = facultative;
 	}
 	
+	public void setDictationBiased(String dictationBiased) {
+		this.dictationBiased = dictationBiased;
+	}
+
+	public String getDictationUnbiased() {
+		return dictationUnbiased;
+	}
+
+	public void setDictationUnbiased(String dictationUnbiased) {
+		this.dictationUnbiased = dictationUnbiased;
+	}
+
+	public String getDictationImpressions() {
+		return dictationImpressions;
+	}
+
+	public void setDictationImpressions(String dictationImpressions) {
+		this.dictationImpressions = dictationImpressions;
+	}
+
+	public String getDictationPlan() {
+		return dictationPlan;
+	}
+
+	public void setDictationPlan(String dictationPlan) {
+		this.dictationPlan = dictationPlan;
+	}
 }

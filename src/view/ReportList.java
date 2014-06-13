@@ -1,61 +1,30 @@
 package view;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
-import javax.swing.JFrame;
-
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import com.jgoodies.forms.factories.FormFactory;
-
 import dataobject.Report;
 
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.JList;
 import javax.swing.JScrollPane;
 
 import java.awt.GridLayout;
-
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.BevelBorder;
 import javax.swing.ListSelectionModel;
-
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-
-import javax.swing.SpringLayout;
 import javax.swing.BoxLayout;
 
 import java.awt.FlowLayout;
 
 import javax.swing.JToolBar;
 import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
-import java.awt.Color;
-
-import javax.swing.JTextPane;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
-
-import net.miginfocom.swing.MigLayout;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
 
-import java.awt.Insets;
-
 import javax.swing.SwingConstants;
-
-import java.awt.Component;
 import java.awt.BorderLayout;
 
 import javax.swing.ScrollPaneConstants;
@@ -63,8 +32,6 @@ import javax.swing.JTextField;
 
 import java.awt.Rectangle;
 import java.util.List;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 public class ReportList {
@@ -256,6 +223,11 @@ public class ReportList {
 		pnlActions.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		
 		btnShow = new JButton("Ver");
+		btnShow.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				controller.showReport(selectedReport);
+			}
+		});
 		btnShow.setEnabled(false);
 		pnlActions.add(btnShow);
 		
@@ -281,7 +253,7 @@ public class ReportList {
 		
 	}
 	
-	private void setSelectedInform(Report i) {
+	private void setSelectedReport(Report i) {
 		selectedReport = i;
 		txtReport.setText(i.getFullText());
 		txtNotes.setText("Notas");
@@ -292,7 +264,7 @@ public class ReportList {
 	        //ListSelectionModel lsm = (ListSelectionModel)e.getSource();
 
 	        int firstIndex = e.getFirstIndex();
-	        setSelectedInform(reportList.get(firstIndex));
+	        setSelectedReport(reportList.get(firstIndex));
 	        btnReview.setEnabled(true);
 	        btnShow.setEnabled(true);
 	        
