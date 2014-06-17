@@ -16,6 +16,8 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import dataobject.Report;
 
 import javax.swing.JScrollPane;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Dictation extends JPanel {
 

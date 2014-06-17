@@ -4,10 +4,18 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.font.TextAttribute;
 import java.util.List;
+import java.util.Map;
 
+import javax.swing.JDialog;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
@@ -22,6 +30,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
 public class ShowReport extends JPanel {
@@ -29,6 +38,8 @@ public class ShowReport extends JPanel {
 	private JFrame frame;
 	private Report report;
 	private ViewController controller;
+	
+	private Font conceptFont;
 	
 	private boolean edited = false; //Is any concept edited?
 	
@@ -88,13 +99,22 @@ public class ShowReport extends JPanel {
 	
 	private void setTextPane(JTextPane pane, List<Object>content){
 		pane.setText("");
+		Font f = new Font(Font.SANS_SERIF, Font.PLAIN, 14);
+		Map attributes = f.getAttributes();
+        attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+        conceptFont = f.deriveFont(attributes);
 		StyledDocument doc = pane.getStyledDocument();
+		pane.setFont(f);
+		//Style style = doc.addStyle("JLabel", null);
 		try{
 			for(Object o : content) {
 				if(o instanceof String) {
 					doc.insertString(doc.getLength(), (String) o, null);
 				} else if (o instanceof SnomedConcept) {
-					pane.insertComponent(createConceptLabel((SnomedConcept)o), doc.getFont(null));
+					pane.insertComponent(createConceptLabel((SnomedConcept)o));
+					
+					/*StyleConstants.setComponent(style, createConceptLabel((SnomedConcept)o));
+					doc.insertString(doc.getLength(), "", style);*/
 				} else
 					throw new IllegalStateException("Soip containing Object that is not String nor SnomeConcept");
 			}
@@ -103,9 +123,16 @@ public class ShowReport extends JPanel {
 		}
 	}
 	
-	private JLabel createConceptLabel(SnomedConcept concept) {
-		JLabel rtn = new JLabel(concept.toString());
-		//TODO bind click to concept view
+	private JLabel createConceptLabel(final SnomedConcept concept) {
+		final JLabel rtn = new JLabel(concept.toString());
+		rtn.setFont(conceptFont);
+		rtn.setAlignmentY(.80f);
+		rtn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ConceptView c = new ConceptView(concept, rtn);
+			}
+		});
 		return rtn;
 	}
 
