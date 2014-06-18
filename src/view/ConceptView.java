@@ -1,17 +1,19 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Point;
 
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import dataobject.SnomedConcept;
 
-import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 
@@ -23,11 +25,14 @@ import com.jgoodies.forms.factories.FormFactory;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import java.awt.Window.Type;
+import net.java.balloontip.BalloonTip;
+import net.java.balloontip.styles.BalloonTipStyle;
+import net.java.balloontip.styles.EdgedBalloonStyle;
 
-public class ConceptView extends JDialog {
+public class ConceptView extends JPanel {
 
-	private final JPanel contentPanel = new JPanel();
+	//private final JPanel contentPanel = new JPanel();
+	private final JPanel contentPanel = this;
 	private JTextField txtSnomed;
 	private JTextField txtDictation;
 
@@ -36,7 +41,7 @@ public class ConceptView extends JDialog {
 	 * Create the dialog.
 	 */
 	public ConceptView(SnomedConcept concept, Component parent) {
-		setUndecorated(true);
+		/*setUndecorated(true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.addWindowFocusListener(new WindowFocusListener() {
             public void windowGainedFocus(WindowEvent e) {
@@ -53,7 +58,7 @@ public class ConceptView extends JDialog {
 		setBounds(100, 100, 280, 239);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		getContentPane().add(contentPanel, BorderLayout.CENTER);*/
 		contentPanel.setLayout(new FormLayout(new ColumnSpec[] {
 				FormFactory.RELATED_GAP_COLSPEC,
 				FormFactory.DEFAULT_COLSPEC,
@@ -92,7 +97,21 @@ public class ConceptView extends JDialog {
 		//Load values
 		txtDictation.setText(concept.text);
 		txtSnomed.setText(Integer.toString(concept.code));
-		this.setVisible(true);
+		//this.setVisible(true);
+		BalloonTipStyle edgedLook = new EdgedBalloonStyle(contentPanel.getBackground(), Color.BLUE);
+		final BalloonTip b =  new BalloonTip((JComponent) parent, (JComponent) this, edgedLook, false);
+		contentPanel.requestFocus();
+		contentPanel.addFocusListener(new FocusListener() {
+				@Override
+		        public void focusLost(FocusEvent e) {
+					b.closeBalloon();
+		        }
+
+				@Override
+				public void focusGained(FocusEvent e) {
+					//DO nothing
+				}
+		});
 	}
 
 }

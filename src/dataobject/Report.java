@@ -88,7 +88,7 @@ public class Report {
 		return versions;
 	}
 	public String getFullText() {
-		return "S: "+getBiased()+ "\n\nO: "+getUnbiased()+ "\n\nI: "+getImpressions()+ "\n\nP: "+getPlan();
+		return "S: "+getDictationBiased()+ "\n\nO: "+getDictationUnbiased()+ "\n\nI: "+getDictationImpressions()+ "\n\nP: "+getDictationPlan();
 	}
 	
 	public String getPatient() {

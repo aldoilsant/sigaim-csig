@@ -80,12 +80,6 @@ public class ReportList {
 		JPanel panel = new JPanel();
 		pnlVistaInformes.add(panel);
 		panel.setLayout(new GridLayout(0, 1, 0, 0));
-		
-		JScrollPane pnlListaInformes = new JScrollPane();
-		pnlListaInformes.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		panel.add(pnlListaInformes);
-		
-		tblInformes = new JTable(new ReportTableModel(reportList));
 		/*tblInformes.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, null, null, null, null},
@@ -101,6 +95,14 @@ public class ReportList {
 				return columnEditables[column];
 			}
 		});*/
+		
+		JPanel pnlInformList = new JPanel();
+		panel.add(pnlInformList);
+		
+		JScrollPane pnlListaInformes = new JScrollPane();
+		pnlListaInformes.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		
+		tblInformes = new JTable(new ReportTableModel(reportList));
 		tblInformes.getColumnModel().getColumn(0).setPreferredWidth(100);
 		tblInformes.getColumnModel().getColumn(0).setMinWidth(100);
 		tblInformes.getColumnModel().getColumn(0).setMaxWidth(100);
@@ -118,8 +120,22 @@ public class ReportList {
 		
 		ListSelectionModel lsm = tblInformes.getSelectionModel();
 		lsm.addListSelectionListener(new TblReportListSelectionHandler());
-
-		pnlListaInformes.setViewportView(tblInformes);
+		
+				pnlListaInformes.setViewportView(tblInformes);
+				GroupLayout gl_pnlInformList = new GroupLayout(pnlInformList);
+				gl_pnlInformList.setHorizontalGroup(
+					gl_pnlInformList.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_pnlInformList.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(pnlListaInformes, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+							.addContainerGap())
+				);
+				gl_pnlInformList.setVerticalGroup(
+					gl_pnlInformList.createParallelGroup(Alignment.LEADING)
+						.addComponent(pnlListaInformes, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
+				);
+				pnlInformList.setLayout(gl_pnlInformList);
+				pnlListaInformes.setVisible(true);
 		
 		JPanel pnlInforme = new JPanel();
 		panel.add(pnlInforme);
@@ -135,19 +151,19 @@ public class ReportList {
 					.addContainerGap()
 					.addGroup(glInforme.createParallelGroup(Alignment.LEADING)
 						.addGroup(glInforme.createSequentialGroup()
-							.addComponent(scrReport, GroupLayout.DEFAULT_SIZE, 753, Short.MAX_VALUE)
+							.addComponent(scrReport, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
 							.addContainerGap())
 						.addGroup(glInforme.createSequentialGroup()
-							.addComponent(lblInformeCompleto, GroupLayout.DEFAULT_SIZE, 660, Short.MAX_VALUE)
+							.addComponent(lblInformeCompleto, GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
 							.addGap(105))))
 		);
 		glInforme.setVerticalGroup(
 			glInforme.createParallelGroup(Alignment.LEADING)
 				.addGroup(glInforme.createSequentialGroup()
-					.addContainerGap()
+					.addGap(6)
 					.addComponent(lblInformeCompleto)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(scrReport, GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
+					.addComponent(scrReport, GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		
@@ -249,7 +265,6 @@ public class ReportList {
 		});
 		pnlActions.add(btnNew);
 		frame.setVisible(true);		
-		pnlListaInformes.setVisible(true);
 		
 	}
 	
