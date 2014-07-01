@@ -17,6 +17,7 @@ import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.RowSpec;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.ImageIcon;
 
 public class LoginDialog extends JDialog {
 
@@ -32,7 +33,7 @@ public class LoginDialog extends JDialog {
 	 */
 	public LoginDialog(ViewController _controller) {
 		controller = _controller;
-		setBounds(100, 100, 338, 164);
+		setBounds(100, 100, 338, 277);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -44,26 +45,33 @@ public class LoginDialog extends JDialog {
 				FormFactory.UNRELATED_GAP_COLSPEC,
 				FormFactory.DEFAULT_COLSPEC,},
 			new RowSpec[] {
+				FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.PARAGRAPH_GAP_ROWSPEC,
 				RowSpec.decode("29px"),
 				FormFactory.UNRELATED_GAP_ROWSPEC,
 				RowSpec.decode("29px"),}));
 		{
+			JLabel lblLogo = new JLabel("[SIGAIM logo]");
+			lblLogo.setIcon(new ImageIcon("img/logo_trans.png"));
+			contentPanel.add(lblLogo, "2, 2, 3, 1");
+		}
+		{
 			lblUsuario = new JLabel("Usuario");
-			contentPanel.add(lblUsuario, "2, 2, right, default");
+			contentPanel.add(lblUsuario, "2, 4, right, default");
 		}
 		{
 			txtUser = new JTextField();
-			contentPanel.add(txtUser, "4, 2, fill, default");
+			contentPanel.add(txtUser, "4, 4, fill, default");
 			txtUser.setColumns(10);
 		}
 		
 		JLabel lblContrasea = new JLabel("Contraseña");
-		contentPanel.add(lblContrasea, "2, 4, right, center");
+		contentPanel.add(lblContrasea, "2, 6, right, center");
 		
 		txtPassword = new JPasswordField();
 		txtPassword.setColumns(10);
-		contentPanel.add(txtPassword, "4, 4, fill, default");
+		contentPanel.add(txtPassword, "4, 6, fill, default");
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));

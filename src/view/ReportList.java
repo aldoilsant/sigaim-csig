@@ -1,12 +1,14 @@
 package view;
 
 import javax.swing.JFrame;
+
 import dataobject.Report;
 
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 
 import java.awt.GridLayout;
+
 import javax.swing.ListSelectionModel;
 import javax.swing.BoxLayout;
 
@@ -18,19 +20,19 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
-
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
-
 import javax.swing.SwingConstants;
+
 import java.awt.BorderLayout;
 
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JTextField;
 
 import java.awt.Rectangle;
+import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -48,10 +50,10 @@ public class ReportList {
 	private JTable tblInformes;
 	private ViewController controller;
 	private JTextArea txtReport;
-	private JTextArea txtNotes;
 	private JButton btnShow;
 	private JButton btnReview;
 	private JButton btnNew;
+	private JTable tblVersions;
 	
 	public ReportList(JFrame container, ViewController _controller) {
 		frame = container;
@@ -99,8 +101,8 @@ public class ReportList {
 		JPanel pnlInformList = new JPanel();
 		panel.add(pnlInformList);
 		
-		JScrollPane pnlListaInformes = new JScrollPane();
-		pnlListaInformes.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		JScrollPane scrListaInformes = new JScrollPane();
+		scrListaInformes.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		
 		tblInformes = new JTable(new ReportTableModel(reportList));
 		tblInformes.getColumnModel().getColumn(0).setPreferredWidth(100);
@@ -121,21 +123,50 @@ public class ReportList {
 		ListSelectionModel lsm = tblInformes.getSelectionModel();
 		lsm.addListSelectionListener(new TblReportListSelectionHandler());
 		
-				pnlListaInformes.setViewportView(tblInformes);
+				scrListaInformes.setViewportView(tblInformes);
 				GroupLayout gl_pnlInformList = new GroupLayout(pnlInformList);
 				gl_pnlInformList.setHorizontalGroup(
 					gl_pnlInformList.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_pnlInformList.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(pnlListaInformes, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+							.addComponent(scrListaInformes, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
 							.addContainerGap())
 				);
 				gl_pnlInformList.setVerticalGroup(
 					gl_pnlInformList.createParallelGroup(Alignment.LEADING)
-						.addComponent(pnlListaInformes, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
+						.addComponent(scrListaInformes, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
 				);
 				pnlInformList.setLayout(gl_pnlInformList);
-				pnlListaInformes.setVisible(true);
+				scrListaInformes.setVisible(true);
+		
+		JPanel pnlVersions = new JPanel();
+		panel.add(pnlVersions);
+		
+		JLabel lblVersionesDelInforme = new JLabel("Versiones del informe:");
+		
+		JScrollPane scrVersions = new JScrollPane();
+		GroupLayout gl_pnlVersions = new GroupLayout(pnlVersions);
+		gl_pnlVersions.setHorizontalGroup(
+			gl_pnlVersions.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_pnlVersions.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_pnlVersions.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblVersionesDelInforme)
+						.addComponent(scrVersions, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		gl_pnlVersions.setVerticalGroup(
+			gl_pnlVersions.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_pnlVersions.createSequentialGroup()
+					.addComponent(lblVersionesDelInforme)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(scrVersions, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		
+		tblVersions = new JTable(new ReportVersionTableModel(new ArrayList<Report>()));
+		scrVersions.setViewportView(tblVersions);
+		pnlVersions.setLayout(gl_pnlVersions);
 		
 		JPanel pnlInforme = new JPanel();
 		panel.add(pnlInforme);
@@ -172,41 +203,7 @@ public class ReportList {
 		txtReport.setEditable(false);
 		txtReport.setLineWrap(true);
 		pnlInforme.setLayout(glInforme);
-		
-		
-		JPanel pnlNotas = new JPanel();
-		panel.add(pnlNotas);
-		
-		JLabel lblNotas = new JLabel("Notas:");
 		lblInformeCompleto.setHorizontalAlignment(SwingConstants.LEFT);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		GroupLayout glNotas = new GroupLayout(pnlNotas);
-		glNotas.setHorizontalGroup(
-			glNotas.createParallelGroup(Alignment.LEADING)
-				.addGroup(glNotas.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(glNotas.createParallelGroup(Alignment.LEADING)
-						.addGroup(glNotas.createSequentialGroup()
-							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 753, Short.MAX_VALUE)
-							.addContainerGap())
-						.addGroup(glNotas.createSequentialGroup()
-							.addComponent(lblNotas, GroupLayout.DEFAULT_SIZE, 660, Short.MAX_VALUE)
-							.addGap(105))))
-		);
-		glNotas.setVerticalGroup(
-			glNotas.createParallelGroup(Alignment.LEADING)
-				.addGroup(glNotas.createSequentialGroup()
-					.addComponent(lblNotas)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		
-		txtNotes = new JTextArea();
-		scrollPane.setViewportView(txtNotes);
-		txtNotes.setEditable(false);
-		pnlNotas.setLayout(glNotas);
 		
 		JToolBar toolFilter = new JToolBar();
 		toolFilter.setFloatable(false);
@@ -271,7 +268,7 @@ public class ReportList {
 	private void setSelectedReport(Report i) {
 		selectedReport = i;
 		txtReport.setText(i.getFullText());
-		txtNotes.setText("Notas");
+		//txtNotes.setText("Notas");
 	}
 	
 	class TblReportListSelectionHandler implements ListSelectionListener {

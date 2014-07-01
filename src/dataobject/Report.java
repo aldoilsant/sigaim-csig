@@ -38,6 +38,20 @@ public class Report {
 		return rtn;
 	}
 	
+	private String getPlainText(ArrayList<Object> soipNote) {
+		String rtn = new String();
+		for(Object o : soipNote){
+			if(o instanceof String)
+				rtn = rtn.concat((String)o);
+			else if (o instanceof SnomedConcept)
+				rtn = rtn.concat(((SnomedConcept)o).text);
+			else
+				throw new IllegalStateException("Soip containing Object that is not String nor SnomeConcept");
+		}
+		return rtn;		
+	}
+
+	
 	public Report() {
 		versionNumber = 1;
 		creation = new Date();
@@ -62,24 +76,29 @@ public class Report {
 	}
 	public void setBiased(ArrayList<Object> biased) {
 		this.biased = biased;
+		this.dictationBiased = getPlainText(biased);
 	}
+
 	public ArrayList<Object> getUnbiased() {
 		return unbiased;
 	}
 	public void setUnbiased(ArrayList<Object> unbiased) {
 		this.unbiased = unbiased;
+		this.dictationUnbiased = getPlainText(unbiased);
 	}
 	public ArrayList<Object> getImpressions() {
 		return impressions;
 	}
 	public void setImpressions(ArrayList<Object> impressions) {
 		this.impressions = impressions;
+		this.dictationImpressions = getPlainText(impressions);
 	}
 	public ArrayList<Object> getPlan() {
 		return plan;
 	}
 	public void setPlan(ArrayList<Object> plan) {
 		this.plan = plan;
+		this.dictationPlan = getPlainText(plan);
 	}
 	public Date getCreation() {
 		return creation;
@@ -131,5 +150,9 @@ public class Report {
 
 	public void setDictationPlan(String dictationPlan) {
 		this.dictationPlan = dictationPlan;
+	}
+	
+	public int getVersion(){
+		return this.versionNumber;
 	}
 }

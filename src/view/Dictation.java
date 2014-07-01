@@ -90,10 +90,10 @@ public class Dictation extends JPanel {
 		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
 		    	boolean askSave = false;
 		        if(report != null) {
-		        	if( (!report.getBiased().equals(txtBiased.getText())) ||
-		        		(!report.getUnbiased().equals(txtUnbiased.getText())) ||
-		        		(!report.getPlan().equals(txtPlan.getText())) ||
-		        		(!report.getImpressions().equals(txtImpression.getText())) )
+		        	if( (!report.getDictationBiased().equals(txtBiased.getText())) ||
+		        		(!report.getDictationUnbiased().equals(txtUnbiased.getText())) ||
+		        		(!report.getDictationPlan().equals(txtPlan.getText())) ||
+		        		(!report.getDictationImpressions().equals(txtImpression.getText())) )
 		        		askSave = true;
 		        } else {
 		        	if( (!txtBiased.getText().isEmpty()) ||
