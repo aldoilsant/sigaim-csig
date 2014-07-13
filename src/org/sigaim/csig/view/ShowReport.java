@@ -4,11 +4,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.font.TextAttribute;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +31,13 @@ import net.java.balloontip.*;
 import net.java.balloontip.styles.BalloonTipStyle;
 
 public class ShowReport extends JPanel {
+	
+	private class ConceptsOrderer implements Comparator<CSIGConcept> {
+	    @Override
+	    public int compare(CSIGConcept o1, CSIGConcept o2) {
+	        return Integer.compare(o1.start, o2.start);
+	    }
+	}
 
 	private JFrame frame;
 	private Report report;
@@ -62,11 +71,10 @@ public class ShowReport extends JPanel {
 	}
 	
 	private void updateReportView(Report r) {
-		r.getBiasedConcepts();
-		/*setTextPane(txtUnbiased, r.getUnbiased());
-		setTextPane(txtBiased, r.getBiased());
-		setTextPane(txtImpression, r.getImpressions());
-		setTextPane(txtPlan, r.getPlan());*/
+		setTextPane(txtUnbiased, r.getUnbiased(), r.getUnbiasedConcepts());
+		setTextPane(txtBiased, r.getBiased(), r.getBiasedConcepts());
+		setTextPane(txtImpression, r.getImpressions(), r.getImpressionsConcepts());
+		setTextPane(txtPlan, r.getPlan(), r.getPlanConcepts());
 	}
 	private void showSaveDialog(){
 		int response;
@@ -93,7 +101,9 @@ public class ShowReport extends JPanel {
 		//TODO: implement
 	}
 	
-	private void setTextPane(JTextPane pane, List<Object>content){
+	private void setTextPane(JTextPane pane, String text, List<CSIGConcept>concepts){
+		int textPointer = 0;
+		concepts.sort(new ConceptsOrderer()); 
 		pane.setText("");
 		Font f = new Font(Font.SANS_SERIF, Font.PLAIN, 14);
 		Map attributes = f.getAttributes();
@@ -103,30 +113,28 @@ public class ShowReport extends JPanel {
 		pane.setFont(f);
 		//Style style = doc.addStyle("JLabel", null);
 		try{
-			for(Object o : content) {
-				if(o instanceof String) {
-					doc.insertString(doc.getLength(), (String) o, null);
-				} else if (o instanceof CSIGConcept) {
-					pane.insertComponent(createConceptLabel((CSIGConcept)o));
-					
-					/*StyleConstants.setComponent(style, createConceptLabel((SnomedConcept)o));
-					doc.insertString(doc.getLength(), "", style);*/
-				} else
-					throw new IllegalStateException("Soip containing Object that is not String nor SnomeConcept");
+			for(CSIGConcept c : concepts){
+				if(textPointer < c.start)
+					doc.insertString(doc.getLength(), text.substring(textPointer, c.start), null);
+				pane.insertComponent(createConceptLabel(c, text.substring(c.start, c.end)));
+				textPointer = c.end;
 			}
+			if(textPointer < text.length())
+				doc.insertString(doc.getLength(), text.substring(textPointer, text.length()), null);
 		} catch(BadLocationException ble) {
 			throw new IllegalStateException("Trying to append text to JTextPane", ble);
 		}
 	}
 	
-	private JLabel createConceptLabel(final CSIGConcept concept) {
-		final JLabel rtn = new JLabel(concept.toString());
+	private JLabel createConceptLabel(final CSIGConcept concept, final String text) {
+		final JLabel rtn = new JLabel(text);
+		rtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		rtn.setFont(conceptFont);
 		rtn.setAlignmentY(.80f);
 		rtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ConceptView c = new ConceptView(concept, rtn);
+				ConceptView c = new ConceptView(concept, text, rtn);
 			}
 		});
 		return rtn;

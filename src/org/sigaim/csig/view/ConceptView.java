@@ -40,25 +40,7 @@ public class ConceptView extends JPanel {
 	/**
 	 * Create the dialog.
 	 */
-	public ConceptView(CSIGConcept concept, Component parent) {
-		/*setUndecorated(true);
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		this.addWindowFocusListener(new WindowFocusListener() {
-            public void windowGainedFocus(WindowEvent e) {
-                //do nothing
-            }
-
-            public void windowLostFocus(WindowEvent e) {
-            	ConceptView.this.dispose();
-            }
-
-        });
-		setResizable(false);
-		setAlwaysOnTop(true);
-		setBounds(100, 100, 280, 239);
-		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);*/
+	public ConceptView(CSIGConcept concept, String text, Component parent) {
 		contentPanel.setLayout(new FormLayout(new ColumnSpec[] {
 				FormFactory.RELATED_GAP_COLSPEC,
 				FormFactory.DEFAULT_COLSPEC,
@@ -72,16 +54,16 @@ public class ConceptView extends JPanel {
 				FormFactory.RELATED_GAP_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,}));
 		
-		JLabel lblSnomed = new JLabel("SNOMED");
-		contentPanel.add(lblSnomed, "2, 2, right, default");
+		JLabel lblTerminology = new JLabel("SNOMED");
+		contentPanel.add(lblTerminology, "2, 2, right, default");
 		
 		txtSnomed = new JTextField();
 		txtSnomed.setEditable(false);
 		contentPanel.add(txtSnomed, "4, 2, fill, default");
 		txtSnomed.setColumns(10);
 		
-		JLabel lblDictation = new JLabel("Dictado");
-		contentPanel.add(lblDictation, "2, 4, right, default");
+		JLabel lbl = new JLabel("Dictado");
+		contentPanel.add(lbl, "2, 4, right, default");
 		
 		txtDictation = new JTextField();
 		txtDictation.setEditable(false);
@@ -95,8 +77,9 @@ public class ConceptView extends JPanel {
 		//setLocationRelativeTo(parent);
 		
 		//Load values
-		txtDictation.setText(concept.text);
+		txtDictation.setText(text);
 		txtSnomed.setText(concept.code);
+		lblTerminology.setText(concept.terminology);
 		//this.setVisible(true);
 		BalloonTipStyle edgedLook = new EdgedBalloonStyle(contentPanel.getBackground(), Color.BLUE);
 		final BalloonTip b =  new BalloonTip((JComponent) parent, (JComponent) this, edgedLook, false);

@@ -6,10 +6,10 @@ public class CSIGConcept {
 	public String name;
 	public String custom; //custom representation specified by user
 	public String text;  //Original dictation text
-	public long start;  //Start char of concept
-	public long end;   //End char of concept
+	public int start;  //Start char of concept
+	public int end;   //End char of concept
 	
-	public CSIGConcept(String _code, String _terminology, long _start, long _end){
+	public CSIGConcept(String _code, String _terminology, int _start, int _end){
 		code = _code;
 		terminology = _terminology;
 		start = _start;

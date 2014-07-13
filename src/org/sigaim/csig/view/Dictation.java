@@ -27,6 +27,7 @@ import javax.swing.JComboBox;
 
 import org.sigaim.csig.model.CSIGPatient;
 import org.sigaim.csig.model.Report;
+import org.sigaim.siie.iso13606.rm.Composition;
 
 import javax.swing.JButton;
 
@@ -101,7 +102,7 @@ public class Dictation extends JPanel {
 	private void saveReport(){
 		//TODO: implement
 		if(report == null) { //New report
-			
+			//Composition newReport=client.createReport("4", newEHR.getEhrId(), composer, "", "some text", reportStatus, rootArchetypeId);
 		}
 	}
 	
