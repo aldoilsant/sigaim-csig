@@ -22,7 +22,7 @@ public class Report extends CSIGIdentifiedObject {
 	private Calendar creation;
 	private int versionNumber;
 	private ArrayList<Report> versions;
-	private String patient;
+	private CSIGPatient patient;
 	private String facultative;
 	private Long ehr;
 	private String reportId;
@@ -127,10 +127,10 @@ public class Report extends CSIGIdentifiedObject {
 		return "S: "+getDictationBiased()+ "\n\nO: "+getDictationUnbiased()+ "\n\nI: "+getDictationImpressions()+ "\n\nP: "+getDictationPlan();
 	}
 	
-	public String getPatient() {
+	public CSIGPatient getPatient() {
 		return patient;
 	}
-	public void setPatient(String patient) {
+	public void setPatient(CSIGPatient patient) {
 		for(Report i : versions)
 			i.patient = patient;
 	}

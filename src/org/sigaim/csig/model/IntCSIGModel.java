@@ -9,7 +9,7 @@ public interface IntCSIGModel {
 	List<Report> getReports();
 	List<String> getFacilities();
 	List<CSIGFacultative> getFacultatives();
-	List<CSIGPatient> getPatient();
+	List<CSIGPatient> getPatients();
 	Report fillSoip(Report report);
 	
 	/*
@@ -18,6 +18,6 @@ public interface IntCSIGModel {
 	 */
 	CSIGFacultative createFacultative();
 	CSIGFacility createFacility();
-	
+	CSIGPatient createPatient();
 	
 }

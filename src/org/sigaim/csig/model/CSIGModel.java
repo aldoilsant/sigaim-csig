@@ -9,6 +9,7 @@ import org.sigaim.siie.clients.IntSIIE004ReportManagementClient;
 import org.sigaim.siie.clients.IntSIIEReportSummary;
 import org.sigaim.siie.clients.ws.WSIntSIIE001EQLClient;
 import org.sigaim.siie.clients.ws.WSIntSIIE004ReportManagementClient;
+import org.sigaim.siie.iso13606.rm.EHRExtract;
 import org.sigaim.siie.iso13606.rm.Element;
 import org.sigaim.siie.iso13606.rm.HealthcareFacility;
 import org.sigaim.siie.iso13606.rm.HealthcareProfessionalRole;
@@ -35,7 +36,7 @@ public class CSIGModel implements IntCSIGModel {
 			for(IntSIIEReportSummary rs : list){
 				Report r = new Report(this);
 				r.setCreation(rs.getCreationDate().toGregorianCalendar());
-				r.setPatient(rs.getSubject().getRoot() + "/" + rs.getSubject().getExtension());
+				r.setPatient(new CSIGPatient(rs.getSubject()));
 				r.setFacultative(rs.getPerformer().getRoot() + "/" + rs.getPerformer().getExtension());
 				r.setId(rs.getId());
 				rtn.add(r);
@@ -121,7 +122,7 @@ public class CSIGModel implements IntCSIGModel {
 	}
 
 	@Override
-	public List<CSIGPatient> getPatient() {
+	public List<CSIGPatient> getPatients() {
 		ArrayList<CSIGPatient> rtn = new ArrayList<CSIGPatient>();
 		try {
 			List<SubjectOfCare> subjects = eqlClient.getAllSubjectsOfCare();
@@ -131,7 +132,7 @@ public class CSIGModel implements IntCSIGModel {
 			e.printStackTrace();
 		}
 		
-		return null;
+		return rtn;
 	}
 
 	@Override
@@ -156,6 +157,17 @@ public class CSIGModel implements IntCSIGModel {
 		try {
 			HealthcareFacility fac = reportClient.createHealthcareFacility("");
 			return new CSIGFacility(fac.getIdentifier());
+		} catch (RejectException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public CSIGPatient createPatient() {
+		try {
+			EHRExtract subject = reportClient.createSubjectOfCare("");
+			return new CSIGPatient(subject.getSubjectOfCare());
 		} catch (RejectException e) {
 			e.printStackTrace();
 		}

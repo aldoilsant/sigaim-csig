@@ -16,6 +16,7 @@ import javax.swing.JScrollPane;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -24,7 +25,13 @@ import com.jgoodies.forms.factories.FormFactory;
 
 import javax.swing.JComboBox;
 
+import org.sigaim.csig.model.CSIGPatient;
 import org.sigaim.csig.model.Report;
+
+import javax.swing.JButton;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Dictation extends JPanel {
 
@@ -36,12 +43,17 @@ public class Dictation extends JPanel {
 	private JTextArea txtImpression;
 	private JTextArea txtPlan;
 	
+	//If true dialog asks to save changes before closing
+	boolean askSave = false;
+	
 	//String constants
 	static String strAskSave = "¿Quiere guardar los cambios realizados en el informe antes de cerrarlo?";
 	static String strNewVersion = "Esto creará una nueva versión del informe"; 
 	static String strTitleAskSave = "Confirme antes de cerrar el informe";
 	static String strTitleNew = "Dictando nuevo informe";
 	static String strTitleEdit = "Revisando informe";
+	private JComboBox<String> ddlPatient;
+	private JButton btnNewPatient;
 	
 	/**
 	 * Create the panel.
@@ -88,6 +100,9 @@ public class Dictation extends JPanel {
 	
 	private void saveReport(){
 		//TODO: implement
+		if(report == null) { //New report
+			
+		}
 	}
 	
 	private void initialize() {
@@ -95,7 +110,6 @@ public class Dictation extends JPanel {
 		frame.addWindowListener(new java.awt.event.WindowAdapter() {
 		    @Override
 		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-		    	boolean askSave = false;
 		        if(report != null) {
 		        	if( (!report.getDictationBiased().equals(txtBiased.getText())) ||
 		        		(!report.getDictationUnbiased().equals(txtUnbiased.getText())) ||
@@ -128,19 +142,38 @@ public class Dictation extends JPanel {
 		pnlReportInfo.setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("max(5dlu;default)"),
 				FormFactory.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(36dlu;default)"),
+				ColumnSpec.decode("max(31dlu;default)"),
 				FormFactory.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("572px:grow"),},
+				ColumnSpec.decode("411px:grow"),
+				FormFactory.RELATED_GAP_COLSPEC,
+				FormFactory.DEFAULT_COLSPEC,
+				FormFactory.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(175dlu;default)"),},
 			new RowSpec[] {
 				RowSpec.decode("4px"),
 				RowSpec.decode("max(11dlu;default)"),
 				RowSpec.decode("max(4dlu;default)"),}));
 		
-		JLabel lblPatient = new JLabel("Patient");
-		pnlReportInfo.add(lblPatient, "3, 2, right, fill");
+		JLabel lblPatient = new JLabel("Paciente");
+		pnlReportInfo.add(lblPatient, "3, 2, fill, fill");
 		
-		JComboBox comboBox = new JComboBox();
-		pnlReportInfo.add(comboBox, "5, 2, fill, default");
+		ddlPatient = new JComboBox<String>();
+		pnlReportInfo.add(ddlPatient, "5, 2, fill, default");
+		
+		btnNewPatient = new JButton("Crear paciente");
+		btnNewPatient.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				CSIGPatient newPat = controller.getModelController().createPatient();
+				if(newPat != null) {
+					ddlPatient.addItem(newPat.toString());
+					ddlPatient.setSelectedItem(newPat.toString());
+					ddlPatient.setEnabled(false);
+					btnNewPatient.setEnabled(false);
+					askSave = true;
+				}
+			}
+		});
+		pnlReportInfo.add(btnNewPatient, "7, 2, default, bottom");
 		JPanel pnlVistaInformes = new JPanel();
 		frame.getContentPane().add(pnlVistaInformes);
 		pnlVistaInformes.setLayout(new GridLayout(4, 1, 5, 5));
@@ -264,6 +297,18 @@ public class Dictation extends JPanel {
 		txtPlan.setLineWrap(true);
 		scrPlan.setViewportView(txtPlan);
 		pnlPlan.setLayout(gl_pnlPlan);
+		
+		if(report != null) {
+			ddlPatient.setEnabled(false);
+			btnNewPatient.setEnabled(false);
+			ddlPatient.addItem(report.getPatient().toString());
+		} else {
+			List<CSIGPatient> patients = controller.getModelController().getPatients();
+			ddlPatient.addItem("");
+			for(CSIGPatient pat : patients)
+				ddlPatient.addItem(pat.toString());
+		}
+		
 		frame.setVisible(true);
 	}
 }

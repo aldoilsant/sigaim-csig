@@ -43,7 +43,7 @@ public class LoginDialog extends JDialog {
 	public LoginDialog(ViewController _controller, List<String> hospitals) {
 		controller = _controller;
 		
-		setBounds(100, 100, 338, 277);
+		setBounds(100, 100, 338, 320);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);

@@ -4,12 +4,15 @@ import java.util.List;
 
 import org.sigaim.csig.model.CSIGFacility;
 import org.sigaim.csig.model.CSIGFacultative;
+import org.sigaim.csig.model.IntCSIGModel;
 import org.sigaim.csig.model.Report;
 import org.sigaim.siie.clients.IntSIIE001EQLClient;
 import org.sigaim.siie.clients.IntSIIE004ReportManagementClient;
 
 public interface ViewController {
 
+	IntCSIGModel getModelController();
+	
 	boolean doLogin(String user, String centre, char[] pass);
 	List<Report> getReports();
 	void newReport();

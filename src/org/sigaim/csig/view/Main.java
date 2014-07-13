@@ -145,10 +145,15 @@ public class Main implements ViewController {
 				login.dispose();
 				login = new LoginDialog(this, model.getFacilities());
 				login.setVisible(true);
-			}				
+			}
 			return facility.getId();
 		}
 		else
 			return -1;
+	}
+
+	@Override
+	public IntCSIGModel getModelController() {
+		return model;
 	}
 }
