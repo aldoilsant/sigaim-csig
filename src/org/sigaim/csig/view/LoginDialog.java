@@ -1,4 +1,4 @@
-package view;
+package org.sigaim.csig.view;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -15,9 +15,17 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.RowSpec;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
+
+import org.sigaim.siie.clients.IntSIIE001EQLClient;
+import org.sigaim.siie.iso13606.rm.HealthcareFacility;
 
 public class LoginDialog extends JDialog {
 
@@ -27,12 +35,14 @@ public class LoginDialog extends JDialog {
 	private JTextField txtUser;
 	
 	private ViewController controller;
+	private JComboBox ddlCentre;
 
 	/**
 	 * Create the dialog.
 	 */
-	public LoginDialog(ViewController _controller) {
+	public LoginDialog(ViewController _controller, List<String> hospitals) {
 		controller = _controller;
+		
 		setBounds(100, 100, 338, 277);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -50,7 +60,9 @@ public class LoginDialog extends JDialog {
 				FormFactory.PARAGRAPH_GAP_ROWSPEC,
 				RowSpec.decode("29px"),
 				FormFactory.UNRELATED_GAP_ROWSPEC,
-				RowSpec.decode("29px"),}));
+				RowSpec.decode("29px"),
+				FormFactory.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("max(13dlu;default)"),}));
 		{
 			JLabel lblLogo = new JLabel("[SIGAIM logo]");
 			lblLogo.setIcon(new ImageIcon("img/logo_trans.png"));
@@ -73,6 +85,14 @@ public class LoginDialog extends JDialog {
 		txtPassword.setColumns(10);
 		contentPanel.add(txtPassword, "4, 6, fill, default");
 		{
+			JLabel lblCentro = new JLabel("Centro");
+			contentPanel.add(lblCentro, "2, 8, right, center");
+		}
+		{
+			ddlCentre = new JComboBox(hospitals.toArray());
+			contentPanel.add(ddlCentre, "4, 8, fill, default");
+		}
+		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
@@ -81,7 +101,7 @@ public class LoginDialog extends JDialog {
 				okButton.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						controller.doLogin(txtUser.getText(), txtPassword.getPassword());
+						controller.doLogin(txtUser.getText(), ddlCentre.getSelectedItem().toString(),  txtPassword.getPassword());
 					}
 				});
 				okButton.setActionCommand("OK");

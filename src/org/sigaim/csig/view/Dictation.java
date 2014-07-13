@@ -1,4 +1,4 @@
-package view;
+package org.sigaim.csig.view;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -12,12 +12,19 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.LayoutStyle.ComponentPlacement;
-
-import dataobject.Report;
-
 import javax.swing.JScrollPane;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.RowSpec;
+import com.jgoodies.forms.factories.FormFactory;
+
+import javax.swing.JComboBox;
+
+import org.sigaim.csig.model.Report;
 
 public class Dictation extends JPanel {
 
@@ -115,6 +122,25 @@ public class Dictation extends JPanel {
 		
 		/*JPanel pnlDictation = new JPanel();		
 		frame.getContentPane().add(pnlDictation);*/
+		
+		JPanel pnlReportInfo = new JPanel();
+		frame.getContentPane().add(pnlReportInfo, BorderLayout.NORTH);
+		pnlReportInfo.setLayout(new FormLayout(new ColumnSpec[] {
+				ColumnSpec.decode("max(5dlu;default)"),
+				FormFactory.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(36dlu;default)"),
+				FormFactory.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("572px:grow"),},
+			new RowSpec[] {
+				RowSpec.decode("4px"),
+				RowSpec.decode("max(11dlu;default)"),
+				RowSpec.decode("max(4dlu;default)"),}));
+		
+		JLabel lblPatient = new JLabel("Patient");
+		pnlReportInfo.add(lblPatient, "3, 2, right, fill");
+		
+		JComboBox comboBox = new JComboBox();
+		pnlReportInfo.add(comboBox, "5, 2, fill, default");
 		JPanel pnlVistaInformes = new JPanel();
 		frame.getContentPane().add(pnlVistaInformes);
 		pnlVistaInformes.setLayout(new GridLayout(4, 1, 5, 5));
@@ -240,5 +266,4 @@ public class Dictation extends JPanel {
 		pnlPlan.setLayout(gl_pnlPlan);
 		frame.setVisible(true);
 	}
-	
 }

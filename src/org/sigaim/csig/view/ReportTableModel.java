@@ -1,21 +1,27 @@
-package view;
+package org.sigaim.csig.view;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import dataobject.Report;
+import org.sigaim.csig.model.Report;
 
 public class ReportTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = -5826567357696416470L;
 	
+	SimpleDateFormat sdf;
+	
 	private String[] columnNames = {"Creaci\u00F3n", "Ult. versi\u00F3n", "Paciente", "Facultativo", "Informe", "Notas"};
-	private List<Report> data;
+	private List<Report> data; 
 
 	public ReportTableModel(List<Report> _data)
 	{
+		sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+		//sdf.setTimeZone();
 		data = _data;
 	}
 
@@ -34,17 +40,16 @@ public class ReportTableModel extends AbstractTableModel {
     public Object getValueAt(int row, int col) {
     	switch(col) {
     		case 0:
-    			return data.get(row).getCreation();
+    			return sdf.format(data.get(row).getCreation().getTime());
     		case 1:
     			List<Report> versions = data.get(row).getVersions();
-    			return versions.get(versions.size()-1).getCreation();
+    			return sdf.format(versions.get(versions.size()-1).getCreation().getTime());
     		case 2:
     			return data.get(row).getPatient();
     		case 3:
     			return data.get(row).getFacultative();
     		case 4:
-    			Report i = data.get(row); 
-    			return new String("S: "+i.getBiased()+ "\nO: "+i.getUnbiased()+ "\nI: "+ i.getImpressions()+ "\nP: "+i.getPlan());
+    			return data.get(row).getId();
     		case 5:
     			return new String("");
     		default:
@@ -55,9 +60,8 @@ public class ReportTableModel extends AbstractTableModel {
         //return getValueAt(0, c).getClass();
     	switch(c) {
 			case 0:
-				return Date.class;
 			case 1:
-				return int.class;
+				return String.class;
 			case 2:
 			case 3:
 			case 4:

@@ -1,8 +1,17 @@
-package dataobject;
+package org.sigaim.csig.model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import org.sigaim.csig.dataobject.SnomedConcept;
+import org.sigaim.siie.clients.IntSIIE001EQLClient;
+import org.sigaim.siie.clients.IntSIIEReportSummary;
+import org.sigaim.siie.rm.ReferenceModelManager;
+import org.sigaim.siie.rm.ReflectorReferenceModelManager;
+import org.sigaim.siie.rm.exceptions.RejectException;
+import org.sigaim.siie.seql.model.SEQLResultSet;
 
 public class Report {
 	
@@ -10,16 +19,20 @@ public class Report {
 	private ArrayList<Object> unbiased;
 	private ArrayList<Object> impressions;
 	private ArrayList<Object> plan;
-	private Date creation;
+	private Calendar creation;
 	private int versionNumber;
 	private ArrayList<Report> versions;
 	private String patient;
 	private String facultative;
+	private Long ehr;
+	private String reportId;
 	
 	private String dictationBiased;
 	private String dictationUnbiased;
 	private String dictationImpressions;
 	private String dictationPlan;
+	
+	private IntCSIGModel modelController;
 
 	public String getDictationBiased() {
 		return dictationBiased;
@@ -52,15 +65,17 @@ public class Report {
 	}
 
 	
-	public Report() {
+	public Report(IntCSIGModel controller) {
+		modelController = controller;
 		versionNumber = 1;
-		creation = new Date();
+		creation = Calendar.getInstance();
 		versions = new ArrayList<Report>();
 		versions.add(this);
 	}
 	public Report(Report prev) {
+		modelController = prev.modelController;
 		versionNumber = prev.versionNumber + 1;
-		creation = new Date();
+		creation = Calendar.getInstance();
 		versions = prev.versions;
 		biased = copySoip(prev.biased);
 		unbiased = copySoip(prev.unbiased);
@@ -100,8 +115,11 @@ public class Report {
 		this.plan = plan;
 		this.dictationPlan = getPlainText(plan);
 	}
-	public Date getCreation() {
+	public Calendar getCreation() {
 		return creation;
+	}
+	public void setCreation(Calendar creation) {
+		this.creation = creation;
 	}
 	public List<Report> getVersions() {
 		return versions;
@@ -154,5 +172,18 @@ public class Report {
 	
 	public int getVersion(){
 		return this.versionNumber;
+	}
+	
+	public long getEhr() {
+		return this.ehr;
+	}
+	public void setEhr(long par) {
+		this.ehr = par;
+	}
+	public String getId() {
+		return this.reportId;
+	}
+	public void setId(String id) {
+		this.reportId = new String(id);
 	}
 }

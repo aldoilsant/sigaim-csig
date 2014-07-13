@@ -1,4 +1,4 @@
-package view;
+package org.sigaim.csig.view;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -17,14 +17,13 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
-
-import dataobject.Report;
-import dataobject.SnomedConcept;
-
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
+
+import org.sigaim.csig.dataobject.SnomedConcept;
+import org.sigaim.csig.model.Report;
 
 import net.java.balloontip.*;
 import net.java.balloontip.styles.BalloonTipStyle;

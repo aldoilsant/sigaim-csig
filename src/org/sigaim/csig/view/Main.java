@@ -1,4 +1,4 @@
-package view;
+package org.sigaim.csig.view;
 
 import java.awt.EventQueue;
 import java.util.ArrayList;
@@ -9,15 +9,35 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import dataobject.Report;
-import dataobject.SnomedConcept;
+import org.sigaim.csig.dataobject.SnomedConcept;
+import org.sigaim.csig.model.CSIGFacility;
+import org.sigaim.csig.model.CSIGModel;
+import org.sigaim.csig.model.IntCSIGModel;
+import org.sigaim.csig.model.Report;
+import org.sigaim.siie.clients.IntSIIE001EQLClient;
+import org.sigaim.siie.clients.IntSIIE004ReportManagementClient;
+import org.sigaim.siie.clients.ws.WSIntSIIE001EQLClient;
+import org.sigaim.siie.clients.ws.WSIntSIIE004ReportManagementClient;
+import org.sigaim.siie.iso13606.rm.HealthcareFacility;
+import org.sigaim.siie.rm.exceptions.RejectException;
 
 
 public class Main implements ViewController {
 
+	private class Session {
+		boolean logged = false;
+		public long user = 0;
+		public long centre = 0;
+	}
+	
+	private Session session;
+	private IntCSIGModel model;
+	
 	public JFrame frame;
 	private JDialog login;
 	private ReportList reportList;
+	
+	public IntSIIE004ReportManagementClient reportClient;
 	
 	
 	private ArrayList<Object> biasedExample1(){
@@ -29,38 +49,48 @@ public class Main implements ViewController {
 	}
 	
 	
-	public List<Report> getInforms() {
-		ArrayList<Report> rtn = new ArrayList<Report>();
-		Report i = new Report();
-		i.setBiased(biasedExample1());
-		i.setUnbiased(new ArrayList<Object>());
-		i.setPlan(new ArrayList<Object>());
-		i.setImpressions(new ArrayList<Object>());
-		rtn.add(i);
-		/*i = new Report();
-		i.setBiased(t2);
-		i.setUnbiased(t1);
-		i.setPlan(t2);
-		i.setImpressions(t1);
-		rtn.add(i);*/
-		return rtn;
+	public List<Report> getReports() {
+		return model.getReports();
 	}
 	
-	public void doLogin(String user, char[] password) {
-		login.setVisible(false);
-		login.dispose();
-		login = null;
-		//frame.removeAll();
-		if(reportList==null)
-			reportList = new ReportList(frame, this);
-		
-		//reportList.show();
-		
+	public boolean doLogin(String user, String centre, char[] password) {
+		long id = -1;
+		boolean valid = false;
+		try {
+			session.user = id = Long.parseLong(user);
+			//session.centre = Long.parseLong(centre);
+		} catch (NumberFormatException e) {
+			return false;
+		}
+		valid = model.checkLoginInfo(id, centre, password);
+		if(valid){
+			session.logged = true;
+			login.setVisible(false);
+			login.dispose();
+			login = null;
+			//frame.removeAll();
+			if(reportList==null)
+				reportList = new ReportList(frame, this);
+			return true;
+		} else {
+			return false;
+		}		
 	}
 	
 	private Main(){
+		model = new CSIGModel();
+		
+		List<String> facs  = model.getFacilities();
+		
+		//TODO: separate in singleton
+		reportClient = new WSIntSIIE004ReportManagementClient();
+		
+		//***************************
+		
+		session = new Session();
+		
 		frame = new JFrame();
-		login = new LoginDialog(this);
+		login = new LoginDialog(this, facs);
 		login.setVisible(true);
 	}
 	/**

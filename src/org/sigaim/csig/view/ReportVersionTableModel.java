@@ -1,11 +1,11 @@
-package view;
+package org.sigaim.csig.view;
 
 import java.util.Date;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import dataobject.Report;
+import org.sigaim.csig.model.Report;
 
 public class ReportVersionTableModel extends AbstractTableModel {
 

@@ -1,9 +1,6 @@
-package view;
+package org.sigaim.csig.view;
 
 import javax.swing.JFrame;
-
-import dataobject.Report;
-
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 
@@ -30,6 +27,8 @@ import java.awt.BorderLayout;
 
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JTextField;
+
+import org.sigaim.csig.model.Report;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -58,7 +57,7 @@ public class ReportList {
 	public ReportList(JFrame container, ViewController _controller) {
 		frame = container;
 		controller = _controller;
-		reportList = controller.getInforms();
+		reportList = controller.getReports();
 		initialize();
 	}
 	

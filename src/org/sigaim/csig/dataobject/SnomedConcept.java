@@ -1,4 +1,4 @@
-package dataobject;
+package org.sigaim.csig.dataobject;
 
 import java.util.Dictionary;
 import java.util.Hashtable;

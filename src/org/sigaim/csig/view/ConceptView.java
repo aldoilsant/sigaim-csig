@@ -1,4 +1,4 @@
-package view;
+package org.sigaim.csig.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -9,8 +9,6 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import dataobject.SnomedConcept;
 
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -24,6 +22,8 @@ import com.jgoodies.forms.factories.FormFactory;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import org.sigaim.csig.dataobject.SnomedConcept;
 
 import net.java.balloontip.BalloonTip;
 import net.java.balloontip.styles.BalloonTipStyle;
