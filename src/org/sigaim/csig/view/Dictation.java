@@ -72,10 +72,10 @@ public class Dictation extends JPanel {
 	}
 	
 	private void updateReportView(Report r) {
-		txtBiased.setText(r.getDictationBiased());
-		txtUnbiased.setText(r.getDictationUnbiased());
-		txtPlan.setText(r.getDictationPlan());
-		txtImpression.setText(r.getDictationImpressions());
+		txtBiased.setText(r.getBiased());
+		txtUnbiased.setText(r.getUnbiased());
+		txtPlan.setText(r.getPlan());
+		txtImpression.setText(r.getImpressions());
 	}
 	private void showSaveDialog(){
 		int response;
@@ -111,10 +111,10 @@ public class Dictation extends JPanel {
 		    @Override
 		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
 		        if(report != null) {
-		        	if( (!report.getDictationBiased().equals(txtBiased.getText())) ||
-		        		(!report.getDictationUnbiased().equals(txtUnbiased.getText())) ||
-		        		(!report.getDictationPlan().equals(txtPlan.getText())) ||
-		        		(!report.getDictationImpressions().equals(txtImpression.getText())) )
+		        	if( (!report.getBiased().equals(txtBiased.getText())) ||
+		        		(!report.getUnbiased().equals(txtUnbiased.getText())) ||
+		        		(!report.getPlan().equals(txtPlan.getText())) ||
+		        		(!report.getImpressions().equals(txtImpression.getText())) )
 		        		askSave = true;
 		        } else {
 		        	if( (!txtBiased.getText().isEmpty()) ||

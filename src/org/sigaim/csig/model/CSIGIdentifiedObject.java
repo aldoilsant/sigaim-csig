@@ -6,20 +6,24 @@ public abstract class CSIGIdentifiedObject {
 
 	private long id;
 	private String root;
+	private II ii;
 	
 	protected CSIGIdentifiedObject(II siieObject) {
 		id = Long.parseLong(siieObject.getExtension());		
 		root = siieObject.getRoot();
+		ii = siieObject;
 	}
 	
 	protected CSIGIdentifiedObject() {
 		id = -1;
 		root = "";
+		ii = null;
 	}
 	
 	public void setId(II ii) {
 		id = Long.parseLong(ii.getExtension());
 		root = ii.getRoot();
+		this.ii = ii;
 	}
 	
 	public long getId() {
@@ -32,5 +36,9 @@ public abstract class CSIGIdentifiedObject {
 	
 	public String toString() {
 		return root + "/" + id; 
+	}
+	
+	public II getII(){
+		return ii;
 	}
 }

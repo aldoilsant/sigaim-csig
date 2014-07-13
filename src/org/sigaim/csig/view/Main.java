@@ -9,12 +9,12 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import org.sigaim.csig.dataobject.SnomedConcept;
 import org.sigaim.csig.model.CSIGFacility;
 import org.sigaim.csig.model.CSIGFacultative;
 import org.sigaim.csig.model.CSIGModel;
 import org.sigaim.csig.model.IntCSIGModel;
 import org.sigaim.csig.model.Report;
+import org.sigaim.csig.model.CSIGConcept;
 import org.sigaim.siie.clients.IntSIIE001EQLClient;
 import org.sigaim.siie.clients.IntSIIE004ReportManagementClient;
 import org.sigaim.siie.clients.ws.WSIntSIIE001EQLClient;

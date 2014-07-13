@@ -23,7 +23,7 @@ import com.jgoodies.forms.factories.FormFactory;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import org.sigaim.csig.dataobject.SnomedConcept;
+import org.sigaim.csig.model.CSIGConcept;
 
 import net.java.balloontip.BalloonTip;
 import net.java.balloontip.styles.BalloonTipStyle;
@@ -40,7 +40,7 @@ public class ConceptView extends JPanel {
 	/**
 	 * Create the dialog.
 	 */
-	public ConceptView(SnomedConcept concept, Component parent) {
+	public ConceptView(CSIGConcept concept, Component parent) {
 		/*setUndecorated(true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.addWindowFocusListener(new WindowFocusListener() {
@@ -96,7 +96,7 @@ public class ConceptView extends JPanel {
 		
 		//Load values
 		txtDictation.setText(concept.text);
-		txtSnomed.setText(Integer.toString(concept.code));
+		txtSnomed.setText(concept.code);
 		//this.setVisible(true);
 		BalloonTipStyle edgedLook = new EdgedBalloonStyle(contentPanel.getBackground(), Color.BLUE);
 		final BalloonTip b =  new BalloonTip((JComponent) parent, (JComponent) this, edgedLook, false);

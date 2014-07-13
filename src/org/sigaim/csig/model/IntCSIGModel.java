@@ -11,6 +11,7 @@ public interface IntCSIGModel {
 	List<CSIGFacultative> getFacultatives();
 	List<CSIGPatient> getPatients();
 	Report fillSoip(Report report);
+	Report fillSoipConcepts(Report report);
 	
 	/*
 	 * Returns a new facultative after creating it in SIIE.

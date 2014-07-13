@@ -22,8 +22,8 @@ import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 
-import org.sigaim.csig.dataobject.SnomedConcept;
 import org.sigaim.csig.model.Report;
+import org.sigaim.csig.model.CSIGConcept;
 
 import net.java.balloontip.*;
 import net.java.balloontip.styles.BalloonTipStyle;
@@ -62,10 +62,11 @@ public class ShowReport extends JPanel {
 	}
 	
 	private void updateReportView(Report r) {
-		setTextPane(txtUnbiased, r.getUnbiased());
+		r.getBiasedConcepts();
+		/*setTextPane(txtUnbiased, r.getUnbiased());
 		setTextPane(txtBiased, r.getBiased());
 		setTextPane(txtImpression, r.getImpressions());
-		setTextPane(txtPlan, r.getPlan());
+		setTextPane(txtPlan, r.getPlan());*/
 	}
 	private void showSaveDialog(){
 		int response;
@@ -105,8 +106,8 @@ public class ShowReport extends JPanel {
 			for(Object o : content) {
 				if(o instanceof String) {
 					doc.insertString(doc.getLength(), (String) o, null);
-				} else if (o instanceof SnomedConcept) {
-					pane.insertComponent(createConceptLabel((SnomedConcept)o));
+				} else if (o instanceof CSIGConcept) {
+					pane.insertComponent(createConceptLabel((CSIGConcept)o));
 					
 					/*StyleConstants.setComponent(style, createConceptLabel((SnomedConcept)o));
 					doc.insertString(doc.getLength(), "", style);*/
@@ -118,7 +119,7 @@ public class ShowReport extends JPanel {
 		}
 	}
 	
-	private JLabel createConceptLabel(final SnomedConcept concept) {
+	private JLabel createConceptLabel(final CSIGConcept concept) {
 		final JLabel rtn = new JLabel(concept.toString());
 		rtn.setFont(conceptFont);
 		rtn.setAlignmentY(.80f);

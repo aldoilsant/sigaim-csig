@@ -9,10 +9,13 @@ import org.sigaim.siie.clients.IntSIIE004ReportManagementClient;
 import org.sigaim.siie.clients.IntSIIEReportSummary;
 import org.sigaim.siie.clients.ws.WSIntSIIE001EQLClient;
 import org.sigaim.siie.clients.ws.WSIntSIIE004ReportManagementClient;
+import org.sigaim.siie.iso13606.rm.Cluster;
 import org.sigaim.siie.iso13606.rm.EHRExtract;
 import org.sigaim.siie.iso13606.rm.Element;
 import org.sigaim.siie.iso13606.rm.HealthcareFacility;
 import org.sigaim.siie.iso13606.rm.HealthcareProfessionalRole;
+import org.sigaim.siie.iso13606.rm.INT;
+import org.sigaim.siie.iso13606.rm.Item;
 import org.sigaim.siie.iso13606.rm.Performer;
 import org.sigaim.siie.iso13606.rm.ST;
 import org.sigaim.siie.iso13606.rm.SubjectOfCare;
@@ -71,24 +74,24 @@ public class CSIGModel implements IntCSIGModel {
 		}
 		
 		if(bias != null)
-			report.setDictationBiased(bias);
+			report.setBiased(bias);
 		else
-			report.setDictationBiased("");
+			report.setBiased("");
 		
 		if(unbias != null)
-			report.setDictationUnbiased(unbias);
+			report.setUnbiased(unbias);
 		else
-			report.setDictationUnbiased("");
+			report.setUnbiased("");
 		
 		if(impress != null)
-			report.setDictationImpressions(impress);
+			report.setImpressions(impress);
 		else
-			report.setDictationImpressions("");
+			report.setImpressions("");
 		
 		if(plan != null)
-			report.setDictationPlan(plan);
+			report.setPlan(plan);
 		else
-			report.setDictationPlan("");			
+			report.setPlan("");			
 		
 		return report;
 	}
@@ -172,6 +175,116 @@ public class CSIGModel implements IntCSIGModel {
 			e.printStackTrace();
 		}
 		return null;
+	}	
+
+	@Override
+	public Report fillSoipConcepts(Report report) {
+		
+		  /* CLUSTER[at0008] occurrences matches {0..1} matches {  -- Lista de elementos
+               parts existence matches {0..1} cardinality matches {0..*; ordered} matches {
+                   CLUSTER[at0009] occurrences matches {0..*} matches {  -- Elemento
+                       parts existence matches {0..1} cardinality matches {0..5; ordered; unique} matches {
+                           ELEMENT[at0010] occurrences matches {0..1} matches {  -- Código
+                               value existence matches {0..1} matches {
+                                   ST occurrences matches {0..1} matches {  
+                                       value existence matches {0..1} matches {*}
+                                   }
+                               }
+                           }
+                           ELEMENT[at0011] occurrences matches {0..1} matches {  -- Inicio
+                               value existence matches {0..1} matches {
+                                   INT occurrences matches {0..1} matches {  
+                                       value existence matches {1..1} matches {*}
+                                   }
+                               }
+                           }
+                           ELEMENT[at0012] occurrences matches {0..1} matches {  -- Fin
+                               value existence matches {0..1} matches {
+                                   INT occurrences matches {0..1} matches {  
+                                       value existence matches {1..1} matches {*}
+                                   }
+                               }
+                           }
+                           ELEMENT[at0013] occurrences matches {0..1} matches {  -- Path
+                               value existence matches {0..1} matches {
+                                   ST occurrences matches {0..1} matches {  -- ST
+                                       value existence matches {0..1} matches {*}
+                                   }
+                               }
+                           }
+                           ELEMENT[at0014] occurrences matches {0..1} matches {  -- Nodo
+                               value existence matches {0..1} matches {
+                                   ST occurrences matches {0..1} matches {  
+                                       value existence matches {0..1} matches {*}
+                                   }
+                               }
+                           }
+                           ELEMENT[at0015] occurrences matches {0..1} matches {  -- Terminología
+                               value existence matches {0..1} matches {
+                                   ST occurrences matches {0..1} matches {  
+                                       value existence matches {0..1} matches {*}
+                                   }
+                               }
+                           }
+                       }
+                       structure_type existence matches {1..1} matches {
+                           STRUCTURE_TYPE occurrences matches {1..1} matches {
+                               value existence matches {0..1} matches {"list"}
+                           }
+                       }
+                   }
+               }
+               structure_type existence matches {1..1} matches {
+                   STRUCTURE_TYPE occurrences matches {1..1} matches { 
+                       value existence matches {0..1} matches {"list"}
+                   }
+               }*/
+		Cluster concepts = null;
+		int textPosition = 0;
+		int biasEnd = report.getBiased().length();
+		int unbiasEnd = biasEnd + report.getUnbiased().length();
+		int impresEnd = unbiasEnd + report.getImpressions().length();
+		
+		ArrayList<CSIGConcept> biasConcepts = new ArrayList<CSIGConcept>();
+		ArrayList<CSIGConcept> unbiasConcepts = new ArrayList<CSIGConcept>();
+		ArrayList<CSIGConcept> impresConcepts = new ArrayList<CSIGConcept>();
+		ArrayList<CSIGConcept> planConcepts = new ArrayList<CSIGConcept>();
+		
+		report.setBiasedConcepts(biasConcepts);
+		report.setUnbiasedConcepts(unbiasConcepts);
+		report.setImpressionsConcepts(impresConcepts);
+		report.setPlanConcepts(planConcepts);		
+		
+		ArrayList<CSIGConcept> rtn = new ArrayList<CSIGConcept>();
+		
+		try {
+			concepts = eqlClient.getConceptInformationForReportId(report.getII());
+		} catch (RejectException e) {
+			e.printStackTrace();
+			return null;
+		}
+		for(Item i : concepts.getParts()) {			
+			Cluster conceptCluster = (Cluster)i;
+			List<Item> params = conceptCluster.getParts();
+			ST code = (ST)((Element)params.get(0)).getValue();
+			INT start = (INT)((Element)params.get(1)).getValue();
+			INT end = (INT)((Element)params.get(2)).getValue();
+			ST term = (ST)((Element)params.get(5)).getValue();
+			if(start.getValue() < biasEnd)
+				biasConcepts.add(new CSIGConcept(code.getValue(), term.getValue(),
+						start.getValue(), end.getValue()));
+			else if (start.getValue() < unbiasEnd)
+				unbiasConcepts.add(new CSIGConcept(code.getValue(), term.getValue(),
+						start.getValue()-biasEnd, end.getValue()-biasEnd));
+			else if(start.getValue() < impresEnd)
+				impresConcepts.add(new CSIGConcept(code.getValue(), term.getValue(), 
+						start.getValue()-unbiasEnd, end.getValue()-unbiasEnd));
+			else
+				planConcepts.add(new CSIGConcept(code.getValue(), term.getValue(),
+						start.getValue()-impresEnd, end.getValue()-impresEnd));
+		}
+			
+		return report;
 	}
 
 }

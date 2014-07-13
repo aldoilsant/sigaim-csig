@@ -5,7 +5,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.sigaim.csig.dataobject.SnomedConcept;
 import org.sigaim.siie.clients.IntSIIE001EQLClient;
 import org.sigaim.siie.clients.IntSIIEReportSummary;
 import org.sigaim.siie.rm.ReferenceModelManager;
@@ -15,10 +14,10 @@ import org.sigaim.siie.seql.model.SEQLResultSet;
 
 public class Report extends CSIGIdentifiedObject {
 	
-	private ArrayList<Object> biased;
-	private ArrayList<Object> unbiased;
-	private ArrayList<Object> impressions;
-	private ArrayList<Object> plan;
+	private List<CSIGConcept> biasedConcepts;
+	private List<CSIGConcept> unbiasedConcepts;
+	private List<CSIGConcept> impressionsConcepts;
+	private List<CSIGConcept> planConcepts;
 	private Calendar creation;
 	private int versionNumber;
 	private ArrayList<Report> versions;
@@ -27,42 +26,38 @@ public class Report extends CSIGIdentifiedObject {
 	private Long ehr;
 	private String reportId;
 	
-	private String dictationBiased;
-	private String dictationUnbiased;
-	private String dictationImpressions;
-	private String dictationPlan;
+	private String biased;
+	private String unbiased;
+	private String impressions;
+	private String plan;
 	
 	private IntCSIGModel modelController;
 
-	public String getDictationBiased() {
-		return dictationBiased;
-	}
-
-	private ArrayList<Object> copySoip(ArrayList<Object> list) {
+	/*private ArrayList<Object> copySoip(ArrayList<Object> list) {
 		ArrayList<Object> rtn = new ArrayList<Object>(list.size());
 		for(Object o : list){
 			if(o instanceof String)
 				rtn.add(o);
-			else if (o instanceof SnomedConcept)
-				rtn.add((new SnomedConcept( (SnomedConcept)o )));
+			else if (o instanceof CSIGConcept)
+				rtn.add((new CSIGConcept( (CSIGConcept)o )));
 			else
 				throw new IllegalStateException("Soip containing Object that is not String nor SnomeConcept");
 		}
 		return rtn;
-	}
+	}*/
 	
-	private String getPlainText(ArrayList<Object> soipNote) {
+	/*private String getPlainText(ArrayList<Object> soipNote) {
 		String rtn = new String();
 		for(Object o : soipNote) {
 			if(o instanceof String)
 				rtn = rtn.concat((String)o);
-			else if (o instanceof SnomedConcept)
-				rtn = rtn.concat(((SnomedConcept)o).text);
+			else if (o instanceof CSIGConcept)
+				rtn = rtn.concat(((CSIGConcept)o).text);
 			else
 				throw new IllegalStateException("Soip containing Object that is not String nor SnomeConcept");
 		}
 		return rtn;		
-	}
+	}*/
 	
 	public Report(IntCSIGModel controller) {
 		modelController = controller;
@@ -76,43 +71,48 @@ public class Report extends CSIGIdentifiedObject {
 		versionNumber = prev.versionNumber + 1;
 		creation = Calendar.getInstance();
 		versions = prev.versions;
-		biased = copySoip(prev.biased);
+		/*biased = copySoip(prev.biased);
 		unbiased = copySoip(prev.unbiased);
 		impressions = copySoip(prev.impressions);
-		plan = copySoip(prev.plan);
+		plan = copySoip(prev.plan);*/
+		
 		patient = prev.patient;
 		facultative = prev.facultative;
 		versions.add(this);
 	}
 	
-	public ArrayList<Object> getBiased() {
-		return biased;
+	public List<CSIGConcept> getBiasedConcepts() {
+		if(biasedConcepts == null)
+			modelController.fillSoipConcepts(this);
+		return biasedConcepts;
 	}
-	public void setBiased(ArrayList<Object> biased) {
-		this.biased = biased;
-		this.dictationBiased = getPlainText(biased);
+	public void setBiasedConcepts(ArrayList<CSIGConcept> biased) {
+		this.biasedConcepts = biased;
 	}
 
-	public ArrayList<Object> getUnbiased() {
-		return unbiased;
+	public List<CSIGConcept> getUnbiasedConcepts() {
+		if(unbiasedConcepts == null)
+			modelController.fillSoipConcepts(this);
+		return unbiasedConcepts;
 	}
-	public void setUnbiased(ArrayList<Object> unbiased) {
-		this.unbiased = unbiased;
-		this.dictationUnbiased = getPlainText(unbiased);
+	public void setUnbiasedConcepts(ArrayList<CSIGConcept> unbiased) {
+		this.unbiasedConcepts = unbiased;
 	}
-	public ArrayList<Object> getImpressions() {
-		return impressions;
+	public List<CSIGConcept> getImpressionsConcepts() {
+		if(impressionsConcepts == null)
+			modelController.fillSoipConcepts(this);
+		return impressionsConcepts;
 	}
-	public void setImpressions(ArrayList<Object> impressions) {
-		this.impressions = impressions;
-		this.dictationImpressions = getPlainText(impressions);
+	public void setImpressionsConcepts(ArrayList<CSIGConcept> impressions) {
+		this.impressionsConcepts = impressions;
 	}
-	public ArrayList<Object> getPlan() {
-		return plan;
+	public List<CSIGConcept> getPlanConcepts() {
+		if(planConcepts == null)
+			modelController.fillSoipConcepts(this);
+		return planConcepts;
 	}
-	public void setPlan(ArrayList<Object> plan) {
-		this.plan = plan;
-		this.dictationPlan = getPlainText(plan);
+	public void setPlanConcepts(ArrayList<CSIGConcept> plan) {
+		this.planConcepts = plan;
 	}
 	public Calendar getCreation() {
 		return creation;
@@ -124,7 +124,7 @@ public class Report extends CSIGIdentifiedObject {
 		return versions;
 	}
 	public String getFullText() {
-		return "S: "+getDictationBiased()+ "\n\nO: "+getDictationUnbiased()+ "\n\nI: "+getDictationImpressions()+ "\n\nP: "+getDictationPlan();
+		return "S: "+getBiased()+ "\n\nO: "+getUnbiased()+ "\n\nI: "+getImpressions()+ "\n\nP: "+getPlan();
 	}
 	
 	public CSIGPatient getPatient() {
@@ -141,41 +141,45 @@ public class Report extends CSIGIdentifiedObject {
 		this.facultative = facultative;
 	}
 	
-	public void setDictationBiased(String dictationBiased) {
-		this.dictationBiased = dictationBiased;
+	public String getBiased() {
+		return biased;
+	}
+	
+	public void setBiased(String dictationBiased) {
+		this.biased = dictationBiased;
 	}
 
-	public String getDictationUnbiased() {
-		if(dictationBiased == null) {
+	public String getUnbiased() {
+		if(biased == null) {
 			modelController.fillSoip(this);
 		}
-		return dictationUnbiased;
+		return unbiased;
 	}
 
-	public void setDictationUnbiased(String dictationUnbiased) {
-		this.dictationUnbiased = dictationUnbiased;
+	public void setUnbiased(String dictationUnbiased) {
+		this.unbiased = dictationUnbiased;
 	}
 
-	public String getDictationImpressions() {
-		if(dictationImpressions == null) {
+	public String getImpressions() {
+		if(impressions == null) {
 			modelController.fillSoip(this);
 		}
-		return dictationImpressions;
+		return impressions;
 	}
 
-	public void setDictationImpressions(String dictationImpressions) {
-		this.dictationImpressions = dictationImpressions;
+	public void setImpressions(String dictationImpressions) {
+		this.impressions = dictationImpressions;
 	}
 
-	public String getDictationPlan() {
-		if(dictationPlan == null) {
+	public String getPlan() {
+		if(plan == null) {
 			modelController.fillSoip(this);
 		}
-		return dictationPlan;
+		return plan;
 	}
 
-	public void setDictationPlan(String dictationPlan) {
-		this.dictationPlan = dictationPlan;
+	public void setPlan(String dictationPlan) {
+		this.plan = dictationPlan;
 	}
 	
 	public int getVersion(){
