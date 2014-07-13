@@ -13,7 +13,7 @@ import org.sigaim.siie.rm.ReflectorReferenceModelManager;
 import org.sigaim.siie.rm.exceptions.RejectException;
 import org.sigaim.siie.seql.model.SEQLResultSet;
 
-public class Report {
+public class Report extends CSIGIdentifiedObject {
 	
 	private ArrayList<Object> biased;
 	private ArrayList<Object> unbiased;
@@ -53,7 +53,7 @@ public class Report {
 	
 	private String getPlainText(ArrayList<Object> soipNote) {
 		String rtn = new String();
-		for(Object o : soipNote){
+		for(Object o : soipNote) {
 			if(o instanceof String)
 				rtn = rtn.concat((String)o);
 			else if (o instanceof SnomedConcept)
@@ -63,7 +63,6 @@ public class Report {
 		}
 		return rtn;		
 	}
-
 	
 	public Report(IntCSIGModel controller) {
 		modelController = controller;
@@ -147,6 +146,9 @@ public class Report {
 	}
 
 	public String getDictationUnbiased() {
+		if(dictationBiased == null) {
+			modelController.fillSoip(this);
+		}
 		return dictationUnbiased;
 	}
 
@@ -155,6 +157,9 @@ public class Report {
 	}
 
 	public String getDictationImpressions() {
+		if(dictationImpressions == null) {
+			modelController.fillSoip(this);
+		}
 		return dictationImpressions;
 	}
 
@@ -163,6 +168,9 @@ public class Report {
 	}
 
 	public String getDictationPlan() {
+		if(dictationPlan == null) {
+			modelController.fillSoip(this);
+		}
 		return dictationPlan;
 	}
 
@@ -179,11 +187,5 @@ public class Report {
 	}
 	public void setEhr(long par) {
 		this.ehr = par;
-	}
-	public String getId() {
-		return this.reportId;
-	}
-	public void setId(String id) {
-		this.reportId = new String(id);
 	}
 }

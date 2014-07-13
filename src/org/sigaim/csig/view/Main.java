@@ -11,6 +11,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import org.sigaim.csig.dataobject.SnomedConcept;
 import org.sigaim.csig.model.CSIGFacility;
+import org.sigaim.csig.model.CSIGFacultative;
 import org.sigaim.csig.model.CSIGModel;
 import org.sigaim.csig.model.IntCSIGModel;
 import org.sigaim.csig.model.Report;
@@ -35,19 +36,7 @@ public class Main implements ViewController {
 	
 	public JFrame frame;
 	private JDialog login;
-	private ReportList reportList;
-	
-	public IntSIIE004ReportManagementClient reportClient;
-	
-	
-	private ArrayList<Object> biasedExample1(){
-		ArrayList<Object> rtn = new ArrayList<Object>();
-		rtn.add(new String("Acude a urgencias: refiere sensación distérmica de 3 días evolución sin "));
-		rtn.add(new SnomedConcept(271897009, "fiebre", "fiebre"));
-		rtn.add(new String(" termometrada\nMolestias faríngeas con tos improductiva."));
-		return rtn;
-	}
-	
+	private ReportList reportList;	
 	
 	public List<Report> getReports() {
 		return model.getReports();
@@ -82,16 +71,15 @@ public class Main implements ViewController {
 		
 		List<String> facs  = model.getFacilities();
 		
-		//TODO: separate in singleton
-		reportClient = new WSIntSIIE004ReportManagementClient();
-		
-		//***************************
-		
 		session = new Session();
 		
 		frame = new JFrame();
 		login = new LoginDialog(this, facs);
 		login.setVisible(true);
+		
+		//Testing window
+		JDialog creator = new LoginCreator(this);
+		creator.setVisible(true);
 	}
 	/**
 	 * Launch the application.
@@ -136,5 +124,31 @@ public class Main implements ViewController {
 	@Override
 	public void showReport(Report r) {
 		new ShowReport(r, this);		
+	}
+
+	@Override
+	public long createFacultative() {
+		CSIGFacultative facultative = model.createFacultative();
+		if(facultative != null)
+			return facultative.getId();
+		else
+			return -1;
+	}
+
+	@Override
+	public long createFacility() {
+		CSIGFacility facility = model.createFacility();
+		if(facility != null) {
+			if(login != null) {
+				//reload login window information
+				login.setVisible(false);
+				login.dispose();
+				login = new LoginDialog(this, model.getFacilities());
+				login.setVisible(true);
+			}				
+			return facility.getId();
+		}
+		else
+			return -1;
 	}
 }
