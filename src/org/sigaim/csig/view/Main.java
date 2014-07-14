@@ -19,7 +19,10 @@ import org.sigaim.siie.clients.IntSIIE001EQLClient;
 import org.sigaim.siie.clients.IntSIIE004ReportManagementClient;
 import org.sigaim.siie.clients.ws.WSIntSIIE001EQLClient;
 import org.sigaim.siie.clients.ws.WSIntSIIE004ReportManagementClient;
+import org.sigaim.siie.iso13606.rm.CDCV;
+import org.sigaim.siie.iso13606.rm.FunctionalRole;
 import org.sigaim.siie.iso13606.rm.HealthcareFacility;
+import org.sigaim.siie.iso13606.rm.II;
 import org.sigaim.siie.rm.exceptions.RejectException;
 
 
@@ -27,8 +30,8 @@ public class Main implements ViewController {
 
 	private class Session {
 		boolean logged = false;
-		public long user = 0;
-		public long centre = 0;
+		public long /*CSIGFacultative*/ user;
+		public long /*CSIGFacility*/ centre;
 	}
 	
 	private Session session;
@@ -47,7 +50,7 @@ public class Main implements ViewController {
 		boolean valid = false;
 		try {
 			session.user = id = Long.parseLong(user);
-			//session.centre = Long.parseLong(centre);
+			session.centre = Long.parseLong(centre.split("/")[1]);
 		} catch (NumberFormatException e) {
 			return false;
 		}
@@ -155,5 +158,29 @@ public class Main implements ViewController {
 	@Override
 	public IntCSIGModel getModelController() {
 		return model;
+	}
+
+	@Override
+	public void createReport(String bias, String unbias, String impressions,
+			String plan, String patient) {
+		//FIXME: use stored II in session
+		FunctionalRole composer=new FunctionalRole();
+		II facultative = new II();
+		facultative.setRoot("org.sigaim");
+		facultative.setExtension(Long.toString(session.user));
+		II facility = new II();
+		facility.setRoot("org.sigaim");
+		facility.setExtension(Long.toString(session.centre));
+		composer.setHealthcareFacility(facility);
+		composer.setPerformer(facultative);
+		II rootArchetypeId = new II();
+		rootArchetypeId.setRoot("CEN-EN13606-COMPOSITION.InformeClinicoNotaSOIP.v1");
+		CDCV reportStatus=new CDCV();
+		reportStatus.setCode("RSTA02");
+		II ehr = model.getEHRIdFromPatient(Long.parseLong(patient.split("/")[1]));
+		model.createReport(bias, unbias, impressions, plan, composer, ehr, reportStatus);
+		if(reportList != null) {
+			reportList.updateList(this.getReports());
+		}
 	}
 }

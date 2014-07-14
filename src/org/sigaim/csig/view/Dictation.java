@@ -102,7 +102,10 @@ public class Dictation extends JPanel {
 	private void saveReport(){
 		//TODO: implement
 		if(report == null) { //New report
-			//Composition newReport=client.createReport("4", newEHR.getEhrId(), composer, "", "some text", reportStatus, rootArchetypeId);
+			if(ddlPatient.getSelectedIndex() > 0)
+			controller.createReport(txtBiased.getText(), txtUnbiased.getText(), txtImpression.getText(), txtPlan.getText(),
+					(String)ddlPatient.getSelectedItem());
+			
 		}
 	}
 	

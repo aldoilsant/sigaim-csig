@@ -61,6 +61,10 @@ public class ReportList {
 		initialize();
 	}
 	
+	public void updateList(List<Report> newList){
+		reportList = newList;
+	}
+	
 	public void show() {
 		frame.removeAll();
 		frame.getContentPane().add(pnlVistaInformes);

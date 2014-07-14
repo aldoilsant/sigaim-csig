@@ -9,11 +9,14 @@ import org.sigaim.siie.clients.IntSIIE004ReportManagementClient;
 import org.sigaim.siie.clients.IntSIIEReportSummary;
 import org.sigaim.siie.clients.ws.WSIntSIIE001EQLClient;
 import org.sigaim.siie.clients.ws.WSIntSIIE004ReportManagementClient;
+import org.sigaim.siie.iso13606.rm.CDCV;
 import org.sigaim.siie.iso13606.rm.Cluster;
 import org.sigaim.siie.iso13606.rm.EHRExtract;
 import org.sigaim.siie.iso13606.rm.Element;
+import org.sigaim.siie.iso13606.rm.FunctionalRole;
 import org.sigaim.siie.iso13606.rm.HealthcareFacility;
 import org.sigaim.siie.iso13606.rm.HealthcareProfessionalRole;
+import org.sigaim.siie.iso13606.rm.II;
 import org.sigaim.siie.iso13606.rm.INT;
 import org.sigaim.siie.iso13606.rm.Item;
 import org.sigaim.siie.iso13606.rm.Performer;
@@ -285,6 +288,28 @@ public class CSIGModel implements IntCSIGModel {
 		}
 			
 		return report;
+	}
+	
+	@Override
+	public II getEHRIdFromPatient(long patientId){
+		try {
+			return eqlClient.getEHRIdFromSubject(patientId);
+		} catch (RejectException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public void createReport(String bias, String unbias, String impressions,
+			String plan, FunctionalRole composer, II ehrId, CDCV status) {
+		String text = "Zona Subjetivo. "+bias+"\nZona Objetivo. "+unbias+"\nZona Impresión. "+impressions+
+				"Zona Plan. "+plan;
+		try {
+			reportClient.createReport("", ehrId, composer, null, text, status, new II());
+		} catch (RejectException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
