@@ -15,6 +15,7 @@ import javax.swing.JToolBar;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.TableModel;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.GroupLayout;
@@ -54,6 +55,8 @@ public class ReportList {
 	private JButton btnNew;
 	private JTable tblVersions;
 	
+	private TableModel reportTableModel;
+	
 	public ReportList(JFrame container, ViewController _controller) {
 		frame = container;
 		controller = _controller;
@@ -63,6 +66,7 @@ public class ReportList {
 	
 	public void updateList(List<Report> newList){
 		reportList = newList;
+		tblInformes.setModel(new ReportTableModel(reportList));
 	}
 	
 	public void show() {
@@ -106,6 +110,8 @@ public class ReportList {
 		
 		JScrollPane scrListaInformes = new JScrollPane();
 		scrListaInformes.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		
+		//reportTableModel = ;
 		
 		tblInformes = new JTable(new ReportTableModel(reportList));
 		tblInformes.getColumnModel().getColumn(0).setPreferredWidth(100);

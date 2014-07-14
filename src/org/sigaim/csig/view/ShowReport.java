@@ -31,13 +31,6 @@ import net.java.balloontip.*;
 import net.java.balloontip.styles.BalloonTipStyle;
 
 public class ShowReport extends JPanel {
-	
-	private class ConceptsOrderer implements Comparator<CSIGConcept> {
-	    @Override
-	    public int compare(CSIGConcept o1, CSIGConcept o2) {
-	        return Integer.compare(o1.start, o2.start);
-	    }
-	}
 
 	private JFrame frame;
 	private Report report;
@@ -105,7 +98,7 @@ public class ShowReport extends JPanel {
 		int textPointer = 0;
 		if(text.length() <= 0)
 			return;
-		concepts.sort(new ConceptsOrderer()); 
+//		concepts.sort(new ConceptsOrderer()); 
 		pane.setText("");
 		Font f = new Font(Font.SANS_SERIF, Font.PLAIN, 14);
 		Map attributes = f.getAttributes();

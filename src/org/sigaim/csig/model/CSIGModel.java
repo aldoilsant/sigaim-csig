@@ -1,6 +1,7 @@
 package org.sigaim.csig.model;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.sigaim.csig.view.ReportList;
@@ -180,6 +181,14 @@ public class CSIGModel implements IntCSIGModel {
 		return null;
 	}	
 
+	
+	private class ConceptsOrderer implements Comparator<CSIGConcept> {
+	    @Override
+	    public int compare(CSIGConcept o1, CSIGConcept o2) {
+	        return Integer.compare(o1.start, o2.start);
+	    }
+	}
+	
 	@Override
 	public Report fillSoipConcepts(Report report) {
 		
@@ -243,7 +252,7 @@ public class CSIGModel implements IntCSIGModel {
                    }
                }*/
 		Cluster concepts = null;
-		int textPosition = 0;
+		//int textPosition = 0;
 		//Magic number 19: offset due to non printed archetype nomenclature
 		int biasEnd = report.getBiased().length()+24;
 		int unbiasEnd = biasEnd + report.getUnbiased().length();
@@ -259,7 +268,7 @@ public class CSIGModel implements IntCSIGModel {
 		report.setImpressionsConcepts(impresConcepts);
 		report.setPlanConcepts(planConcepts);		
 		
-		ArrayList<CSIGConcept> rtn = new ArrayList<CSIGConcept>();
+		//ArrayList<CSIGConcept> rtn = new ArrayList<CSIGConcept>();
 		
 		try {
 			concepts = eqlClient.getConceptInformationForReportId(report.getII());
@@ -287,6 +296,12 @@ public class CSIGModel implements IntCSIGModel {
 				planConcepts.add(new CSIGConcept(code.getCode(), code.getCodeSystemName(),
 						start.getValue()-impresEnd-3, end.getValue()-impresEnd-3));
 		}
+		
+		ConceptsOrderer orderer = new ConceptsOrderer();
+		biasConcepts.sort(orderer);
+		unbiasConcepts.sort(orderer);
+		impresConcepts.sort(orderer);
+		planConcepts.sort(orderer);
 			
 		return report;
 	}
