@@ -182,36 +182,6 @@ public class Dictation extends JPanel {
 		frame.getContentPane().add(pnlVistaInformes);
 		pnlVistaInformes.setLayout(new GridLayout(4, 1, 5, 5));
 		
-		JPanel pnlUnbiased = new JPanel();
-		pnlVistaInformes.add(pnlUnbiased);
-		
-		JLabel lblObjetivo = new JLabel("Objetivo");
-		
-		JScrollPane scrUnbiased = new JScrollPane();
-		GroupLayout gl_pnlUnbiased = new GroupLayout(pnlUnbiased);
-		gl_pnlUnbiased.setHorizontalGroup(
-			gl_pnlUnbiased.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_pnlUnbiased.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_pnlUnbiased.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrUnbiased, GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
-						.addComponent(lblObjetivo))
-					.addContainerGap())
-		);
-		gl_pnlUnbiased.setVerticalGroup(
-			gl_pnlUnbiased.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_pnlUnbiased.createSequentialGroup()
-					.addComponent(lblObjetivo)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(scrUnbiased, GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		
-		txtUnbiased = new JTextArea();
-		txtUnbiased.setLineWrap(true);
-		scrUnbiased.setViewportView(txtUnbiased);
-		pnlUnbiased.setLayout(gl_pnlUnbiased);
-		
 		JPanel pnlBiased = new JPanel();
 		pnlVistaInformes.add(pnlBiased);
 		
@@ -241,6 +211,36 @@ public class Dictation extends JPanel {
 		txtBiased.setLineWrap(true);
 		scrBiased.setViewportView(txtBiased);
 		pnlBiased.setLayout(gl_pnlBiased);
+		
+		JPanel pnlUnbiased = new JPanel();
+		pnlVistaInformes.add(pnlUnbiased);
+		
+		JLabel lblObjetivo = new JLabel("Objetivo");
+		
+		JScrollPane scrUnbiased = new JScrollPane();
+		GroupLayout gl_pnlUnbiased = new GroupLayout(pnlUnbiased);
+		gl_pnlUnbiased.setHorizontalGroup(
+			gl_pnlUnbiased.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_pnlUnbiased.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_pnlUnbiased.createParallelGroup(Alignment.LEADING)
+						.addComponent(scrUnbiased, GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
+						.addComponent(lblObjetivo))
+					.addContainerGap())
+		);
+		gl_pnlUnbiased.setVerticalGroup(
+			gl_pnlUnbiased.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_pnlUnbiased.createSequentialGroup()
+					.addComponent(lblObjetivo)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(scrUnbiased, GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		
+		txtUnbiased = new JTextArea();
+		txtUnbiased.setLineWrap(true);
+		scrUnbiased.setViewportView(txtUnbiased);
+		pnlUnbiased.setLayout(gl_pnlUnbiased);
 		
 		JPanel pnlImpression = new JPanel();
 		pnlVistaInformes.add(pnlImpression);

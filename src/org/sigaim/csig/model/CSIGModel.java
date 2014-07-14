@@ -244,7 +244,8 @@ public class CSIGModel implements IntCSIGModel {
                }*/
 		Cluster concepts = null;
 		int textPosition = 0;
-		int biasEnd = report.getBiased().length();
+		//Magic number 19: offset due to non printed archetype nomenclature
+		int biasEnd = report.getBiased().length()+24;
 		int unbiasEnd = biasEnd + report.getUnbiased().length();
 		int impresEnd = unbiasEnd + report.getImpressions().length();
 		
@@ -269,22 +270,22 @@ public class CSIGModel implements IntCSIGModel {
 		for(Item i : concepts.getParts()) {			
 			Cluster conceptCluster = (Cluster)i;
 			List<Item> params = conceptCluster.getParts();
-			ST code = (ST)((Element)params.get(0)).getValue();
+			CDCV code = (CDCV)((Element)params.get(0)).getValue();
 			INT start = (INT)((Element)params.get(1)).getValue();
 			INT end = (INT)((Element)params.get(2)).getValue();
-			ST term = (ST)((Element)params.get(5)).getValue();
+			//ST term = (ST)((Element)params.get(5)).getValue();
 			if(start.getValue() < biasEnd)
-				biasConcepts.add(new CSIGConcept(code.getValue(), term.getValue(),
-						start.getValue(), end.getValue()));
+				biasConcepts.add(new CSIGConcept(code.getCode(), code.getCodeSystemName(),
+						start.getValue()-24, end.getValue()-24));
 			else if (start.getValue() < unbiasEnd)
-				unbiasConcepts.add(new CSIGConcept(code.getValue(), term.getValue(),
-						start.getValue()-biasEnd, end.getValue()-biasEnd));
+				unbiasConcepts.add(new CSIGConcept(code.getCode(), code.getCodeSystemName(),
+						start.getValue()-biasEnd-1, end.getValue()-biasEnd-1));
 			else if(start.getValue() < impresEnd)
-				impresConcepts.add(new CSIGConcept(code.getValue(), term.getValue(), 
-						start.getValue()-unbiasEnd, end.getValue()-unbiasEnd));
+				impresConcepts.add(new CSIGConcept(code.getCode(), code.getCodeSystemName(), 
+						start.getValue()-unbiasEnd-2, end.getValue()-unbiasEnd-2));
 			else
-				planConcepts.add(new CSIGConcept(code.getValue(), term.getValue(),
-						start.getValue()-impresEnd, end.getValue()-impresEnd));
+				planConcepts.add(new CSIGConcept(code.getCode(), code.getCodeSystemName(),
+						start.getValue()-impresEnd-3, end.getValue()-impresEnd-3));
 		}
 			
 		return report;
@@ -303,8 +304,8 @@ public class CSIGModel implements IntCSIGModel {
 	@Override
 	public void createReport(String bias, String unbias, String impressions,
 			String plan, FunctionalRole composer, II ehrId, CDCV status) {
-		String text = "Zona Subjetivo. "+bias+"\nZona Objetivo. "+unbias+"\nZona Impresión. "+impressions+
-				"Zona Plan. "+plan;
+		String text = "Zona Subjetivo. "+bias+" Zona Objetivo. "+unbias+" Zona Impresión. "+impressions+
+				" Zona Plan. "+plan;
 		try {
 			reportClient.createReport("", ehrId, composer, null, text, status, new II());
 		} catch (RejectException e) {

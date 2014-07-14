@@ -71,8 +71,8 @@ public class ShowReport extends JPanel {
 	}
 	
 	private void updateReportView(Report r) {
-		setTextPane(txtUnbiased, r.getUnbiased(), r.getUnbiasedConcepts());
 		setTextPane(txtBiased, r.getBiased(), r.getBiasedConcepts());
+		setTextPane(txtUnbiased, r.getUnbiased(), r.getUnbiasedConcepts());
 		setTextPane(txtImpression, r.getImpressions(), r.getImpressionsConcepts());
 		setTextPane(txtPlan, r.getPlan(), r.getPlanConcepts());
 	}
@@ -103,6 +103,8 @@ public class ShowReport extends JPanel {
 	
 	private void setTextPane(JTextPane pane, String text, List<CSIGConcept>concepts){
 		int textPointer = 0;
+		if(text.length() <= 0)
+			return;
 		concepts.sort(new ConceptsOrderer()); 
 		pane.setText("");
 		Font f = new Font(Font.SANS_SERIF, Font.PLAIN, 14);
