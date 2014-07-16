@@ -41,7 +41,8 @@ public class LoginCreator extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public LoginCreator(ViewController c) {		
+	public LoginCreator(ViewController c) {
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);		
 		controller = c;
 		
 		setBounds(100, 100, 450, 300);

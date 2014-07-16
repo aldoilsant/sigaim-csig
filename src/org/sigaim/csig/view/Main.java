@@ -36,6 +36,7 @@ public class Main implements ViewController {
 	
 	private Session session;
 	private IntCSIGModel model;
+	static public String wsurl = "http://localhost:8080/SIIEWS";
 	
 	public JFrame frame;
 	private JDialog login;
@@ -70,7 +71,7 @@ public class Main implements ViewController {
 	}
 	
 	private Main(){
-		model = new CSIGModel();
+		model = new CSIGModel(wsurl);
 		
 		List<String> facs  = model.getFacilities();
 		
@@ -88,6 +89,20 @@ public class Main implements ViewController {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		for(int i = 0; i < args.length; i++) {
+
+            if(args[i].equals("-wsurl")) {
+            	if(args.length == i)
+            		System.out.println("Incorrect parameter -wsurl has no value");
+                wsurl = args[i+1];
+            } else if(args[i].equals("-help")) {
+            	System.out.println("Available commands:\n\t"
+            			+ "-wsurl url\n\t\turl is the route to SIIE Web Services server (example: http://localhost:8080/SIIEWS)\n\t-help");
+            	return;
+            }
+		}
+		System.out.println("Conecting to web services in "+wsurl+" (change with -wsurl param)");
+		
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException e1) {
@@ -103,6 +118,7 @@ public class Main implements ViewController {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {

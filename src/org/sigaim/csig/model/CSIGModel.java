@@ -30,9 +30,9 @@ public class CSIGModel implements IntCSIGModel {
 	private IntSIIE001EQLClient eqlClient;
 	private IntSIIE004ReportManagementClient reportClient;
 	
-	public CSIGModel() {
-		eqlClient = new WSIntSIIE001EQLClient();
-		reportClient = new WSIntSIIE004ReportManagementClient();
+	public CSIGModel(String url) {
+		eqlClient = new WSIntSIIE001EQLClient(url+"/services/INTSIIE001EQLImpl");
+		reportClient = new WSIntSIIE004ReportManagementClient(url+"/services/INTSIIE004ReportManagementImpl");
 	}	
 	
 	@Override

@@ -41,6 +41,7 @@ public class LoginDialog extends JDialog {
 	 * Create the dialog.
 	 */
 	public LoginDialog(ViewController _controller, List<String> hospitals) {
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		controller = _controller;
 		
 		setBounds(100, 100, 338, 320);
