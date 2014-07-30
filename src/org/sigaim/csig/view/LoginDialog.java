@@ -44,7 +44,7 @@ public class LoginDialog extends JDialog {
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		controller = _controller;
 		
-		setBounds(100, 100, 338, 320);
+		setBounds(100, 100, 338, 312);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -66,7 +66,7 @@ public class LoginDialog extends JDialog {
 				RowSpec.decode("max(13dlu;default)"),}));
 		{
 			JLabel lblLogo = new JLabel("[SIGAIM logo]");
-			lblLogo.setIcon(new ImageIcon("img/logo_trans.png"));
+			lblLogo.setIcon(new ImageIcon(LoginDialog.class.getResource("/org/sigaim/csig/resources/img/logo_trans.png")));
 			contentPanel.add(lblLogo, "2, 2, 3, 1");
 		}
 		{
