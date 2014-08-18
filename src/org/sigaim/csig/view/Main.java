@@ -3,6 +3,8 @@ package org.sigaim.csig.view;
 import java.awt.EventQueue;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -40,7 +42,9 @@ public class Main implements ViewController {
 	
 	public JFrame frame;
 	private JDialog login;
-	private ReportList reportList;	
+	private ReportList reportList;
+	
+	public ResourceBundle lang;
 	
 	public List<Report> getReports() {
 		return model.getReports();
@@ -71,6 +75,8 @@ public class Main implements ViewController {
 	}
 	
 	private Main(){
+		getLang();
+		
 		model = new CSIGModel(wsurl);
 		
 		List<String> facs  = model.getFacilities();
@@ -198,5 +204,12 @@ public class Main implements ViewController {
 		if(reportList != null) {
 			reportList.updateList(this.getReports());
 		}
+	}
+	
+	@Override
+	public ResourceBundle getLang() {
+		if(lang == null)
+			lang = ResourceBundle.getBundle("org.sigaim.csig.resources.lang.Text",new Locale("es"));
+		return lang;
 	}
 }

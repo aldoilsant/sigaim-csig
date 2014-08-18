@@ -8,5 +8,10 @@
 	<classpathentry kind="lib" path="lib/balloontip.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/RM"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/SIIEClients"/>
+	<classpathentry kind="lib" path="lib/transcriptionClient.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="lib/javaFlacEncoder-0.3.1.jar"/>
+	<classpathentry kind="lib" path="lib/miglayout-core-4.2.jar"/>
+	<classpathentry kind="lib" path="lib/netty-all-4.0.20.Final.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -17,6 +17,7 @@ import javax.swing.JScrollPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -36,6 +37,8 @@ import java.awt.event.ActionEvent;
 
 public class Dictation extends JPanel {
 
+	private ResourceBundle lang;
+	
 	private JFrame frame;
 	private Report report;
 	private ViewController controller;
@@ -48,11 +51,6 @@ public class Dictation extends JPanel {
 	boolean askSave = false;
 	
 	//String constants
-	static String strAskSave = "¿Quiere guardar los cambios realizados en el informe antes de cerrarlo?";
-	static String strNewVersion = "Esto creará una nueva versión del informe"; 
-	static String strTitleAskSave = "Confirme antes de cerrar el informe";
-	static String strTitleNew = "Dictando nuevo informe";
-	static String strTitleEdit = "Revisando informe";
 	private JComboBox<String> ddlPatient;
 	private JButton btnNewPatient;
 	
@@ -60,12 +58,14 @@ public class Dictation extends JPanel {
 	 * Create the panel.
 	 */
 	public Dictation(Report r, ViewController _controller) {
+		controller = _controller;
+		lang = controller.getLang();
+		
 		frame = new JFrame();
 		if(r != null)
-			frame.setTitle(strTitleEdit);
+			frame.setTitle(lang.getString("Dictation.TitleEdit"));
 		else
-			frame.setTitle(strTitleNew);
-		controller = _controller;
+			frame.setTitle(lang.getString("Dictation.TitleNew"));
 		report = r;
 		initialize();
 		if(r != null)
@@ -81,10 +81,11 @@ public class Dictation extends JPanel {
 	private void showSaveDialog(){
 		int response;
 		if(report != null)
-			response = JOptionPane.showConfirmDialog(frame, new String[]{strAskSave, strNewVersion}, strTitleAskSave,
+			response = JOptionPane.showConfirmDialog(frame, new String[]{lang.getString("Dictation.AskSave"),
+					lang.getString("Dictation.NewVersion")}, lang.getString("TitleAskSave"),
 		        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
 		else
-			response = JOptionPane.showConfirmDialog(frame, strAskSave, strTitleAskSave,
+			response = JOptionPane.showConfirmDialog(frame, lang.getString("AskSave"), lang.getString("TitleAskSave"),
 			        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
 		
 		switch(response) {
@@ -148,23 +149,24 @@ public class Dictation extends JPanel {
 				FormFactory.RELATED_GAP_COLSPEC,
 				ColumnSpec.decode("max(31dlu;default)"),
 				FormFactory.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("411px:grow"),
+				ColumnSpec.decode("141px:grow"),
 				FormFactory.RELATED_GAP_COLSPEC,
 				FormFactory.DEFAULT_COLSPEC,
 				FormFactory.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(175dlu;default)"),},
+				ColumnSpec.decode("max(175dlu;default)"),
+				ColumnSpec.decode("right:default"),},
 			new RowSpec[] {
 				RowSpec.decode("4px"),
 				RowSpec.decode("max(11dlu;default)"),
 				RowSpec.decode("max(4dlu;default)"),}));
 		
-		JLabel lblPatient = new JLabel("Paciente");
+		JLabel lblPatient = new JLabel(lang.getString("lblPatient"));
 		pnlReportInfo.add(lblPatient, "3, 2, fill, fill");
 		
 		ddlPatient = new JComboBox<String>();
 		pnlReportInfo.add(ddlPatient, "5, 2, fill, default");
 		
-		btnNewPatient = new JButton("Crear paciente");
+		btnNewPatient = new JButton(lang.getString("Dictation.btnCreatePatient"));
 		btnNewPatient.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				CSIGPatient newPat = controller.getModelController().createPatient();
@@ -178,6 +180,13 @@ public class Dictation extends JPanel {
 			}
 		});
 		pnlReportInfo.add(btnNewPatient, "7, 2, default, bottom");
+		
+		JButton btnRecord = new JButton(lang.getString("Dictation.btnRecord"));
+		btnRecord.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		pnlReportInfo.add(btnRecord, "10, 2");
 		JPanel pnlVistaInformes = new JPanel();
 		frame.getContentPane().add(pnlVistaInformes);
 		pnlVistaInformes.setLayout(new GridLayout(4, 1, 5, 5));
@@ -185,7 +194,7 @@ public class Dictation extends JPanel {
 		JPanel pnlBiased = new JPanel();
 		pnlVistaInformes.add(pnlBiased);
 		
-		JLabel lblSubjetivo = new JLabel("Subjetivo");
+		JLabel lblSubjetivo = new JLabel(lang.getString("lblBiased"));
 		
 		JScrollPane scrBiased = new JScrollPane();
 		GroupLayout gl_pnlBiased = new GroupLayout(pnlBiased);
@@ -215,7 +224,7 @@ public class Dictation extends JPanel {
 		JPanel pnlUnbiased = new JPanel();
 		pnlVistaInformes.add(pnlUnbiased);
 		
-		JLabel lblObjetivo = new JLabel("Objetivo");
+		JLabel lblObjetivo = new JLabel(lang.getString("lblUnbiased"));
 		
 		JScrollPane scrUnbiased = new JScrollPane();
 		GroupLayout gl_pnlUnbiased = new GroupLayout(pnlUnbiased);
@@ -245,7 +254,7 @@ public class Dictation extends JPanel {
 		JPanel pnlImpression = new JPanel();
 		pnlVistaInformes.add(pnlImpression);
 		
-		JLabel lblImpression = new JLabel("Impresión");
+		JLabel lblImpression = new JLabel(lang.getString("lblImpression"));
 		
 		JScrollPane scrImpression = new JScrollPane();
 		GroupLayout gl_pnlImpression = new GroupLayout(pnlImpression);
@@ -275,7 +284,7 @@ public class Dictation extends JPanel {
 		JPanel pnlPlan = new JPanel();
 		pnlVistaInformes.add(pnlPlan);
 		
-		JLabel lblPlan = new JLabel("Plan");
+		JLabel lblPlan = new JLabel(lang.getString("lblPlan"));
 		
 		JScrollPane scrPlan = new JScrollPane();
 		GroupLayout gl_pnlPlan = new GroupLayout(pnlPlan);

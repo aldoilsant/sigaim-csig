@@ -1,6 +1,7 @@
 package org.sigaim.csig.view;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 import org.sigaim.csig.model.CSIGFacility;
 import org.sigaim.csig.model.CSIGFacultative;
@@ -21,5 +22,6 @@ public interface ViewController {
 	long createFacultative();
 	long createFacility();
 	void createReport(String bias, String unbias, String impressions, String plan, String patient);
+	ResourceBundle getLang();
 
 }

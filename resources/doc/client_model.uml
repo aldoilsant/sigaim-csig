@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_P-ZmwBfTEeSoa6pRvWpm2A" name="Model">
+  <packageImport xmi:type="uml:PackageImport" xmi:id="_P-ZmwRfTEeSoa6pRvWpm2A">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:Class" xmi:id="_J6vJQBfVEeSoa6pRvWpm2A" name="TranscriptionClientApiImpl"/>
+  <packagedElement xmi:type="uml:Interface" xmi:id="_Mb-W8BfVEeSoa6pRvWpm2A" name="TranscriptionClientApi"/>
+  <packagedElement xmi:type="uml:Realization" xmi:id="_UFGrgBfVEeSoa6pRvWpm2A" name="" client="_J6vJQBfVEeSoa6pRvWpm2A" supplier="_Mb-W8BfVEeSoa6pRvWpm2A"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_GiESYBfXEeSoa6pRvWpm2A" name="TranscriptionClient"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_Imb94BfXEeSoa6pRvWpm2A" name="TranscriptionClientHandler"/>
+</uml:Model>
