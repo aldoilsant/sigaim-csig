@@ -3,6 +3,9 @@ package org.sigaim.csig.view;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.sound.sampled.Line;
+import javax.sound.sampled.TargetDataLine;
+
 import org.sigaim.csig.model.CSIGFacility;
 import org.sigaim.csig.model.CSIGFacultative;
 import org.sigaim.csig.model.IntCSIGModel;
@@ -23,5 +26,6 @@ public interface ViewController {
 	long createFacility();
 	void createReport(String bias, String unbias, String impressions, String plan, String patient);
 	ResourceBundle getLang();
+	TargetDataLine getLine();
 
 }

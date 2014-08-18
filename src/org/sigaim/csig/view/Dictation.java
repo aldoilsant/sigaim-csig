@@ -1,5 +1,9 @@
 package org.sigaim.csig.view;
 
+import javax.sound.sampled.AudioFileFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.TargetDataLine;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -17,12 +21,17 @@ import javax.swing.JScrollPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
 
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.factories.FormFactory;
+
+import es.udc.tic.rnasa.sigaim_transcriptor_client.TranscriptionClientApi;
+import es.udc.tic.rnasa.sigaim_transcriptor_client.TranscriptionClientApiImpl;
 
 import javax.swing.JComboBox;
 
@@ -34,8 +43,15 @@ import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.net.InetSocketAddress;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
-public class Dictation extends JPanel {
+import javaFlacEncoder.FLACEncoder;
+import javaFlacEncoder.FLAC_FileEncoder;
+
+public class Dictation extends JPanel implements Observer {
 
 	private ResourceBundle lang;
 	
@@ -47,12 +63,17 @@ public class Dictation extends JPanel {
 	private JTextArea txtImpression;
 	private JTextArea txtPlan;
 	
+	private boolean isRecording = false;
+	private TargetDataLine line;
+	private TranscriptionClientApi transcriptor;
+	
 	//If true dialog asks to save changes before closing
 	boolean askSave = false;
 	
 	//String constants
 	private JComboBox<String> ddlPatient;
 	private JButton btnNewPatient;
+	private JButton btnRecord;
 	
 	/**
 	 * Create the panel.
@@ -110,6 +131,42 @@ public class Dictation extends JPanel {
 		}
 	}
 	
+	private void switchRecord(){
+		if(transcriptor == null) {
+			transcriptor = new TranscriptionClientApiImpl();
+			if( transcriptor.connect(new InetSocketAddress("193.144.33.81",8000)) != true) {
+				System.out.println("Error connecting to transcription service");
+				return;
+			}
+			transcriptor.addObserver(this);	
+		}
+		if(isRecording) {
+			btnRecord.setText("Grabar");
+			line.stop();
+			line.close();
+			isRecording = false;
+			FLAC_FileEncoder flacEncoder = new FLAC_FileEncoder();
+			//FLACEncoder enc = new FLACEncoder();
+			File inputFile = new File("temp.wav");
+	        File outputFile = new File("session.flac");
+	        flacEncoder.encode(inputFile, outputFile);
+	        Path path = Paths.get("session.flac").toAbsolutePath();
+	        //Path path = Paths.get("C:/Users/siro.gonzalez/workspace/SIGAIM_csig/resources", "es-0020.flac");
+	        transcriptor.transcribeFlac(path);
+		} else {
+			if(line == null)
+				line = controller.getLine();
+			try{
+				new CaptureThread().start();
+				btnRecord.setText("Parar");
+				isRecording = true;
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
+
 	private void initialize() {
 		//On exit ask saving if content changed
 		frame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -181,9 +238,10 @@ public class Dictation extends JPanel {
 		});
 		pnlReportInfo.add(btnNewPatient, "7, 2, default, bottom");
 		
-		JButton btnRecord = new JButton(lang.getString("Dictation.btnRecord"));
+		btnRecord = new JButton(lang.getString("Dictation.btnRecord"));
 		btnRecord.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				switchRecord();
 			}
 		});
 		pnlReportInfo.add(btnRecord, "10, 2");
@@ -324,4 +382,33 @@ public class Dictation extends JPanel {
 		
 		frame.setVisible(true);
 	}
+	
+	class CaptureThread extends Thread{
+		  public void run(){
+		    AudioFileFormat.Type fileType = null;
+		    File audioFile = null;
+
+		    
+		    fileType = AudioFileFormat.Type.WAVE;
+		    audioFile = new File("temp.wav");
+
+		    try{
+		      line.open(line.getFormat());
+		      line.start();
+		      AudioSystem.write(
+		            new AudioInputStream(line),
+		            fileType,
+		            audioFile);
+		    } catch (Exception e){
+		      e.printStackTrace();
+		    }
+
+		  }
+		}
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		System.out.println("Receiving transcription");
+	}
+	
 }
