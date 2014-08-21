@@ -8,8 +8,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
@@ -18,8 +20,6 @@ import javax.swing.JTextArea;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JScrollPane;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -37,8 +37,6 @@ import javax.swing.JComboBox;
 
 import org.sigaim.csig.model.CSIGPatient;
 import org.sigaim.csig.model.Report;
-import org.sigaim.siie.iso13606.rm.Composition;
-
 import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
@@ -48,8 +46,9 @@ import java.net.InetSocketAddress;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import javaFlacEncoder.FLACEncoder;
-import javaFlacEncoder.FLAC_FileEncoder;
+import javaFlacEncoder.FLACFileWriter;
+
+import com.jgoodies.forms.layout.Sizes;
 
 public class Dictation extends JPanel implements Observer {
 
@@ -64,8 +63,10 @@ public class Dictation extends JPanel implements Observer {
 	private JTextArea txtPlan;
 	
 	private boolean isRecording = false;
+	private boolean isPaused = false;
 	private TargetDataLine line;
 	private TranscriptionClientApi transcriptor;
+	private CaptureThread captureThread;
 	
 	//If true dialog asks to save changes before closing
 	boolean askSave = false;
@@ -74,6 +75,9 @@ public class Dictation extends JPanel implements Observer {
 	private JComboBox<String> ddlPatient;
 	private JButton btnNewPatient;
 	private JButton btnRecord;
+	private JButton btnPause;
+	
+	private MantainCaretFocusListener mantainCaretFocusListener = new MantainCaretFocusListener();
 	
 	/**
 	 * Create the panel.
@@ -106,7 +110,7 @@ public class Dictation extends JPanel implements Observer {
 					lang.getString("Dictation.NewVersion")}, lang.getString("TitleAskSave"),
 		        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
 		else
-			response = JOptionPane.showConfirmDialog(frame, lang.getString("AskSave"), lang.getString("TitleAskSave"),
+			response = JOptionPane.showConfirmDialog(frame, lang.getString("Dictation.AskSave"), lang.getString("TitleAskSave"),
 			        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
 		
 		switch(response) {
@@ -131,6 +135,27 @@ public class Dictation extends JPanel implements Observer {
 		}
 	}
 	
+	private void startRecord() {
+		if(line == null)
+			line = controller.getLine();
+		try{
+			captureThread = new CaptureThread();
+			captureThread.start();
+			isRecording = true;
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	private void stopRecord() {
+		line.stop();
+		line.close();
+		isRecording = false;
+       
+        Path path = Paths.get("session.flac").toAbsolutePath();
+        //Path path = Paths.get("C:/Users/siro.gonzalez/workspace/SIGAIM_csig/resources", "es-0020.flac");
+        transcriptor.transcribeFlac(path);
+	}
+	
 	private void switchRecord(){
 		if(transcriptor == null) {
 			transcriptor = new TranscriptionClientApiImpl();
@@ -141,30 +166,28 @@ public class Dictation extends JPanel implements Observer {
 			transcriptor.addObserver(this);	
 		}
 		if(isRecording) {
-			btnRecord.setText("Grabar");
-			line.stop();
-			line.close();
-			isRecording = false;
-			FLAC_FileEncoder flacEncoder = new FLAC_FileEncoder();
-			//FLACEncoder enc = new FLACEncoder();
-			File inputFile = new File("temp.wav");
-	        File outputFile = new File("session.flac");
-	        flacEncoder.encode(inputFile, outputFile);
-	        Path path = Paths.get("session.flac").toAbsolutePath();
-	        //Path path = Paths.get("C:/Users/siro.gonzalez/workspace/SIGAIM_csig/resources", "es-0020.flac");
-	        transcriptor.transcribeFlac(path);
+			stopRecord();
+			btnRecord.setText(lang.getString("Dictation.btnStartRecord"));
+			btnPause.setEnabled(false);
+			btnPause.setText(lang.getString("Dictation.btnPauseRecord"));
+			isPaused = false;
 		} else {
-			if(line == null)
-				line = controller.getLine();
-			try{
-				new CaptureThread().start();
-				btnRecord.setText("Parar");
-				isRecording = true;
-			}catch (Exception e) {
-				e.printStackTrace();
-			}
+			startRecord();
+			btnRecord.setText(lang.getString("Dictation.btnStopRecord"));
+			//btnPause.setEnabled(true);
 		}
-
+	}
+	
+	private void switchPause() {
+		if(isPaused) {
+			startRecord();
+			isPaused = false;
+			btnPause.setText(lang.getString("Dictation.btnPauseRecord"));
+		} else {
+			isPaused = true;
+			stopRecord();
+			btnPause.setText(lang.getString("Dictation.btnContinueRecord"));
+		}
 	}
 
 	private void initialize() {
@@ -196,22 +219,26 @@ public class Dictation extends JPanel implements Observer {
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.getContentPane().removeAll();
 		
-		/*JPanel pnlDictation = new JPanel();		
+		/*JPanel pnlDictation = new JPanel();
 		frame.getContentPane().add(pnlDictation);*/
 		
 		JPanel pnlReportInfo = new JPanel();
 		frame.getContentPane().add(pnlReportInfo, BorderLayout.NORTH);
 		pnlReportInfo.setLayout(new FormLayout(new ColumnSpec[] {
-				ColumnSpec.decode("max(5dlu;default)"),
+				new ColumnSpec(ColumnSpec.FILL, Sizes.bounded(Sizes.DEFAULT, Sizes.constant("5dlu", true), Sizes.constant("5dlu", true)), 0),
 				FormFactory.RELATED_GAP_COLSPEC,
 				ColumnSpec.decode("max(31dlu;default)"),
 				FormFactory.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("141px:grow"),
+				new ColumnSpec(ColumnSpec.FILL, Sizes.bounded(Sizes.MINIMUM, Sizes.constant("100dlu", true), Sizes.constant("200dlu", true)), 1),
 				FormFactory.RELATED_GAP_COLSPEC,
 				FormFactory.DEFAULT_COLSPEC,
 				FormFactory.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(175dlu;default)"),
-				ColumnSpec.decode("right:default"),},
+				FormFactory.DEFAULT_COLSPEC,
+				FormFactory.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(90dlu;default)"),
+				FormFactory.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(90dlu;default)"),
+				new ColumnSpec(ColumnSpec.FILL, Sizes.bounded(Sizes.DEFAULT, Sizes.constant("5dlu", true), Sizes.constant("5dlu", true)), 0),},
 			new RowSpec[] {
 				RowSpec.decode("4px"),
 				RowSpec.decode("max(11dlu;default)"),
@@ -238,13 +265,20 @@ public class Dictation extends JPanel implements Observer {
 		});
 		pnlReportInfo.add(btnNewPatient, "7, 2, default, bottom");
 		
-		btnRecord = new JButton(lang.getString("Dictation.btnRecord"));
+		btnPause = new JButton(lang.getString("Dictation.btnPauseRecord"));
+		btnPause.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {switchPause();}
+		});
+		btnPause.setEnabled(false);
+		pnlReportInfo.add(btnPause, "11, 2");
+		
+		btnRecord = new JButton(lang.getString("Dictation.btnStartRecord"));
 		btnRecord.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				switchRecord();
 			}
 		});
-		pnlReportInfo.add(btnRecord, "10, 2");
+		pnlReportInfo.add(btnRecord, "13, 2");
 		JPanel pnlVistaInformes = new JPanel();
 		frame.getContentPane().add(pnlVistaInformes);
 		pnlVistaInformes.setLayout(new GridLayout(4, 1, 5, 5));
@@ -380,35 +414,37 @@ public class Dictation extends JPanel implements Observer {
 				ddlPatient.addItem(pat.toString());
 		}
 		
+		mantainCaretFocusListener.addTextArea(txtBiased);
+		mantainCaretFocusListener.addTextArea(txtUnbiased);
+		mantainCaretFocusListener.addTextArea(txtImpression);
+		mantainCaretFocusListener.addTextArea(txtPlan);
+		
+		
 		frame.setVisible(true);
 	}
 	
-	class CaptureThread extends Thread{
-		  public void run(){
-		    AudioFileFormat.Type fileType = null;
-		    File audioFile = null;
-
-		    
-		    fileType = AudioFileFormat.Type.WAVE;
-		    audioFile = new File("temp.wav");
-
-		    try{
-		      line.open(line.getFormat());
-		      line.start();
-		      AudioSystem.write(
-		            new AudioInputStream(line),
-		            fileType,
-		            audioFile);
-		    } catch (Exception e){
-		      e.printStackTrace();
-		    }
-
-		  }
-		}
-
+	//Observer for transcription service
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		System.out.println("Receiving transcription");
 	}
 	
+	class CaptureThread extends Thread{
+		private boolean isPaused;
+		
+		public void run(){
+			btnPause.setEnabled(true);
+			try{
+				line.open(line.getFormat());
+				line.start();
+				AudioSystem.write(
+						new AudioInputStream(line),
+						FLACFileWriter.FLAC,//fileType,
+						new File("session.flac"));
+			} catch (Exception e){
+				e.printStackTrace();
+			}
+		}
+		
+	}
 }
