@@ -49,6 +49,7 @@ import java.nio.file.Paths;
 import javaFlacEncoder.FLACFileWriter;
 
 import com.jgoodies.forms.layout.Sizes;
+import java.awt.FlowLayout;
 
 public class Dictation extends JPanel implements Observer {
 
@@ -419,8 +420,19 @@ public class Dictation extends JPanel implements Observer {
 		mantainCaretFocusListener.addTextArea(txtImpression);
 		mantainCaretFocusListener.addTextArea(txtPlan);
 		
+		JPanel pnlActions = new JPanel();
+		FlowLayout fl_pnlActions = (FlowLayout) pnlActions.getLayout();
+		fl_pnlActions.setAlignment(FlowLayout.RIGHT);
+		frame.getContentPane().add(pnlActions, BorderLayout.SOUTH);
+		
+		JButton btnAnalyze = new JButton(lang.getString("Dictation.btnAnalyze"));
+		pnlActions.add(btnAnalyze);
 		
 		frame.setVisible(true);
+	}
+	
+	private void translate() {
+		
 	}
 	
 	//Observer for transcription service
