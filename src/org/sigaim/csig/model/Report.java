@@ -3,6 +3,7 @@ package org.sigaim.csig.model;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.sigaim.siie.clients.IntSIIE001EQLClient;
@@ -30,6 +31,8 @@ public class Report extends CSIGIdentifiedObject {
 	private String unbiased;
 	private String impressions;
 	private String plan;
+	
+	private HashMap<String, CSIGConcept.Synonym> synonyms;
 	
 	private IntCSIGModel modelController;
 
@@ -191,5 +194,8 @@ public class Report extends CSIGIdentifiedObject {
 	}
 	public void setEhr(long par) {
 		this.ehr = par;
+	}
+	public void setSynonyms(HashMap<String, CSIGConcept.Synonym> list){
+		synonyms = list;
 	}
 }

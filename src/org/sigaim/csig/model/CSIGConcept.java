@@ -1,6 +1,15 @@
 package org.sigaim.csig.model;
 
 public class CSIGConcept {
+	public class Synonym {
+		public String code;
+		public String terminology;
+		public Synonym(String cod, String term){
+			code = cod;
+			terminology = term;
+		}
+	}
+	
 	public String code;
 	public String terminology;
 	public String name;

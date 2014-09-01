@@ -46,7 +46,7 @@ public class Main implements ViewController {
 	
 	private Session session;
 	private IntCSIGModel model;
-	static public String wsurl = "http://localhost:8080/SIIEWS";
+	static public String wsurl = "http://localhost:8080/SIIEWS3";
 	
 	public JFrame frame;
 	private JDialog login;
