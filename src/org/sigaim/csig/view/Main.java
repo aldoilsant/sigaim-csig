@@ -211,7 +211,13 @@ public class Main implements ViewController {
 		CDCV reportStatus=new CDCV();
 		reportStatus.setCode("RSTA02");
 		II ehr = model.getEHRIdFromPatient(Long.parseLong(patient.split("/")[1]));
-		model.createReport(bias, unbias, impressions, plan, composer, ehr, reportStatus);
+		
+		Report r = model.createReport(bias, unbias, impressions, plan, composer, ehr, reportStatus);
+		
+		model.fillSoip(r);
+		model.fillSoipConcepts(r);
+		this.showReport(r);
+		
 		if(reportList != null) {
 			reportList.updateList(this.getReports());
 		}

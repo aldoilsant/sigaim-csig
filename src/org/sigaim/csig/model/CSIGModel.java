@@ -21,6 +21,7 @@ import org.sigaim.siie.dadl.DADLManager;
 import org.sigaim.siie.dadl.OpenEHRDADLManager;
 import org.sigaim.siie.iso13606.rm.CDCV;
 import org.sigaim.siie.iso13606.rm.Cluster;
+import org.sigaim.siie.iso13606.rm.Composition;
 import org.sigaim.siie.iso13606.rm.EHRExtract;
 import org.sigaim.siie.iso13606.rm.Element;
 import org.sigaim.siie.iso13606.rm.FunctionalRole;
@@ -72,6 +73,8 @@ public class CSIGModel implements IntCSIGModel {
 		}
 		return rtn;
 	}
+	
+	
 
 	@Override
 	public Report fillSoip(Report report) {
@@ -299,6 +302,7 @@ public class CSIGModel implements IntCSIGModel {
 			e.printStackTrace();
 			return null;
 		}
+		if(concepts != null)
 		for(Item i : concepts.getParts()) {			
 			Cluster conceptCluster = (Cluster)i;
 			List<Item> params = conceptCluster.getParts();
@@ -370,17 +374,25 @@ public class CSIGModel implements IntCSIGModel {
 	}
 
 	@Override
-	public void createReport(String bias, String unbias, String impressions,
+	public Report createReport(String bias, String unbias, String impressions,
 			String plan, FunctionalRole composer, II ehrId, CDCV status) {
 		String text = "Zona Subjetivo. "+bias+" Zona Objetivo. "+unbias+" Zona Impresión. "+impressions+
 				" Zona Plan. "+plan;
+		Composition newReport = null;
 		try {
 			II rootArchetypeId= new II();
 			rootArchetypeId.setRoot("CEN-EN13606-COMPOSITION.InformeClinicoNotaSOIP.v1");
-			reportClient.createReport("createReport", ehrId, composer, text, true, rootArchetypeId);
+			newReport = reportClient.createReport("createReport", ehrId, composer, text, true, rootArchetypeId);
 		} catch (RejectException e) {
 			e.printStackTrace();
 		}
+		if(newReport != null) {
+			Report r = new Report(this);
+			r.setPatient(new CSIGPatient(ehrId));
+			r.setFacultative(composer.getPerformer().getRoot() + "/" + composer.getPerformer().getExtension());
+			r.setId(newReport.getRcId());
+			return r;
+		} else return null;
 	}
 
 }

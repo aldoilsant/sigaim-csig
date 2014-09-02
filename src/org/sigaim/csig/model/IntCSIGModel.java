@@ -25,7 +25,7 @@ public interface IntCSIGModel {
 	CSIGFacility createFacility();
 	CSIGPatient createPatient();
 	II getEHRIdFromPatient(long patientId);
-	void createReport(String bias, String unbias, String impressions, String plan, FunctionalRole composer,
+	Report createReport(String bias, String unbias, String impressions, String plan, FunctionalRole composer,
 			II ehrId, CDCV status);
 	
 }

@@ -124,8 +124,8 @@ public class Dictation extends JPanel implements Observer {
 		
 		switch(response) {
 			case JOptionPane.YES_OPTION:
-				saveReport();
 				frame.dispose();
+				saveReport();				
 				break;
 			case JOptionPane.NO_OPTION:
 				frame.dispose();
@@ -435,6 +435,12 @@ public class Dictation extends JPanel implements Observer {
 		frame.getContentPane().add(pnlActions, BorderLayout.SOUTH);
 		
 		JButton btnAnalyze = new JButton(lang.getString("Dictation.btnAnalyze"));
+		btnAnalyze.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				saveReport();
+				frame.dispose();
+			}
+		});
 		pnlActions.add(btnAnalyze);
 		
 		frame.setVisible(true);
