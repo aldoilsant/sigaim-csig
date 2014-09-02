@@ -33,6 +33,7 @@ import org.sigaim.siie.iso13606.rm.Performer;
 import org.sigaim.siie.iso13606.rm.ST;
 import org.sigaim.siie.iso13606.rm.SubjectOfCare;
 import org.sigaim.siie.rm.ReferenceModelManager;
+import org.sigaim.siie.rm.ReflectorReferenceModelManager;
 import org.sigaim.siie.rm.exceptions.ReferenceModelException;
 import org.sigaim.siie.rm.exceptions.RejectException;
 import org.sigaim.siie.dadl.OpenEHRDADLManager;
@@ -48,8 +49,9 @@ public class CSIGModel implements IntCSIGModel {
 	public CSIGModel(String url) {
 		eqlClient = new WSIntSIIE001EQLClient(url+"/services/INTSIIE001EQLImplService");
 		reportClient = new WSIntSIIE004ReportManagementClient(url+"/services/INTSIIE004ReportManagementImplService");
-		termiClient = new WSIntSIIE003TerminologiesClient(url+"/services/INTSIIE001EQLImplService");
-		dadlManager=new OpenEHRDADLManager();
+		termiClient = new WSIntSIIE003TerminologiesClient(url+"/services/INTSIIE003TerminologiesImplService");
+		dadlManager= new OpenEHRDADLManager();
+		model = new ReflectorReferenceModelManager(dadlManager);
 	}	
 	
 	@Override
@@ -94,6 +96,7 @@ public class CSIGModel implements IntCSIGModel {
 				plan = ((ST)e.getValue()).getValue();
 		}
 		
+		
 		if(bias != null)
 			report.setBiased(bias);
 		else
@@ -124,6 +127,7 @@ public class CSIGModel implements IntCSIGModel {
 			return eqlClient.getUserExists(user);
 		} catch (RejectException re) {
 			System.out.println("Error connecting");
+			re.printStackTrace();
 			return false;
 		}
 	}
@@ -270,8 +274,8 @@ public class CSIGModel implements IntCSIGModel {
                }*/
 		Cluster concepts = null;
 		//int textPosition = 0;
-		//Magic number 19: offset due to non printed archetype nomenclature
-		int biasEnd = report.getBiased().length()+24;
+		//Magic number 23: offset due to non printed archetype nomenclature
+		int biasEnd = report.getBiased().length()+23;
 		int unbiasEnd = biasEnd + report.getUnbiased().length();
 		int impresEnd = unbiasEnd + report.getImpressions().length();
 		
@@ -281,7 +285,8 @@ public class CSIGModel implements IntCSIGModel {
 		ArrayList<CSIGConcept> planConcepts = new ArrayList<CSIGConcept>();
 		
 		HashSet<String> conceptsCDCV = new HashSet<String>(); //to get synonyms
-		HashMap<String, CSIGConcept.Synonym> synonyms;
+		HashMap<String, List<CSIGConcept>> synonyms =
+				new HashMap<String, List<CSIGConcept>>();
 		
 		report.setBiasedConcepts(biasConcepts);
 		report.setUnbiasedConcepts(unbiasConcepts);
@@ -302,7 +307,10 @@ public class CSIGModel implements IntCSIGModel {
 			INT end = (INT)((Element)params.get(2)).getValue();
 			
 			try {
+				//FIXME: not here but exception if no synonyms found
+				if(!code.getCodeSystemName().equals("SIGAIM"))
 				conceptsCDCV.add(dadlManager.serialize(model.unbind(code),false));
+				
 			} catch (ReferenceModelException e) {
 				System.err.println("Error serializing CDCV concept");
 				e.printStackTrace();
@@ -310,24 +318,20 @@ public class CSIGModel implements IntCSIGModel {
 			
 			//ST term = (ST)((Element)params.get(5)).getValue();
 			if(start.getValue() < biasEnd)
-				biasConcepts.add(new CSIGConcept(code.getCode(), code.getCodeSystemName(),
-						start.getValue()-24, end.getValue()-24));
+				biasConcepts.add(new CSIGConcept(code,
+						start.getValue()-23, end.getValue()-23));
 			else if (start.getValue() < unbiasEnd)
-				unbiasConcepts.add(new CSIGConcept(code.getCode(), code.getCodeSystemName(),
+				unbiasConcepts.add(new CSIGConcept(code,
 						start.getValue()-biasEnd-1, end.getValue()-biasEnd-1));
 			else if(start.getValue() < impresEnd)
-				impresConcepts.add(new CSIGConcept(code.getCode(), code.getCodeSystemName(), 
+				impresConcepts.add(new CSIGConcept(code, 
 						start.getValue()-unbiasEnd-2, end.getValue()-unbiasEnd-2));
 			else
-				planConcepts.add(new CSIGConcept(code.getCode(), code.getCodeSystemName(),
+				planConcepts.add(new CSIGConcept(code,
 						start.getValue()-impresEnd-3, end.getValue()-impresEnd-3));
 		}
 		
 		ConceptsOrderer orderer = new ConceptsOrderer();
-		/*biasConcepts.sort(orderer);
-		unbiasConcepts.sort(orderer);
-		impresConcepts.sort(orderer);
-		planConcepts.sort(orderer);*/
 		Collections.sort(biasConcepts, orderer);
 		Collections.sort(unbiasConcepts, orderer);
 		Collections.sort(impresConcepts, orderer);
@@ -336,13 +340,17 @@ public class CSIGModel implements IntCSIGModel {
 		try {
 			Map<CDCV,Set<CDCV>> syn=termiClient.getSynonymsForConcepts("", new ArrayList<String>(conceptsCDCV));
 			for(Entry<CDCV,Set<CDCV>> entry : syn.entrySet()) {
+				List<CSIGConcept> list = new ArrayList<CSIGConcept>();
+				
 				//synonyms.add(entry.getKey().toString(), )
-				System.out.println("Synonyms for: "+entry.getKey().getCode());
+				System.out.println("Synonyms for: "+entry.getKey().getCodeSystemName()+entry.getKey().getCode());
 				for(CDCV synonym : entry.getValue()) {
-					System.out.println(">>>"+synonym.getCode()+ " ("+synonym.getDisplayName().getValue()+")");
-
+					System.out.println(">>>"+synonym.getCodeSystemName()+" "+synonym.getCode()+ " ("+synonym.getDisplayName().getValue()+")");
+					list.add(new CSIGConcept(synonym));
 				}
+				synonyms.put(CSIGConcept.getConceptId(entry.getKey()), list);
 			}
+			report.setSynonyms(synonyms);
 		} catch (RejectException e) {
 			System.err.println("Error getting synonyms for Report");
 			e.printStackTrace();
@@ -366,11 +374,13 @@ public class CSIGModel implements IntCSIGModel {
 			String plan, FunctionalRole composer, II ehrId, CDCV status) {
 		String text = "Zona Subjetivo. "+bias+" Zona Objetivo. "+unbias+" Zona Impresión. "+impressions+
 				" Zona Plan. "+plan;
-		/*try {
-			//TODOreportClient.createReport("", ehrId, composer, null, text, status, new II());
+		try {
+			II rootArchetypeId= new II();
+			rootArchetypeId.setRoot("CEN-EN13606-COMPOSITION.InformeClinicoNotaSOIP.v1");
+			reportClient.createReport("createReport", ehrId, composer, text, true, rootArchetypeId);
 		} catch (RejectException e) {
 			e.printStackTrace();
-		}*/
+		}
 	}
 
 }

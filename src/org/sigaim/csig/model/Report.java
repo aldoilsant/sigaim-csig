@@ -2,16 +2,9 @@ package org.sigaim.csig.model;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import org.sigaim.siie.clients.IntSIIE001EQLClient;
-import org.sigaim.siie.clients.IntSIIEReportSummary;
-import org.sigaim.siie.rm.ReferenceModelManager;
-import org.sigaim.siie.rm.ReflectorReferenceModelManager;
-import org.sigaim.siie.rm.exceptions.RejectException;
-import org.sigaim.siie.seql.model.SEQLResultSet;
 
 public class Report extends CSIGIdentifiedObject {
 	
@@ -32,7 +25,7 @@ public class Report extends CSIGIdentifiedObject {
 	private String impressions;
 	private String plan;
 	
-	private HashMap<String, CSIGConcept.Synonym> synonyms;
+	private HashMap<String, List<CSIGConcept>> synonyms;
 	
 	private IntCSIGModel modelController;
 
@@ -195,7 +188,10 @@ public class Report extends CSIGIdentifiedObject {
 	public void setEhr(long par) {
 		this.ehr = par;
 	}
-	public void setSynonyms(HashMap<String, CSIGConcept.Synonym> list){
+	public void setSynonyms(HashMap<String, List<CSIGConcept>> list){
 		synonyms = list;
+	}
+	public HashMap<String, List<CSIGConcept>> getSynonyms(){
+		return synonyms;
 	}
 }

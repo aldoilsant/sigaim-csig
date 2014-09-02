@@ -36,7 +36,7 @@ public class ShowReport extends JPanel {
 	private Report report;
 	private ViewController controller;
 	
-	private Font conceptFont;
+	private Font conceptFont, conceptFontRed;
 	
 	private boolean edited = false; //Is any concept edited?
 	
@@ -104,6 +104,7 @@ public class ShowReport extends JPanel {
 		Map attributes = f.getAttributes();
         attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
         conceptFont = f.deriveFont(attributes);
+        //conceptFontRed = f.deriveFont(attributes);
 		StyledDocument doc = pane.getStyledDocument();
 		pane.setFont(f);
 		//Style style = doc.addStyle("JLabel", null);
@@ -121,15 +122,19 @@ public class ShowReport extends JPanel {
 		}
 	}
 	
-	private JLabel createConceptLabel(final CSIGConcept concept, final String text) {
-		final JLabel rtn = new JLabel(text);
+	private JLabel createConceptLabel(final CSIGConcept concept, final String originalText) {
+		final JLabel rtn = new JLabel(concept.text);
 		rtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		rtn.setFont(conceptFont);
+		if(!originalText.toLowerCase().equals(concept.text.toLowerCase()))
+			rtn.setForeground(new Color(124, 90, 0));
 		rtn.setAlignmentY(.80f);
 		rtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ConceptView c = new ConceptView(concept, text, rtn);
+				CSIGConcept con = concept;
+				ConceptView c = new ConceptView(concept, originalText, rtn, 
+						report.getSynonyms().get(concept.getConceptId()));
 			}
 		});
 		return rtn;

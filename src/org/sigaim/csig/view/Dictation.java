@@ -37,21 +37,29 @@ import javax.swing.JComboBox;
 
 import org.sigaim.csig.model.CSIGPatient;
 import org.sigaim.csig.model.Report;
+
 import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import javaFlacEncoder.FLACFileWriter;
 
 import com.jgoodies.forms.layout.Sizes;
+
 import java.awt.FlowLayout;
 
 public class Dictation extends JPanel implements Observer {
+	
+	private String transcriptionServiceUrl = "193.147.36.199";
 
 	private ResourceBundle lang;
 	
@@ -154,13 +162,14 @@ public class Dictation extends JPanel implements Observer {
        
         Path path = Paths.get("session.flac").toAbsolutePath();
         //Path path = Paths.get("C:/Users/siro.gonzalez/workspace/SIGAIM_csig/resources", "es-0020.flac");
+        System.out.println("Sending audio and waiting for transcription...");
         transcriptor.transcribeFlac(path);
 	}
 	
 	private void switchRecord(){
 		if(transcriptor == null) {
 			transcriptor = new TranscriptionClientApiImpl();
-			if( transcriptor.connect(new InetSocketAddress("193.144.33.81",8000)) != true) {
+			if( transcriptor.connect(new InetSocketAddress(transcriptionServiceUrl,8000)) != true) {
 				System.out.println("Error connecting to transcription service");
 				return;
 			}
@@ -439,6 +448,27 @@ public class Dictation extends JPanel implements Observer {
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		System.out.println("Receiving transcription");
+		Path transcription = (Path) arg1;
+		Charset charset = Charset.forName("UTF-8");
+		
+		try (BufferedReader reader = Files.newBufferedReader(transcription, charset))
+		{
+			String line = null;
+			while ((line = reader.readLine()) != null)
+			{
+				//System.out.println(line);
+				JTextArea txt = mantainCaretFocusListener.getLastTextArea();
+				if(txt == null)
+					System.err.println("No text area selected");
+				else {
+					txt.insert(line, txt.getCaretPosition());
+				}
+			}
+		} catch (IOException x)
+		{
+			System.err.println("Error reading transcription file");
+			x.printStackTrace();
+		}
 	}
 	
 	class CaptureThread extends Thread{

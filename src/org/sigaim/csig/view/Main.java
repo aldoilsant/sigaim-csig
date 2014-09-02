@@ -46,7 +46,8 @@ public class Main implements ViewController {
 	
 	private Session session;
 	private IntCSIGModel model;
-	static public String wsurl = "http://localhost:8080/SIIEWS3";
+	static public String wsurl = "http://sigaim.siie.cesga.es:8080/SIIEWS3";
+	//static public String wsurl = "http://localhost:8080/SIIEWS3";
 	
 	public JFrame frame;
 	private JDialog login;
@@ -238,7 +239,7 @@ public class Main implements ViewController {
 	    		targetMixer.open();
 	    		//Check if it supports the desired format
 	    		if (targetMixer.isLineSupported(targetDataLineInfo)) {
-	    			System.out.println(mixerInfo.getName() + " supports recording @" + af);
+	    			//System.out.println(mixerInfo.getName() + " supports recording @" + af);
 	    			//now go back and start again trying to match a mixer to a port
 	    			//the only way I figured how is by matching name, because 
 	    			//the port mixer name is the same as the actual mixer with "Port " in front of it

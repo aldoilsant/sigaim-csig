@@ -9,6 +9,8 @@ import javax.swing.JTextArea;
 
 public class MantainCaretFocusListener implements FocusListener {
 
+	private JTextArea lastTA;
+	
 	public void focusLost(FocusEvent e) {
 		JTextArea source = (JTextArea) e.getSource();
 		source.getCaret().setVisible(true);
@@ -22,10 +24,17 @@ public class MantainCaretFocusListener implements FocusListener {
 		source.getCaret().setBlinkRate(400);
 		source.getCaret().setVisible(true);
 		source.setBorder(BorderFactory.createLineBorder(Color.blue, 1));
+		lastTA = source;
+	}
+	
+	public JTextArea getLastTextArea() {
+		return lastTA;
 	}
 	
 	public void addTextArea(JTextArea txt) {
 		txt.setBorder(BorderFactory.createLineBorder(Color.gray, 1));
 		txt.addFocusListener(this);
+		if(lastTA == null)
+			lastTA = txt;
 	}
 }
