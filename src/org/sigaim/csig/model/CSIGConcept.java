@@ -49,7 +49,7 @@ public class CSIGConcept {
 
 	@Override
 	public String toString() {
-		return terminology + ": " + text;
+		return text;
 	}
 	
 }

@@ -42,10 +42,12 @@ public class LoginCreator extends JDialog {
 	 * Create the dialog.
 	 */
 	public LoginCreator(ViewController c) {
+		setTitle("Testing element creator");
+		setAutoRequestFocus(false);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);		
 		controller = c;
 		
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 420, 156);
 		getContentPane().setLayout(new FormLayout(new ColumnSpec[] {
 				FormFactory.RELATED_GAP_COLSPEC,
 				FormFactory.DEFAULT_COLSPEC,
@@ -61,7 +63,7 @@ public class LoginCreator extends JDialog {
 				FormFactory.RELATED_GAP_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,}));
 		
-		JButton btnCreateMedic = new JButton("Create Medic");
+		JButton btnCreateMedic = new JButton("Create Facultative");
 		btnCreateMedic.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				long medicId = controller.createFacultative();

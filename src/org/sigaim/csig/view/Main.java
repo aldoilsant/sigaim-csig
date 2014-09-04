@@ -1,7 +1,9 @@
 package org.sigaim.csig.view;
 
+import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.util.ArrayList;
+import java.awt.GraphicsEnvironment;
+import java.awt.Toolkit;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -10,7 +12,6 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.Line;
-import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.Mixer;
 import javax.sound.sampled.Port;
 import javax.sound.sampled.TargetDataLine;
@@ -24,17 +25,9 @@ import org.sigaim.csig.model.CSIGFacultative;
 import org.sigaim.csig.model.CSIGModel;
 import org.sigaim.csig.model.IntCSIGModel;
 import org.sigaim.csig.model.Report;
-import org.sigaim.csig.model.CSIGConcept;
-import org.sigaim.siie.clients.IntSIIE001EQLClient;
-import org.sigaim.siie.clients.IntSIIE004ReportManagementClient;
-import org.sigaim.siie.clients.ws.WSIntSIIE001EQLClient;
-import org.sigaim.siie.clients.ws.WSIntSIIE004ReportManagementClient;
 import org.sigaim.siie.iso13606.rm.CDCV;
 import org.sigaim.siie.iso13606.rm.FunctionalRole;
-import org.sigaim.siie.iso13606.rm.HealthcareFacility;
 import org.sigaim.siie.iso13606.rm.II;
-import org.sigaim.siie.rm.exceptions.RejectException;
-
 
 public class Main implements ViewController {
 
@@ -94,12 +87,18 @@ public class Main implements ViewController {
 		
 		session = new Session();
 		
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		
 		frame = new JFrame();
 		login = new LoginDialog(this, facs);
+		login.setLocation(
+				  ((int) (screenSize.getWidth()) - login.getWidth())/2, 
+				  ((int) (screenSize.getHeight()) - login.getHeight())/2);
 		login.setVisible(true);
 		
 		//Testing window
 		JDialog creator = new LoginCreator(this);
+		creator.setLocation(0, 0);
 		creator.setVisible(true);
 	}
 	/**

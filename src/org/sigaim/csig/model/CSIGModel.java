@@ -279,8 +279,8 @@ public class CSIGModel implements IntCSIGModel {
 		//int textPosition = 0;
 		//Magic number 23: offset due to non printed archetype nomenclature
 		int biasEnd = report.getBiased().length()+23;
-		int unbiasEnd = biasEnd + report.getUnbiased().length();
-		int impresEnd = unbiasEnd + report.getImpressions().length();
+		int unbiasEnd = biasEnd + report.getUnbiased().length()+23;
+		int impresEnd = unbiasEnd + report.getImpressions().length()+25;
 		
 		ArrayList<CSIGConcept> biasConcepts = new ArrayList<CSIGConcept>();
 		ArrayList<CSIGConcept> unbiasConcepts = new ArrayList<CSIGConcept>();
@@ -311,8 +311,6 @@ public class CSIGModel implements IntCSIGModel {
 			INT end = (INT)((Element)params.get(2)).getValue();
 			
 			try {
-				//FIXME: not here but exception if no synonyms found
-				if(!code.getCodeSystemName().equals("SIGAIM"))
 				conceptsCDCV.add(dadlManager.serialize(model.unbind(code),false));
 				
 			} catch (ReferenceModelException e) {
@@ -323,16 +321,16 @@ public class CSIGModel implements IntCSIGModel {
 			//ST term = (ST)((Element)params.get(5)).getValue();
 			if(start.getValue() < biasEnd)
 				biasConcepts.add(new CSIGConcept(code,
-						start.getValue()-23, end.getValue()-23));
+						start.getValue()-39, end.getValue()-39));
 			else if (start.getValue() < unbiasEnd)
 				unbiasConcepts.add(new CSIGConcept(code,
-						start.getValue()-biasEnd-1, end.getValue()-biasEnd-1));
+						start.getValue()-biasEnd-32, end.getValue()-biasEnd-32));
 			else if(start.getValue() < impresEnd)
 				impresConcepts.add(new CSIGConcept(code, 
-						start.getValue()-unbiasEnd-2, end.getValue()-unbiasEnd-2));
+						start.getValue()-unbiasEnd-26, end.getValue()-unbiasEnd-26));
 			else
 				planConcepts.add(new CSIGConcept(code,
-						start.getValue()-impresEnd-3, end.getValue()-impresEnd-3));
+						start.getValue()-impresEnd-12, end.getValue()-impresEnd-12));
 		}
 		
 		ConceptsOrderer orderer = new ConceptsOrderer();
