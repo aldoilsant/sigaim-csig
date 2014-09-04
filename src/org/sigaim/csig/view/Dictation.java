@@ -434,11 +434,14 @@ public class Dictation extends JPanel implements Observer {
 		fl_pnlActions.setAlignment(FlowLayout.RIGHT);
 		frame.getContentPane().add(pnlActions, BorderLayout.SOUTH);
 		
-		JButton btnAnalyze = new JButton(lang.getString("Dictation.btnAnalyze"));
+		final JButton btnAnalyze = new JButton(lang.getString("Dictation.btnAnalyze"));
 		btnAnalyze.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				saveReport();
-				frame.dispose();
+			public void actionPerformed(ActionEvent ev) {
+				if(ddlPatient.getSelectedIndex() > 0) {
+					btnAnalyze.setEnabled(false);
+					saveReport();
+					frame.dispose();
+				} //TODO: else show error
 			}
 		});
 		pnlActions.add(btnAnalyze);
