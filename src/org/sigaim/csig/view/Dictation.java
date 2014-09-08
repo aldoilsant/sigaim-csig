@@ -1,6 +1,5 @@
 package org.sigaim.csig.view;
 
-import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.TargetDataLine;
@@ -59,7 +58,7 @@ import java.awt.FlowLayout;
 
 public class Dictation extends JPanel implements Observer {
 	
-	private String transcriptionServiceUrl = "193.147.36.199";
+	//private String transcriptionServiceUrl = "193.147.36.199";
 
 	private ResourceBundle lang;
 	
@@ -94,7 +93,8 @@ public class Dictation extends JPanel implements Observer {
 	public Dictation(Report r, ViewController _controller) {
 		controller = _controller;
 		lang = controller.getLang();
-		
+
+
 		frame = new JFrame();
 		if(r != null)
 			frame.setTitle(lang.getString("Dictation.TitleEdit"));
@@ -104,6 +104,16 @@ public class Dictation extends JPanel implements Observer {
 		initialize();
 		if(r != null)
 			updateReportView(r);
+		
+		transcriptor = new TranscriptionClientApiImpl();
+		if( transcriptor.connect(new InetSocketAddress(
+				controller.getTranscriptionIP(),
+				controller.getTranscriptionPort())) != true) {
+			System.out.println("Error connecting to transcription service");
+		} else {
+			btnRecord.setEnabled(true);
+			transcriptor.addObserver(this);
+		}
 	}
 	
 	private void updateReportView(Report r) {
@@ -137,9 +147,12 @@ public class Dictation extends JPanel implements Observer {
 	private void saveReport(){
 		//TODO: implement
 		if(report == null) { //New report
-			if(ddlPatient.getSelectedIndex() > 0)
-			controller.createReport(txtBiased.getText(), txtUnbiased.getText(), txtImpression.getText(), txtPlan.getText(),
-					(String)ddlPatient.getSelectedItem());
+			if(ddlPatient.getSelectedIndex() > 0) {
+				WaitModal.open();
+				controller.createReport(txtBiased.getText(), txtUnbiased.getText(), txtImpression.getText(), txtPlan.getText(),
+						(String)ddlPatient.getSelectedItem());
+				WaitModal.close();
+			}
 			
 		}
 	}
@@ -167,21 +180,13 @@ public class Dictation extends JPanel implements Observer {
 	}
 	
 	private void switchRecord(){
-		if(transcriptor == null) {
-			transcriptor = new TranscriptionClientApiImpl();
-			if( transcriptor.connect(new InetSocketAddress(transcriptionServiceUrl,8000)) != true) {
-				System.out.println("Error connecting to transcription service");
-				return;
-			}
-			transcriptor.addObserver(this);	
-		}
 		if(isRecording) {
 			stopRecord();
 			btnRecord.setText(lang.getString("Dictation.btnStartRecord"));
 			btnPause.setEnabled(false);
 			btnPause.setText(lang.getString("Dictation.btnPauseRecord"));
 			isPaused = false;
-		} else {
+		} else if(transcriptor != null){
 			startRecord();
 			btnRecord.setText(lang.getString("Dictation.btnStopRecord"));
 			//btnPause.setEnabled(true);
@@ -288,6 +293,7 @@ public class Dictation extends JPanel implements Observer {
 				switchRecord();
 			}
 		});
+		btnRecord.setEnabled(false);
 		pnlReportInfo.add(btnRecord, "13, 2");
 		JPanel pnlVistaInformes = new JPanel();
 		frame.getContentPane().add(pnlVistaInformes);

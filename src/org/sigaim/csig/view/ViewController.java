@@ -17,6 +17,9 @@ public interface ViewController {
 
 	IntCSIGModel getModelController();
 	
+	String getTranscriptionIP();
+	int getTranscriptionPort();
+	
 	boolean doLogin(String user, String centre, char[] pass);
 	List<Report> getReports();
 	void newReport();

@@ -42,6 +42,10 @@ public class Main implements ViewController {
 	static public String wsurl = "http://sigaim.siie.cesga.es:8080/SIIEWS3";
 	//static public String wsurl = "http://localhost:8080/SIIEWS3";
 	
+	//static public String transip = "193.147.36.199";
+	static public String transip = "193.144.33.85";
+	static public int transport = 8000;
+	
 	public JFrame frame;
 	private JDialog login;
 	private ReportList reportList;
@@ -78,8 +82,14 @@ public class Main implements ViewController {
 		}		
 	}
 	
-	private Main(){
+	private Main() {
 		getLang();
+		
+		try {
+			Thread.sleep(5);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		
 		model = new CSIGModel(wsurl);
 		
@@ -95,6 +105,8 @@ public class Main implements ViewController {
 				  ((int) (screenSize.getWidth()) - login.getWidth())/2, 
 				  ((int) (screenSize.getHeight()) - login.getHeight())/2);
 		login.setVisible(true);
+		
+		WaitModal.close();
 		
 		//Testing window
 		JDialog creator = new LoginCreator(this);
@@ -113,8 +125,22 @@ public class Main implements ViewController {
                 wsurl = args[i+1];
             } else if(args[i].equals("-help")) {
             	System.out.println("Available commands:\n\t"
-            			+ "-wsurl url\n\t\turl is the route to SIIE Web Services server (example: http://localhost:8080/SIIEWS)\n\t-help");
+            			+ "-wsurl url\n\t\turl is the route to SIIE Web Services server (example: http://localhost:8080/SIIEWS)\n\t-help"
+            			+ "\n\t-tip Transcription service IP (default: 193.144.33.85)"
+            			+ "\n\t-tport Transcription service Port (default: 8000)");
             	return;
+            } else if(args[i].equals("-tip")) {
+            	if(args.length == i)
+            		System.out.println("Incorrect parameter -tip has no value");
+            	else
+            		transip = args[i+1];
+            } else if(args[i].equals("-tport")) {
+            	if(args.length == i)
+            		System.out.println("Incorrect parameter -tip has no value");
+            	else {
+            		transport = Integer.parseInt(args[i+1]);
+            	}
+            	
             }
 		}
 		System.out.println("Conecting to web services in "+wsurl+" (change with -wsurl param)");
@@ -138,6 +164,7 @@ public class Main implements ViewController {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					WaitModal.open();
 					new Main();
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -279,4 +306,15 @@ public class Main implements ViewController {
 	    }
 		return null;
 	}
+
+	@Override
+	public String getTranscriptionIP() {
+		return transip;
+	}
+
+	@Override
+	public int getTranscriptionPort() {
+		return transport;
+	}
+	
 }

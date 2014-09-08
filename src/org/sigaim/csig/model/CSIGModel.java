@@ -147,7 +147,6 @@ public class CSIGModel implements IntCSIGModel {
 			}
 		} catch (RejectException re) {
 			re.printStackTrace();
-			System.out.print("Connection refused");
 		}	
 		return rtn;
 	}
