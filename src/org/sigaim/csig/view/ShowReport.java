@@ -5,8 +5,10 @@ import javax.swing.JPanel;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.font.TextAttribute;
@@ -61,6 +63,9 @@ public class ShowReport extends JPanel {
 		initialize();
 		if(r != null)
 			updateReportView(r);
+		WaitModal.close(this);
+		//frame.toFront();
+		//this.requestFocus();
 	}
 	
 	private void updateReportView(Report r) {
@@ -276,6 +281,10 @@ public class ShowReport extends JPanel {
 		txtPlan = new JTextPane();
 		scrPlan.setViewportView(txtPlan);
 		pnlPlan.setLayout(gl_pnlPlan);
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		frame.setLocation(
+				  ((int) (screenSize.getWidth()) - frame.getWidth())/2, 
+				  ((int) (screenSize.getHeight()) - frame.getHeight())/2);
 		frame.setVisible(true);
 	}
 }

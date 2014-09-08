@@ -143,6 +143,8 @@ public class CSIGModel implements IntCSIGModel {
 		try {
 			facs = eqlClient.getAllHealthcareFacilities();
 			for(HealthcareFacility f:facs) {
+				if(f==null)
+					continue;
 				rtn.add(f.getIdentifier().getRoot()+"/"+f.getIdentifier().getExtension());
 			}
 		} catch (RejectException re) {
@@ -157,8 +159,10 @@ public class CSIGModel implements IntCSIGModel {
 		ArrayList<CSIGPatient> rtn = new ArrayList<CSIGPatient>();
 		try {
 			List<SubjectOfCare> subjects = eqlClient.getAllSubjectsOfCare();
-			for(SubjectOfCare s : subjects)
+			for(SubjectOfCare s : subjects){
+				if(s==null) continue;
 				rtn.add(new CSIGPatient(s.getIdentifier()));
+			}
 		} catch (RejectException e) {
 			e.printStackTrace();
 		}

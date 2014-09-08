@@ -9,6 +9,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -37,7 +38,10 @@ public class WaitModal extends JDialog {
 	
 	public static void open(String msg){
 		message = msg;
-		open();
+		if(modal==null)
+			open();
+		else
+			setMessage(msg);
 	};
 	public static void open() {
 		if(modal == null) {
@@ -52,11 +56,19 @@ public class WaitModal extends JDialog {
 				} 
 			};
 			thread.start();
-		}
+		}		
 	}
 	public static void close(){
-		if(modal != null)
+		if(modal != null){
 			modal.dispose();
+			modal = null;
+		}
+	}
+	public static void close(JComponent src){
+		if(modal!=null){
+			modal.setLocationRelativeTo(src);
+			close();
+		}
 	}
 	public static void setMessage(String msg){
 		message = msg;
@@ -73,7 +85,7 @@ public class WaitModal extends JDialog {
 	 */
 	private WaitModal() {
 		setContentPane(new BackgroundImage("/org/sigaim/csig/resources/img/WaitModal.png"));
-		setAlwaysOnTop(true);
+		//setAlwaysOnTop(true);
 		setModal(true);
 		setResizable(false);
 		setUndecorated(true);
@@ -94,7 +106,7 @@ public class WaitModal extends JDialog {
 		getContentPane().add(imgLogo, "1, 2, center, center");*/
 		
 		//Font lato = FontHelper.getTTF("Lato-Regular.ttf");
-		JLabel lblPleaseWait = new JLabel("ESPERE, POR FAVOR...");
+		JLabel lblPleaseWait = new JLabel("ESPERE, POR FAVOR");
 		//lblPleaseWait.setFont(lato);
 		getContentPane().add(lblPleaseWait, "1, 4, center, bottom");
 		

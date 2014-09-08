@@ -7,7 +7,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -112,6 +114,8 @@ public class Dictation extends JPanel implements Observer {
 			btnRecord.setEnabled(true);
 			transcriptor.addObserver(this);
 		}
+		
+		frame.requestFocus();
 	}
 	
 	private void updateReportView(Report r) {
@@ -122,39 +126,38 @@ public class Dictation extends JPanel implements Observer {
 	}
 	private void showSaveDialog(){
 		int response;
-		if(report != null)
-			response = JOptionPane.showConfirmDialog(frame, new String[]{lang.getString("Dictation.AskSave"),
-					lang.getString("Dictation.NewVersion")}, lang.getString("TitleAskSave"),
-		        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-		else
-			response = JOptionPane.showConfirmDialog(frame, lang.getString("Dictation.AskSave"), lang.getString("TitleAskSave"),
-			        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+		response = JOptionPane.showConfirmDialog(frame, lang.getString("Dictation.ConfirmExit"), lang.getString("TitleConfirmExit"),
+		      JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		
 		switch(response) {
+			/*case JOptionPane.YES_OPTION: before, it was a save? dialog
+				if(saveReport())
+					frame.dispose();
+				//saveReport();				
+				break;*/
 			case JOptionPane.YES_OPTION:
-				frame.dispose();
-				saveReport();				
-				break;
-			case JOptionPane.NO_OPTION:
 				frame.dispose();
 			/*case JOptionPane.CANCEL_OPTION:
 			case JOptionPane.CLOSED_OPTION:*/// Do nothing				
 		}
 	}
 	
-	private void saveReport(){
+	private boolean saveReport(){
 		//TODO: implement
 		if(report == null) { //New report
 			if(ddlPatient.getSelectedIndex() > 0) {
 				WaitModal.open();
+				this.setVisible(false);
 				controller.createReport(txtBiased.getText(), txtUnbiased.getText(), txtImpression.getText(), txtPlan.getText(),
 						(String)ddlPatient.getSelectedItem());
-				WaitModal.close();
+				//WaitModal.close();
+				return true;
 			} else {
-				JOptionPane.showMessageDialog(this, lang.getString("Warning.PatientNotSelected"), "Aviso", JOptionPane.WARNING_MESSAGE);
-			}
-			
+				JOptionPane.showMessageDialog(frame, lang.getString("Warning.PatientNotSelected"), "Aviso", JOptionPane.WARNING_MESSAGE);
+				return false;
+			}		
 		}
+		return false;
 	}
 	
 	private void startRecord() {
@@ -442,15 +445,16 @@ public class Dictation extends JPanel implements Observer {
 		final JButton btnAnalyze = new JButton(lang.getString("Dictation.btnAnalyze"));
 		btnAnalyze.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
-				if(ddlPatient.getSelectedIndex() > 0) {
-					btnAnalyze.setEnabled(false);
-					saveReport();
+				if(saveReport() == true)
 					frame.dispose();
-				} //TODO: else show error
 			}
 		});
 		pnlActions.add(btnAnalyze);
 		
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		frame.setLocation(
+				  ((int) (screenSize.getWidth()) - frame.getWidth())/2, 
+				  ((int) (screenSize.getHeight()) - frame.getHeight())/2);
 		frame.setVisible(true);
 	}
 	

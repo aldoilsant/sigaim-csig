@@ -4,7 +4,9 @@ import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 
+import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 
 import javax.swing.ListSelectionModel;
 import javax.swing.BoxLayout;
@@ -270,6 +272,13 @@ public class ReportList {
 			}
 		});
 		pnlActions.add(btnNew);
+		
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		frame.setLocation(
+				  ((int) (screenSize.getWidth()) - frame.getWidth())/2, 
+				  ((int) (screenSize.getHeight()) - frame.getHeight())/2);
+		frame.setAutoRequestFocus(false);
+		frame.setFocusableWindowState(false);
 		frame.setVisible(true);		
 		
 	}
