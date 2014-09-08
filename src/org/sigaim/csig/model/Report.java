@@ -138,6 +138,9 @@ public class Report extends CSIGIdentifiedObject {
 	}
 	
 	public String getBiased() {
+		if(biased == null) {
+			modelController.fillSoip(this);
+		}
 		return biased;
 	}
 	

@@ -192,7 +192,7 @@ public class Main implements ViewController {
 	public void showReport(Report r) {
 		if(r != null)
 			WaitModal.open("Abriendo Informe...");
-		new ShowReport(r, this);		
+		new ShowReport(r, this);
 	}
 
 	@Override
@@ -227,7 +227,7 @@ public class Main implements ViewController {
 	}
 
 	@Override
-	public void createReport(String bias, String unbias, String impressions,
+	public boolean createReport(String bias, String unbias, String impressions,
 			String plan, String patient) {
 		//FIXME: use stored II in session
 		FunctionalRole composer=new FunctionalRole();
@@ -247,14 +247,18 @@ public class Main implements ViewController {
 		
 		Report r = model.createReport(bias, unbias, impressions, plan, composer, ehr, reportStatus);
 		
+		if(r==null)
+			return false;
+		
+		WaitModal.setMessage("Recuperando análisis del servidor");
 		model.fillSoip(r);
 		model.fillSoipConcepts(r);
-		//WaitModal.close();
 		this.showReport(r);
 		
 		if(reportList != null) {
 			reportList.updateList(this.getReports());
 		}
+		return true;
 	}
 	
 	@Override

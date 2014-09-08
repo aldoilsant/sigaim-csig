@@ -27,7 +27,7 @@ public interface ViewController {
 	void showReport(Report r);
 	long createFacultative();
 	long createFacility();
-	void createReport(String bias, String unbias, String impressions, String plan, String patient);
+	boolean createReport(String bias, String unbias, String impressions, String plan, String patient);
 	ResourceBundle getLang();
 	TargetDataLine getLine();
 

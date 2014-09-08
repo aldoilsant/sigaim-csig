@@ -88,6 +88,8 @@ public class CSIGModel implements IntCSIGModel {
 		}
 		
 		for(Element e : soip){
+			if(e==null)
+				continue;
 			String code = e.getMeaning().getCode();
 			if(code.equals("at0003"))
 				bias = ((ST)e.getValue()).getValue();
@@ -282,9 +284,9 @@ public class CSIGModel implements IntCSIGModel {
 		Cluster concepts = null;
 		//int textPosition = 0;
 		//Magic number 23: offset due to non printed archetype nomenclature
-		int biasEnd = report.getBiased().length()+23;
-		int unbiasEnd = biasEnd + report.getUnbiased().length()+23;
-		int impresEnd = unbiasEnd + report.getImpressions().length()+25;
+		int biasEnd = report.getBiased().length()+39;
+		int unbiasEnd = biasEnd + report.getUnbiased().length()+16;
+		int impresEnd = unbiasEnd + report.getImpressions().length()+17;
 		
 		ArrayList<CSIGConcept> biasConcepts = new ArrayList<CSIGConcept>();
 		ArrayList<CSIGConcept> unbiasConcepts = new ArrayList<CSIGConcept>();
@@ -328,13 +330,13 @@ public class CSIGModel implements IntCSIGModel {
 						start.getValue()-39, end.getValue()-39));
 			else if (start.getValue() < unbiasEnd)
 				unbiasConcepts.add(new CSIGConcept(code,
-						start.getValue()-biasEnd-32, end.getValue()-biasEnd-32));
+						start.getValue()-biasEnd-16, end.getValue()-biasEnd-16));
 			else if(start.getValue() < impresEnd)
 				impresConcepts.add(new CSIGConcept(code, 
-						start.getValue()-unbiasEnd-26, end.getValue()-unbiasEnd-26));
+						start.getValue()-unbiasEnd-17, end.getValue()-unbiasEnd-17));
 			else
 				planConcepts.add(new CSIGConcept(code,
-						start.getValue()-impresEnd-12, end.getValue()-impresEnd-12));
+						start.getValue()-impresEnd-12, end.getValue()-impresEnd-12));		
 		}
 		
 		ConceptsOrderer orderer = new ConceptsOrderer();
@@ -380,6 +382,7 @@ public class CSIGModel implements IntCSIGModel {
 			String plan, FunctionalRole composer, II ehrId, CDCV status) {
 		String text = "Zona Subjetivo. "+bias+" Zona Objetivo. "+unbias+" Zona Impresión. "+impressions+
 				" Zona Plan. "+plan;
+		System.out.println("New report text:" + text);
 		Composition newReport = null;
 		try {
 			II rootArchetypeId= new II();

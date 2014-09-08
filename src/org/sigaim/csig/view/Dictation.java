@@ -146,12 +146,18 @@ public class Dictation extends JPanel implements Observer {
 		//TODO: implement
 		if(report == null) { //New report
 			if(ddlPatient.getSelectedIndex() > 0) {
-				WaitModal.open();
+				WaitModal.open("Creando informe");
 				this.setVisible(false);
-				controller.createReport(txtBiased.getText(), txtUnbiased.getText(), txtImpression.getText(), txtPlan.getText(),
+				boolean created = controller.createReport(txtBiased.getText(), txtUnbiased.getText(), txtImpression.getText(), txtPlan.getText(),
 						(String)ddlPatient.getSelectedItem());
-				//WaitModal.close();
-				return true;
+				if(created)
+					return true;
+				else{
+					WaitModal.close();
+					this.setVisible(true);
+					JOptionPane.showMessageDialog(frame, lang.getString("Error.CouldNotCreateReport"), "Error", JOptionPane.ERROR_MESSAGE);
+					return false;
+				}
 			} else {
 				JOptionPane.showMessageDialog(frame, lang.getString("Warning.PatientNotSelected"), "Aviso", JOptionPane.WARNING_MESSAGE);
 				return false;

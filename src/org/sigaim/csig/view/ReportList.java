@@ -132,7 +132,7 @@ public class ReportList {
 		tblInformes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		ListSelectionModel lsm = tblInformes.getSelectionModel();
-		lsm.addListSelectionListener(new TblReportListSelectionHandler());
+		lsm.addListSelectionListener(new TblReportListSelectionHandler(tblInformes));
 		
 				scrListaInformes.setViewportView(tblInformes);
 				GroupLayout gl_pnlInformList = new GroupLayout(pnlInformList);
@@ -277,26 +277,44 @@ public class ReportList {
 		frame.setLocation(
 				  ((int) (screenSize.getWidth()) - frame.getWidth())/2, 
 				  ((int) (screenSize.getHeight()) - frame.getHeight())/2);
-		frame.setAutoRequestFocus(false);
-		frame.setFocusableWindowState(false);
 		frame.setVisible(true);		
 		
 	}
 	
 	private void setSelectedReport(Report i) {
 		selectedReport = i;
-		txtReport.setText(i.getFullText());
+		if(selectedReport == null) {
+			txtReport.setText("");
+		} else {
+			txtReport.setText(i.getFullText());
+		}
 		//txtNotes.setText("Notas");
 	}
 	
 	class TblReportListSelectionHandler implements ListSelectionListener {
-	    public void valueChanged(ListSelectionEvent e) {
-	        //ListSelectionModel lsm = (ListSelectionModel)e.getSource();
+		int selectedIndex = -1;
+		JTable table;
 
-	        int firstIndex = e.getFirstIndex();
-	        setSelectedReport(reportList.get(firstIndex));
-	        btnReview.setEnabled(true);
-	        btnShow.setEnabled(true);
+		public TblReportListSelectionHandler(JTable parent) {
+			super();
+			table = parent;			
+		}
+		
+		@Override
+	    public void valueChanged(ListSelectionEvent e) {
+			//ListSelectionModel lsm = (ListSelectionModel)e.getSource();
+			if(selectedIndex != table.getSelectedRow()){
+				if(table.getSelectedRow() < 0) {
+					selectedIndex = table.getSelectedRow();
+					setSelectedReport(null);
+				}
+				else {
+					selectedIndex = table.getSelectedRow();
+					setSelectedReport(reportList.get(selectedIndex));
+					btnReview.setEnabled(true);
+					btnShow.setEnabled(true);
+				}
+			}
 	        
 	    }
 	}

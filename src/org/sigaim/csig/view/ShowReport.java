@@ -57,6 +57,8 @@ public class ShowReport extends JPanel {
 	 */
 	public ShowReport(Report r, ViewController _controller) {
 		frame = new JFrame();
+		frame.setVisible(false);
+		frame.setAutoRequestFocus(false);
 		frame.setTitle(strTitle);
 		controller = _controller;
 		report = r;
@@ -64,6 +66,7 @@ public class ShowReport extends JPanel {
 		if(r != null)
 			updateReportView(r);
 		WaitModal.close(this);
+		frame.setVisible(true);
 		//frame.toFront();
 		//this.requestFocus();
 	}
@@ -221,6 +224,7 @@ public class ShowReport extends JPanel {
 		);
 		
 		txtUnbiased = new JTextPane();
+		txtUnbiased.setEditable(false);
 		scrUnbiased.setViewportView(txtUnbiased);
 		pnlUnbiased.setLayout(gl_pnlUnbiased);
 		
@@ -250,6 +254,7 @@ public class ShowReport extends JPanel {
 		);
 		
 		txtImpression = new JTextPane();
+		txtImpression.setEditable(false);
 		scrImpression.setViewportView(txtImpression);
 		pnlImpression.setLayout(gl_pnlImpression);
 		
@@ -279,12 +284,13 @@ public class ShowReport extends JPanel {
 		);
 		
 		txtPlan = new JTextPane();
+		txtPlan.setEditable(false);
 		scrPlan.setViewportView(txtPlan);
 		pnlPlan.setLayout(gl_pnlPlan);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setLocation(
 				  ((int) (screenSize.getWidth()) - frame.getWidth())/2, 
 				  ((int) (screenSize.getHeight()) - frame.getHeight())/2);
-		frame.setVisible(true);
+		//frame.setVisible(true);
 	}
 }
