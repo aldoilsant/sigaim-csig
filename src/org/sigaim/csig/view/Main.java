@@ -17,6 +17,7 @@ import javax.sound.sampled.Port;
 import javax.sound.sampled.TargetDataLine;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -28,6 +29,7 @@ import org.sigaim.csig.model.Report;
 import org.sigaim.siie.iso13606.rm.CDCV;
 import org.sigaim.siie.iso13606.rm.FunctionalRole;
 import org.sigaim.siie.iso13606.rm.II;
+import org.sigaim.siie.rm.exceptions.RejectException;
 
 public class Main implements ViewController {
 
@@ -39,8 +41,8 @@ public class Main implements ViewController {
 	
 	private Session session;
 	private IntCSIGModel model;
-	static public String wsurl = "http://sigaim.siie.cesga.es:8080/SIIEWS3";
-	//static public String wsurl = "http://localhost:8080/SIIEWS3";
+	//static public String wsurl = "http://sigaim.siie.cesga.es:8080/SIIEWS3";
+	static public String wsurl = "http://localhost:8080/SIIEWS3";
 	
 	//static public String transip = "193.147.36.199";
 	static public String transip = "193.144.33.85";
@@ -78,6 +80,7 @@ public class Main implements ViewController {
 				reportList = new ReportList(frame, this);
 			return true;
 		} else {
+			JOptionPane.showMessageDialog(null, lang.getString("Error.InvalidLoginInfo"), "Error", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}		
 	}
@@ -85,15 +88,18 @@ public class Main implements ViewController {
 	private Main() {
 		getLang();
 		
-		try {
-			Thread.sleep(5);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
 		model = new CSIGModel(wsurl);
 		
-		List<String> facs  = model.getFacilities();
+		//WaitModal.setMessage("Conectando con el servidor SIIE...");
+		List<String> facs;
+		do{
+			facs  = model.getFacilities();
+			if(facs == null) {
+				WaitModal.close();
+				JOptionPane.showMessageDialog(WaitModal.getModal(), lang.getString("Error.SIIENotResponding"), "Error", JOptionPane.ERROR_MESSAGE);
+				System.exit(0);
+			}
+		} while(facs == null);
 		
 		session = new Session();
 		
@@ -140,7 +146,6 @@ public class Main implements ViewController {
             	else {
             		transport = Integer.parseInt(args[i+1]);
             	}
-            	
             }
 		}
 		System.out.println("Conecting to web services in "+wsurl+" (change with -wsurl param)");

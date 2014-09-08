@@ -105,6 +105,7 @@ public class LoginDialog extends JDialog {
 						controller.doLogin(txtUser.getText(), ddlCentre.getSelectedItem().toString(),  txtPassword.getPassword());
 					}
 				});
+				getRootPane().setDefaultButton(okButton);
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);

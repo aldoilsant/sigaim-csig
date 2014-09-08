@@ -3,6 +3,7 @@ package org.sigaim.csig.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -22,6 +23,7 @@ import com.jgoodies.forms.factories.FormFactory;
 import javax.swing.JLabel;
 
 import org.sigaim.csig.view.helper.BackgroundImage;
+import org.sigaim.csig.view.helper.FontHelper;
 
 public class WaitModal extends JDialog {
 
@@ -29,7 +31,14 @@ public class WaitModal extends JDialog {
 	private static WaitModal modal;
 	private static Thread thread;
 	
+	private JLabel lblMessage;
+	private static String message = "Esto puede tardar unos minutos";
 	
+	
+	public static void open(String msg){
+		message = msg;
+		open();
+	};
 	public static void open() {
 		if(modal == null) {
 			thread = new Thread() {
@@ -48,6 +57,15 @@ public class WaitModal extends JDialog {
 	public static void close(){
 		if(modal != null)
 			modal.dispose();
+	}
+	public static void setMessage(String msg){
+		message = msg;
+		if(modal!=null && modal.lblMessage!=null) {
+			modal.lblMessage.setText(msg);
+		}
+	}
+	public static JDialog getModal(){
+		return modal;
 	}
 	
 	/**
@@ -75,10 +93,12 @@ public class WaitModal extends JDialog {
 		/*JLabel imgLogo = new JLabel("...");
 		getContentPane().add(imgLogo, "1, 2, center, center");*/
 		
+		//Font lato = FontHelper.getTTF("Lato-Regular.ttf");
 		JLabel lblPleaseWait = new JLabel("ESPERE, POR FAVOR...");
+		//lblPleaseWait.setFont(lato);
 		getContentPane().add(lblPleaseWait, "1, 4, center, bottom");
 		
-		JLabel lblMessage = new JLabel("Esto puede tardar unos minutos");
+		lblMessage = new JLabel(message);
 		getContentPane().add(lblMessage, "1, 6, center, bottom");
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

@@ -147,6 +147,7 @@ public class CSIGModel implements IntCSIGModel {
 			}
 		} catch (RejectException re) {
 			re.printStackTrace();
+			return null;
 		}	
 		return rtn;
 	}

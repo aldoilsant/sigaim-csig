@@ -7,10 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.GridLayout;
 
-import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
@@ -152,6 +150,8 @@ public class Dictation extends JPanel implements Observer {
 				controller.createReport(txtBiased.getText(), txtUnbiased.getText(), txtImpression.getText(), txtPlan.getText(),
 						(String)ddlPatient.getSelectedItem());
 				WaitModal.close();
+			} else {
+				JOptionPane.showMessageDialog(this, lang.getString("Warning.PatientNotSelected"), "Aviso", JOptionPane.WARNING_MESSAGE);
 			}
 			
 		}
@@ -174,7 +174,6 @@ public class Dictation extends JPanel implements Observer {
 		isRecording = false;
        
         Path path = Paths.get("session.flac").toAbsolutePath();
-        //Path path = Paths.get("C:/Users/siro.gonzalez/workspace/SIGAIM_csig/resources", "es-0020.flac");
         System.out.println("Sending audio and waiting for transcription...");
         transcriptor.transcribeFlac(path);
 	}
