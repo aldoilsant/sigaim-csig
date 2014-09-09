@@ -383,7 +383,7 @@ public class CSIGModel implements IntCSIGModel {
 				" Zona Plan. "+plan;
 		//TODO: remove and fix on server side.
 		text = text.replace('\n', ' ');
-		//text = text.replace('\r', ' ');
+		text = text.replace('\r', ' ');
 		System.out.println("New report text:" + text);
 		Composition newReport = null;
 		try {
