@@ -260,7 +260,6 @@ public class CSIGModel implements IntCSIGModel {
                                        value existence matches {0..1} matches {*}
                                    }
                                }
-                           }
                            ELEMENT[at0015] occurrences matches {0..1} matches {  -- Terminología
                                value existence matches {0..1} matches {
                                    ST occurrences matches {0..1} matches {  
@@ -382,6 +381,9 @@ public class CSIGModel implements IntCSIGModel {
 			String plan, FunctionalRole composer, II ehrId, CDCV status) {
 		String text = "Zona Subjetivo. "+bias+" Zona Objetivo. "+unbias+" Zona Impresión. "+impressions+
 				" Zona Plan. "+plan;
+		//TODO: remove and fix on server side.
+		text = text.replace('\n', ' ');
+		//text = text.replace('\r', ' ');
 		System.out.println("New report text:" + text);
 		Composition newReport = null;
 		try {
