@@ -379,11 +379,16 @@ public class CSIGModel implements IntCSIGModel {
 	@Override
 	public Report createReport(String bias, String unbias, String impressions,
 			String plan, FunctionalRole composer, II ehrId, CDCV status) {
+		bias = bias.trim();
+		unbias = unbias.trim();
+		impressions.trim();
+		plan.trim();
 		String text = "Zona Subjetivo. "+bias+" Zona Objetivo. "+unbias+" Zona Impresión. "+impressions+
 				" Zona Plan. "+plan;
 		//TODO: remove and fix on server side.
 		text = text.replace('\n', ' ');
 		text = text.replace('\r', ' ');
+		text = text.trim();
 		System.out.println("New report text:" + text);
 		Composition newReport = null;
 		try {
