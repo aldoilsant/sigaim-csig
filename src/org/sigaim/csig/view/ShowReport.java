@@ -26,7 +26,7 @@ import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 
-import org.sigaim.csig.model.Report;
+import org.sigaim.csig.model.CSIGReport;
 import org.sigaim.csig.model.CSIGConcept;
 
 import net.java.balloontip.*;
@@ -35,7 +35,7 @@ import net.java.balloontip.styles.BalloonTipStyle;
 public class ShowReport extends JPanel {
 
 	private JFrame frame;
-	private Report report;
+	private CSIGReport report;
 	private ViewController controller;
 	
 	private Font conceptFont, conceptFontRed;
@@ -55,7 +55,7 @@ public class ShowReport extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public ShowReport(Report r, ViewController _controller) {
+	public ShowReport(CSIGReport r, ViewController _controller) {
 		frame = new JFrame();
 		frame.setVisible(false);
 		frame.setAutoRequestFocus(false);
@@ -71,7 +71,7 @@ public class ShowReport extends JPanel {
 		//this.requestFocus();
 	}
 	
-	private void updateReportView(Report r) {
+	private void updateReportView(CSIGReport r) {
 		setTextPane(txtBiased, r.getBiased(), r.getBiasedConcepts());
 		setTextPane(txtUnbiased, r.getUnbiased(), r.getUnbiasedConcepts());
 		setTextPane(txtImpression, r.getImpressions(), r.getImpressionsConcepts());

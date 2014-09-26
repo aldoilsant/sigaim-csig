@@ -35,7 +35,7 @@ import es.udc.tic.rnasa.sigaim_transcriptor_client.TranscriptionClientApiImpl;
 import javax.swing.JComboBox;
 
 import org.sigaim.csig.model.CSIGPatient;
-import org.sigaim.csig.model.Report;
+import org.sigaim.csig.model.CSIGReport;
 
 import javax.swing.JButton;
 
@@ -63,7 +63,7 @@ public class Dictation extends JPanel implements Observer {
 	private ResourceBundle lang;
 	
 	private JFrame frame;
-	private Report report;
+	private CSIGReport report;
 	private ViewController controller;
 	private JTextArea txtUnbiased;
 	private JTextArea txtBiased;
@@ -90,7 +90,7 @@ public class Dictation extends JPanel implements Observer {
 	/**
 	 * Create the panel.
 	 */
-	public Dictation(Report r, ViewController _controller) {
+	public Dictation(CSIGReport r, ViewController _controller) {
 		controller = _controller;
 		lang = controller.getLang();
 
@@ -118,7 +118,7 @@ public class Dictation extends JPanel implements Observer {
 		frame.requestFocus();
 	}
 	
-	private void updateReportView(Report r) {
+	private void updateReportView(CSIGReport r) {
 		txtBiased.setText(r.getBiased());
 		txtUnbiased.setText(r.getUnbiased());
 		txtPlan.setText(r.getPlan());

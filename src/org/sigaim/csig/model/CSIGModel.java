@@ -56,12 +56,12 @@ public class CSIGModel implements IntCSIGModel {
 	}	
 	
 	@Override
-	public List<Report> getReports() {
-		ArrayList<Report> rtn = new ArrayList<Report>();
+	public List<CSIGReport> getReports() {
+		ArrayList<CSIGReport> rtn = new ArrayList<CSIGReport>();
 		try {
 			List<IntSIIEReportSummary> list = eqlClient.getAllReportSummaries();
 			for(IntSIIEReportSummary rs : list){
-				Report r = new Report(this);
+				CSIGReport r = new CSIGReport(this);
 				r.setCreation(rs.getCreationDate().toGregorianCalendar());
 				r.setPatient(new CSIGPatient(rs.getSubject()));
 				r.setFacultative(rs.getPerformer().getRoot() + "/" + rs.getPerformer().getExtension());
@@ -77,7 +77,7 @@ public class CSIGModel implements IntCSIGModel {
 	
 
 	@Override
-	public Report fillSoip(Report report) {
+	public CSIGReport fillSoip(CSIGReport report) {
 		List<Element> soip = new ArrayList<Element>();
 		String bias=null, unbias=null, impress=null, plan=null;
 		
@@ -220,7 +220,7 @@ public class CSIGModel implements IntCSIGModel {
 	}
 	
 	@Override
-	public Report fillSoipConcepts(Report report) {
+	public CSIGReport fillSoipConcepts(CSIGReport report) {
 		
 		  /* CLUSTER[at0008] occurrences matches {0..1} matches {  -- Lista de elementos
                parts existence matches {0..1} cardinality matches {0..*; ordered} matches {
@@ -377,7 +377,7 @@ public class CSIGModel implements IntCSIGModel {
 	}
 
 	@Override
-	public Report createReport(String bias, String unbias, String impressions,
+	public CSIGReport createReport(String bias, String unbias, String impressions,
 			String plan, FunctionalRole composer, II ehrId, CDCV status) {
 		bias = bias.trim();
 		unbias = unbias.trim();
@@ -399,7 +399,7 @@ public class CSIGModel implements IntCSIGModel {
 			e.printStackTrace();
 		}
 		if(newReport != null) {
-			Report r = new Report(this);
+			CSIGReport r = new CSIGReport(this);
 			r.setPatient(new CSIGPatient(ehrId));
 			r.setFacultative(composer.getPerformer().getRoot() + "/" + composer.getPerformer().getExtension());
 			r.setId(newReport.getRcId());

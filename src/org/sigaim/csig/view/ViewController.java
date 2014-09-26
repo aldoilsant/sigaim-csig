@@ -9,7 +9,7 @@ import javax.sound.sampled.TargetDataLine;
 import org.sigaim.csig.model.CSIGFacility;
 import org.sigaim.csig.model.CSIGFacultative;
 import org.sigaim.csig.model.IntCSIGModel;
-import org.sigaim.csig.model.Report;
+import org.sigaim.csig.model.CSIGReport;
 import org.sigaim.siie.clients.IntSIIE001EQLClient;
 import org.sigaim.siie.clients.IntSIIE004ReportManagementClient;
 
@@ -21,10 +21,10 @@ public interface ViewController {
 	int getTranscriptionPort();
 	
 	boolean doLogin(String user, String centre, char[] pass);
-	List<Report> getReports();
+	List<CSIGReport> getReports();
 	void newReport();
-	void openReport(Report r);
-	void showReport(Report r);
+	void openReport(CSIGReport r);
+	void showReport(CSIGReport r);
 	long createFacultative();
 	long createFacility();
 	boolean createReport(String bias, String unbias, String impressions, String plan, String patient);

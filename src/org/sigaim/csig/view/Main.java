@@ -26,7 +26,7 @@ import org.sigaim.csig.model.CSIGFacility;
 import org.sigaim.csig.model.CSIGFacultative;
 import org.sigaim.csig.model.CSIGModel;
 import org.sigaim.csig.model.IntCSIGModel;
-import org.sigaim.csig.model.Report;
+import org.sigaim.csig.model.CSIGReport;
 import org.sigaim.siie.iso13606.rm.CDCV;
 import org.sigaim.siie.iso13606.rm.FunctionalRole;
 import org.sigaim.siie.iso13606.rm.II;
@@ -57,7 +57,7 @@ public class Main implements ViewController {
 	
 	private TargetDataLine line;
 	
-	public List<Report> getReports() {
+	public List<CSIGReport> getReports() {
 		return model.getReports();
 	}
 	
@@ -196,12 +196,12 @@ public class Main implements ViewController {
 	}
 
 	@Override
-	public void openReport(Report r) {
+	public void openReport(CSIGReport r) {
 		new Dictation(r, this);		
 	}
 
 	@Override
-	public void showReport(Report r) {
+	public void showReport(CSIGReport r) {
 		if(r != null)
 			WaitModal.open("Abriendo Informe...");
 		new ShowReport(r, this);
@@ -257,7 +257,7 @@ public class Main implements ViewController {
 		reportStatus.setCode("RSTA02");
 		II ehr = model.getEHRIdFromPatient(Long.parseLong(patient.split("/")[1]));
 		
-		Report r = model.createReport(bias, unbias, impressions, plan, composer, ehr, reportStatus);
+		CSIGReport r = model.createReport(bias, unbias, impressions, plan, composer, ehr, reportStatus);
 		
 		if(r==null)
 			return false;

@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class Report extends CSIGIdentifiedObject {
+public class CSIGReport extends CSIGIdentifiedObject {
 	
 	private List<CSIGConcept> biasedConcepts;
 	private List<CSIGConcept> unbiasedConcepts;
@@ -14,7 +14,7 @@ public class Report extends CSIGIdentifiedObject {
 	private List<CSIGConcept> planConcepts;
 	private Calendar creation;
 	private int versionNumber;
-	private ArrayList<Report> versions;
+	private ArrayList<CSIGReport> versions;
 	private CSIGPatient patient;
 	private String facultative;
 	private Long ehr;
@@ -55,14 +55,14 @@ public class Report extends CSIGIdentifiedObject {
 		return rtn;		
 	}*/
 	
-	public Report(IntCSIGModel controller) {
+	public CSIGReport(IntCSIGModel controller) {
 		modelController = controller;
 		versionNumber = 1;
 		creation = Calendar.getInstance();
-		versions = new ArrayList<Report>();
+		versions = new ArrayList<CSIGReport>();
 		versions.add(this);
 	}
-	public Report(Report prev) {
+	public CSIGReport(CSIGReport prev) {
 		modelController = prev.modelController;
 		versionNumber = prev.versionNumber + 1;
 		creation = Calendar.getInstance();
@@ -116,7 +116,7 @@ public class Report extends CSIGIdentifiedObject {
 	public void setCreation(Calendar creation) {
 		this.creation = creation;
 	}
-	public List<Report> getVersions() {
+	public List<CSIGReport> getVersions() {
 		return versions;
 	}
 	public String getFullText() {
@@ -127,7 +127,7 @@ public class Report extends CSIGIdentifiedObject {
 		return patient;
 	}
 	public void setPatient(CSIGPatient patient) {
-		for(Report i : versions)
+		for(CSIGReport i : versions)
 			i.patient = patient;
 	}
 	public String getFacultative() {

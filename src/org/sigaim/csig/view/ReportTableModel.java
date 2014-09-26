@@ -7,7 +7,7 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import org.sigaim.csig.model.Report;
+import org.sigaim.csig.model.CSIGReport;
 
 public class ReportTableModel extends AbstractTableModel {
 
@@ -16,9 +16,9 @@ public class ReportTableModel extends AbstractTableModel {
 	SimpleDateFormat sdf;
 	
 	private String[] columnNames = {"Creaci\u00F3n", "Ult. versi\u00F3n", "Paciente", "Facultativo", "Informe", "Notas"};
-	private List<Report> data; 
+	private List<CSIGReport> data; 
 
-	public ReportTableModel(List<Report> _data)
+	public ReportTableModel(List<CSIGReport> _data)
 	{
 		sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
 		//sdf.setTimeZone();
@@ -42,7 +42,7 @@ public class ReportTableModel extends AbstractTableModel {
     		case 0:
     			return sdf.format(data.get(row).getCreation().getTime());
     		case 1:
-    			List<Report> versions = data.get(row).getVersions();
+    			List<CSIGReport> versions = data.get(row).getVersions();
     			return sdf.format(versions.get(versions.size()-1).getCreation().getTime());
     		case 2:
     			return data.get(row).getPatient();

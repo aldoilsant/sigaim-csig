@@ -31,7 +31,7 @@ import java.awt.BorderLayout;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JTextField;
 
-import org.sigaim.csig.model.Report;
+import org.sigaim.csig.model.CSIGReport;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -41,8 +41,8 @@ import java.awt.event.ActionEvent;
 public class ReportList {
 
 	
-	private List<Report> reportList;
-	private Report selectedReport;
+	private List<CSIGReport> reportList;
+	private CSIGReport selectedReport;
 	
 	public JFrame frame;
 	private JTextField txtFiltrePatient;
@@ -66,7 +66,7 @@ public class ReportList {
 		initialize();
 	}
 	
-	public void updateList(List<Report> newList){
+	public void updateList(List<CSIGReport> newList){
 		reportList = newList;
 		tblInformes.setModel(new ReportTableModel(reportList));
 	}
@@ -175,7 +175,7 @@ public class ReportList {
 					.addContainerGap())
 		);
 		
-		tblVersions = new JTable(new ReportVersionTableModel(new ArrayList<Report>()));
+		tblVersions = new JTable(new ReportVersionTableModel(new ArrayList<CSIGReport>()));
 		scrVersions.setViewportView(tblVersions);
 		pnlVersions.setLayout(gl_pnlVersions);
 		
@@ -281,7 +281,7 @@ public class ReportList {
 		
 	}
 	
-	private void setSelectedReport(Report i) {
+	private void setSelectedReport(CSIGReport i) {
 		selectedReport = i;
 		if(selectedReport == null) {
 			txtReport.setText("");

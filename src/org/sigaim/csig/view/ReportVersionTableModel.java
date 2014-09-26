@@ -5,16 +5,16 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import org.sigaim.csig.model.Report;
+import org.sigaim.csig.model.CSIGReport;
 
 public class ReportVersionTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = -5826567355596416470L;
 	
 	private String[] columnNames = {"Versi\u00F3n", "Creaci\u00F3n", "Facultativo"};
-	private List<Report> data;
+	private List<CSIGReport> data;
 
-	public ReportVersionTableModel(List<Report> _data)
+	public ReportVersionTableModel(List<CSIGReport> _data)
 	{
 		data = _data;
 	}

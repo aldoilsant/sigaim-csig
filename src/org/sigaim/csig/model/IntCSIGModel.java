@@ -10,12 +10,12 @@ public interface IntCSIGModel {
 
 	boolean checkLoginInfo(long user, String centre, char[] password);
 	
-	List<Report> getReports();
+	List<CSIGReport> getReports();
 	List<String> getFacilities();
 	List<CSIGFacultative> getFacultatives();
 	List<CSIGPatient> getPatients();
-	Report fillSoip(Report report);
-	Report fillSoipConcepts(Report report);
+	CSIGReport fillSoip(CSIGReport report);
+	CSIGReport fillSoipConcepts(CSIGReport report);
 	
 	/*
 	 * Returns a new facultative after creating it in SIIE.
@@ -25,7 +25,7 @@ public interface IntCSIGModel {
 	CSIGFacility createFacility();
 	CSIGPatient createPatient();
 	II getEHRIdFromPatient(long patientId);
-	Report createReport(String bias, String unbias, String impressions, String plan, FunctionalRole composer,
+	CSIGReport createReport(String bias, String unbias, String impressions, String plan, FunctionalRole composer,
 			II ehrId, CDCV status);
 	
 }
