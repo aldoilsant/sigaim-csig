@@ -51,7 +51,7 @@ public class CSIGModel implements IntCSIGModel {
 		eqlClient = new WSIntSIIE001EQLClient(url+"/services/INTSIIE001EQLImplService");
 		reportClient = new WSIntSIIE004ReportManagementClient(url+"/services/INTSIIE004ReportManagementImplService");
 		termiClient = new WSIntSIIE003TerminologiesClient(url+"/services/INTSIIE003TerminologiesImplService");
-		dadlManager= new OpenEHRDADLManager();
+		dadlManager = new OpenEHRDADLManager();
 		model = new ReflectorReferenceModelManager(dadlManager);
 	}	
 	
@@ -383,21 +383,32 @@ public class CSIGModel implements IntCSIGModel {
 		unbias = unbias.trim();
 		impressions.trim();
 		plan.trim();
-		String text = "Zona Subjetivo. "+bias+" Zona Objetivo. "+unbias+" Zona Impresión. "+impressions+
-				" Zona Plan. "+plan;
+		//String text = "Zona Subjetivo. "+bias+" Zona Objetivo. "+unbias+" Zona Impresión. "+impressions+
+		//		" Zona Plan. "+plan;
 		//TODO: remove and fix on server side.
-		text = text.replace('\n', ' ');
-		text = text.replace('\r', ' ');
-		text = text.trim();
-		System.out.println("New report text:" + text);
+		//text = text.replace('\n', ' ');
+		//text = text.replace('\r', ' ');
+		//text = text.trim();
+		//System.out.println("New report text:" + text);
 		Composition newReport = null;
+		CSIGReport csig_report = new CSIGReport(this);
+		csig_report.setBiased(bias.trim());
+		csig_report.setUnbiased(unbias.trim());
+		csig_report.setImpressions(impressions.trim());
+		csig_report.setPlan(plan.trim());
+		String text;
+
 		try {
+			text = dadlManager.serialize(model.unbind(csig_report.toCluster()), false);
 			II rootArchetypeId= new II();
 			rootArchetypeId.setRoot("CEN-EN13606-COMPOSITION.InformeClinicoNotaSOIP.v1");
 			newReport = reportClient.createReport("createReport", ehrId, composer, text, true, rootArchetypeId);
 		} catch (RejectException e) {
 			e.printStackTrace();
+		} catch (ReferenceModelException rme) {
+			rme.printStackTrace();
 		}
+		
 		if(newReport != null) {
 			CSIGReport r = new CSIGReport(this);
 			r.setPatient(new CSIGPatient(ehrId));

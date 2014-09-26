@@ -6,6 +6,20 @@ import java.util.HashMap;
 import java.util.List;
 
 
+
+
+
+
+import org.sigaim.siie.iso13606.rm.CD;
+import org.sigaim.siie.iso13606.rm.CDCV;
+//import org.openehr.rm.datastructure.itemstructure.representation.Item;
+import org.sigaim.siie.iso13606.rm.Cluster;
+import org.sigaim.siie.iso13606.rm.Element;
+import org.sigaim.siie.iso13606.rm.II;
+import org.sigaim.siie.iso13606.rm.Item;
+import org.sigaim.siie.iso13606.rm.ST;
+
+
 public class CSIGReport extends CSIGIdentifiedObject {
 	
 	private List<CSIGConcept> biasedConcepts;
@@ -18,7 +32,7 @@ public class CSIGReport extends CSIGIdentifiedObject {
 	private CSIGPatient patient;
 	private String facultative;
 	private Long ehr;
-	private String reportId;
+	//private String reportId;
 	
 	private String biased;
 	private String unbiased;
@@ -196,5 +210,47 @@ public class CSIGReport extends CSIGIdentifiedObject {
 	}
 	public HashMap<String, List<CSIGConcept>> getSynonyms(){
 		return synonyms;
+	}
+	public Cluster toCluster(){
+		Cluster rtn = new Cluster();
+		List<Item> items = rtn.getParts();
+		
+		Element biased = new Element();
+		CDCV meaning = new CDCV();
+		meaning.setCode(ModelConstants.CD_BIAS);
+		biased.setMeaning(meaning);
+		ST st_biased = new ST();
+		st_biased.setValue(this.biased.trim());
+		biased.setValue(st_biased);
+		items.add(biased);
+		
+		Element unbiased = new Element();
+		CDCV meaning0 = new CDCV();
+		meaning0.setCode(ModelConstants.CD_UNBIAS);
+		unbiased.setMeaning(meaning0);
+		ST st_unbiased = new ST();
+		st_unbiased.setValue(this.unbiased.trim());
+		unbiased.setValue(st_biased);
+		items.add(unbiased);
+		
+		Element impression = new Element();
+		CDCV meaning1 = new CDCV();
+		meaning1.setCode(ModelConstants.CD_IMPRESSION);
+		impression.setMeaning(meaning1);
+		ST st_impression = new ST();
+		st_impression.setValue(this.impressions.trim());
+		impression.setValue(st_impression);
+		items.add(impression);
+		
+		Element plan = new Element();
+		CDCV meaning2 = new CDCV();
+		meaning2.setCode(ModelConstants.CD_PLAN);
+		plan.setMeaning(meaning2);
+		ST st_plan = new ST();
+		st_plan.setValue(this.plan.trim());
+		plan.setValue(st_plan);
+		items.add(plan);
+		
+		return rtn;
 	}
 }
