@@ -44,6 +44,9 @@ public class ConceptView extends JPanel {
 	private JTextField txtSnomed;
 	private JTextField txtDictation;
 	
+	private CSIGConcept concept;
+	private List<CSIGConcept> synonyms;
+	
 	private boolean freezed = false;
 	private JCheckBox chkError;
 	private JComboBox ddlSynonym;
@@ -52,7 +55,11 @@ public class ConceptView extends JPanel {
 
 	
 	private void updateParentLabel() {
-		label.setText((String)ddlSynonym.getSelectedItem());
+		CSIGConcept selected = synonyms.get(ddlSynonym.getSelectedIndex());
+		//label.setText((String)ddlSynonym.getSelectedItem());
+		label.setText(selected.toString());
+		concept.replace(selected);
+		
 		if(chkError.isSelected())
 			label.setForeground(Color.RED);
 		else
@@ -63,6 +70,9 @@ public class ConceptView extends JPanel {
 	 * Create the dialog.
 	 */
 	public ConceptView(CSIGConcept concept, String text, final Component parent, List<CSIGConcept> synonyms) {
+		this.concept = concept;
+		this.synonyms = synonyms;
+		
 		label = (JLabel) parent;
 		contentPanel.setLayout(new FormLayout(new ColumnSpec[] {
 				FormFactory.RELATED_GAP_COLSPEC,

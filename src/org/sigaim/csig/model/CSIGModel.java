@@ -281,11 +281,11 @@ public class CSIGModel implements IntCSIGModel {
                    }
                }*/
 		Cluster concepts = null;
-		//int textPosition = 0;
-		//Magic number 23: offset due to non printed archetype nomenclature
-		int biasEnd = report.getBiased().length()+39;
-		int unbiasEnd = biasEnd + report.getUnbiased().length()+16;
-		int impresEnd = unbiasEnd + report.getImpressions().length()+17;
+
+		//Constant offsets: offset due to non printed archetype nomenclature
+		int biasEnd = report.getBiased().length()+ModelConstants.OFFSET_BIAS;
+		int unbiasEnd = biasEnd + report.getUnbiased().length()+ModelConstants.OFFSET_UNBIAS;
+		int impresEnd = unbiasEnd + report.getImpressions().length()+ModelConstants.OFFSET_IMPRESSION;
 		
 		ArrayList<CSIGConcept> biasConcepts = new ArrayList<CSIGConcept>();
 		ArrayList<CSIGConcept> unbiasConcepts = new ArrayList<CSIGConcept>();
@@ -364,6 +364,54 @@ public class CSIGModel implements IntCSIGModel {
 		}
 			
 		return report;
+	}
+	
+	public Cluster conceptsToCluster(CSIGReport r) {
+		
+		int biasStart = ModelConstants.OFFSET_BIAS;
+		int unbiasStart = biasStart + r.getBiased().length() + ModelConstants.OFFSET_UNBIAS;
+		int impresStart = unbiasStart + r.getUnbiased().length() + ModelConstants.OFFSET_IMPRESSION;
+		int planStart = impresStart + r.getImpressions().length() + ModelConstants.OFFSET_PLAN;
+		
+		Cluster rtn = new Cluster();
+		List<Item> items = rtn.getParts();
+		
+		for(CSIGConcept c : r.getBiasedConcepts()){
+			aux_addConcept(c, items, biasStart);
+		}
+		for(CSIGConcept c : r.getUnbiasedConcepts()){
+			aux_addConcept(c, items, unbiasStart);
+		}
+		for(CSIGConcept c : r.getImpressionsConcepts()){
+			aux_addConcept(c, items, impresStart);
+		}
+		for(CSIGConcept c : r.getPlanConcepts()){
+			aux_addConcept(c, items, planStart);
+		}
+		
+		return rtn;
+	}
+	
+	private void aux_addConcept(CSIGConcept c, List<Item> items, int offset) {
+		Cluster conceptCluster = new Cluster();
+		List<Item> params = conceptCluster.getParts();
+		CDCV code = c.getCDCV();
+		Element el_code = new Element();
+		el_code.setValue(code);
+		params.add(0,el_code);
+		
+		INT i_start = new INT();
+		Element el_start = new Element();
+		i_start.setValue(c.start+offset);
+		el_start.setValue(i_start);
+		INT i_end = new INT();
+		Element el_end = new Element();
+		i_end.setValue(c.end+offset);
+		el_end.setValue(i_end);
+		
+		params.add(1, el_start);
+		params.add(2, el_end);
+		items.add(conceptCluster);
 	}
 	
 	@Override

@@ -1,6 +1,7 @@
 package org.sigaim.csig.model;
 
 import org.sigaim.siie.iso13606.rm.CDCV;
+import org.sigaim.siie.iso13606.rm.ST;
 
 public class CSIGConcept {	
 	public String code;
@@ -10,6 +11,7 @@ public class CSIGConcept {
 	public String text;
 	public int start;  //Start char of concept
 	public int end;   //End char of concept
+	//public boolean detectionError = false;
 	
 	public CSIGConcept(CDCV cdcv, int _start, int _end){
 		code = cdcv.getCode();
@@ -40,6 +42,14 @@ public class CSIGConcept {
 		return terminology+code;
 	}
 	
+	//Replace for a synonym, this should not affect this concept in the synonyms list
+	public CSIGConcept replace(CSIGConcept c){
+		this.code = c.code;
+		this.terminology = c.terminology;
+		this.text = c.text;
+		return this;
+	}
+	
 	static public String getConceptId(CDCV cdcv){
 		if(cdcv.getCodeSystemName().equals("SCTSPA")){
 			return "SNOMED-CT" + cdcv.getCode();
@@ -50,6 +60,17 @@ public class CSIGConcept {
 	@Override
 	public String toString() {
 		return text;
+	}
+	
+	public CDCV getCDCV(){
+		CDCV rtn = new CDCV();
+		rtn.setCode(this.code);
+		rtn.setCodeSystemName(this.terminology);
+		ST st_text = new ST();
+		st_text.setValue(text);
+		rtn.setDisplayName(st_text);
+		
+		return rtn;
 	}
 	
 }
