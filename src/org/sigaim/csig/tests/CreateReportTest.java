@@ -40,10 +40,10 @@ public class CreateReportTest {
 	public void testCreateReportSerialization() throws Exception {
 		CSIGReport r = new CSIGReport((CSIGModel)null);
 		
-		r.setBiased("Subjetivo");
-		r.setUnbiased("Analisis objetivo");
-		r.setImpressions("Impresión médica");
-		r.setPlan("Plan terapéutico");
+		r.setBiased("Acude a urgencias: refiere sensación distérmica de 3 días evolución sin fiebre termometrada.\nMolestias faríngeas con tos improductiva.");
+		r.setUnbiased("Buen estado general, consciente, orientado y colaborador, eupneico. Sin signos distrés respiratorio. No exantemas ni petequias. Bien hidratado y bien perfundido. Afebril 36 grados. Otorrinolaringología: Hiperemia faríngea sin evidencia de exudados. Auscultación cardiorrespiratoria: Murmullo vesicular conservado sin estertores.");
+		r.setImpressions("Síndrome catarral.");
+		r.setPlan("Hidratación + Ibuprofeno 600 (1-1-1) + Iniston antitusivo.");
 		
 		DADLManager dadlManager = new OpenEHRDADLManager();
 		ReferenceModelManager model = new ReflectorReferenceModelManager(dadlManager);

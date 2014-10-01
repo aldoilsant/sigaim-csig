@@ -225,61 +225,57 @@ public class CSIGModel implements IntCSIGModel {
 		  /* CLUSTER[at0008] occurrences matches {0..1} matches {  -- Lista de elementos
                parts existence matches {0..1} cardinality matches {0..*; ordered} matches {
                    CLUSTER[at0009] occurrences matches {0..*} matches {  -- Elemento
-                       parts existence matches {0..1} cardinality matches {0..5; ordered; unique} matches {
-                           ELEMENT[at0010] occurrences matches {0..1} matches {  -- Código
-                               value existence matches {0..1} matches {
-                                   ST occurrences matches {0..1} matches {  
-                                       value existence matches {0..1} matches {*}
-                                   }
-                               }
-                           }
-                           ELEMENT[at0011] occurrences matches {0..1} matches {  -- Inicio
-                               value existence matches {0..1} matches {
-                                   INT occurrences matches {0..1} matches {  
-                                       value existence matches {1..1} matches {*}
-                                   }
-                               }
-                           }
-                           ELEMENT[at0012] occurrences matches {0..1} matches {  -- Fin
-                               value existence matches {0..1} matches {
-                                   INT occurrences matches {0..1} matches {  
-                                       value existence matches {1..1} matches {*}
-                                   }
-                               }
-                           }
-                           ELEMENT[at0013] occurrences matches {0..1} matches {  -- Path
-                               value existence matches {0..1} matches {
-                                   ST occurrences matches {0..1} matches {  -- ST
-                                       value existence matches {0..1} matches {*}
-                                   }
-                               }
-                           }
-                           ELEMENT[at0014] occurrences matches {0..1} matches {  -- Nodo
-                               value existence matches {0..1} matches {
-                                   ST occurrences matches {0..1} matches {  
-                                       value existence matches {0..1} matches {*}
-                                   }
-                               }
-                           ELEMENT[at0015] occurrences matches {0..1} matches {  -- Terminología
-                               value existence matches {0..1} matches {
-                                   ST occurrences matches {0..1} matches {  
-                                       value existence matches {0..1} matches {*}
-                                   }
-                               }
-                           }
-                       }
-                       structure_type existence matches {1..1} matches {
-                           STRUCTURE_TYPE occurrences matches {1..1} matches {
-                               value existence matches {0..1} matches {"list"}
-                           }
-                       }
-                   }
-               }
-               structure_type existence matches {1..1} matches {
-                   STRUCTURE_TYPE occurrences matches {1..1} matches { 
-                       value existence matches {0..1} matches {"list"}
-                   }
-               }*/
+                        parts existence matches {0..1} cardinality matches {0..6; ordered; unique} matches {
+                            ELEMENT[at0010] occurrences matches {0..1} matches {  -- Código
+                                value existence matches {0..1} matches {
+									CV occurrences matches {1..1} matches {
+										code existence matches {0..1} matches {*}
+										displayName existence matches {1..1} matches {
+											ST occurrences matches {1..1} matches { 
+												value existence matches {0..1} matches {*}
+											}
+										}
+										codeSystemName existence matches {0..1} matches {*}
+										codeSystemVersion existence matches {0..1} matches {*}
+									}
+                                }
+                            }
+                            ELEMENT[at0011] occurrences matches {0..1} matches {  -- Inicio
+                                value existence matches {0..1} matches {
+                                    INT occurrences matches {0..1} matches {  
+                                        value existence matches {1..1} matches {*}
+                                    }
+                                }
+                            }
+                            ELEMENT[at0012] occurrences matches {0..1} matches {  -- Fin
+                                value existence matches {0..1} matches {
+                                    INT occurrences matches {0..1} matches {  
+                                        value existence matches {1..1} matches {*}
+                                    }
+                                }
+                            }
+                            ELEMENT[at0013] occurrences matches {0..1} matches {  -- Path
+                                value existence matches {0..1} matches {
+                                    ST occurrences matches {0..1} matches {
+                                        value existence matches {0..1} matches {*}
+                                    }
+                                }
+                            }
+                            ELEMENT[at0014] occurrences matches {0..1} matches {  -- Nodo
+                                value existence matches {0..1} matches {
+                                    ST occurrences matches {0..1} matches {  
+                                        value existence matches {0..1} matches {*}
+                                    }
+                                }
+                            }
+                            ELEMENT[at0015] occurrences matches {0..1} matches {  -- Estado
+                                value existence matches {0..1} matches {
+                                    ST occurrences matches {0..1} matches {
+                                    	value existence matches {0..1} matches {"válido", "preferido", "error"}
+                                    }
+                                }
+                            }
+                        }*/
 		Cluster concepts = null;
 
 		//Constant offsets: offset due to non printed archetype nomenclature
@@ -308,16 +304,24 @@ public class CSIGModel implements IntCSIGModel {
 			return null;
 		}
 		if(concepts != null)
-		for(Item i : concepts.getParts()) {			
+		for(Item i : concepts.getParts()) {
 			Cluster conceptCluster = (Cluster)i;
-			List<Item> params = conceptCluster.getParts();
-			CDCV code = (CDCV)((Element)params.get(0)).getValue();
-			INT start = (INT)((Element)params.get(1)).getValue();
-			INT end = (INT)((Element)params.get(2)).getValue();
+			CDCV code=null;
+			INT start=null, end=null;
+			for(Item param : conceptCluster.getParts()){
+				Element el = (Element)param;
+				if(param.getMeaning().getCode().equals(ModelConstants.CD_CONCEPT_CODE)){
+					code = (CDCV)el.getValue();
+				} else if(param.getMeaning().getCode().equals(ModelConstants.CD_CONCEPT_START)) {
+					start = (INT)el.getValue();
+				} else if(param.getMeaning().getCode().equals(ModelConstants.CD_CONCEPT_END)) {
+					end = (INT)el.getValue();
+				}
+				//TODO add path & node
+			}
 			
 			try {
-				conceptsCDCV.add(dadlManager.serialize(model.unbind(code),false));
-				
+				conceptsCDCV.add(dadlManager.serialize(model.unbind(code),false));	
 			} catch (ReferenceModelException e) {
 				System.err.println("Error serializing CDCV concept");
 				e.printStackTrace();
@@ -325,16 +329,16 @@ public class CSIGModel implements IntCSIGModel {
 			
 			//ST term = (ST)((Element)params.get(5)).getValue();
 			if(start.getValue() < biasEnd)
-				biasConcepts.add(new CSIGConcept(code,
+				biasConcepts.add(new CSIGConcept(conceptCluster,
 						start.getValue()-39, end.getValue()-39));
 			else if (start.getValue() < unbiasEnd)
-				unbiasConcepts.add(new CSIGConcept(code,
+				unbiasConcepts.add(new CSIGConcept(conceptCluster,
 						start.getValue()-biasEnd-16, end.getValue()-biasEnd-16));
 			else if(start.getValue() < impresEnd)
-				impresConcepts.add(new CSIGConcept(code, 
+				impresConcepts.add(new CSIGConcept(conceptCluster, 
 						start.getValue()-unbiasEnd-17, end.getValue()-unbiasEnd-17));
 			else
-				planConcepts.add(new CSIGConcept(code,
+				planConcepts.add(new CSIGConcept(conceptCluster,
 						start.getValue()-impresEnd-12, end.getValue()-impresEnd-12));		
 		}
 		
@@ -402,9 +406,13 @@ public class CSIGModel implements IntCSIGModel {
 		
 		INT i_start = new INT();
 		Element el_start = new Element();
+		CDCV cd_start = new CDCV();
+		cd_start.setCode(ModelConstants.CD_CONCEPT_START);
 		i_start.setValue(c.start+offset);
 		el_start.setValue(i_start);
+		el_start.setMeaning(cd_start);
 		INT i_end = new INT();
+		CDCV cd_end = new CDCV();
 		Element el_end = new Element();
 		i_end.setValue(c.end+offset);
 		el_end.setValue(i_end);

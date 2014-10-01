@@ -124,8 +124,8 @@ public class ConceptView extends JPanel {
 		
 		//Load values
 		txtDictation.setText(text);
-		txtSnomed.setText(concept.code);
-		lblTerminology.setText(concept.terminology);
+		txtSnomed.setText(concept.getCode());
+		lblTerminology.setText(concept.getTerminology());
 		
 		JLabel lblSinonym = new JLabel("Sinónimos");
 		add(lblSinonym, "2, 6, right, default");

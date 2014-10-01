@@ -1,20 +1,26 @@
 package org.sigaim.csig.view;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.font.TextAttribute;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -37,6 +43,8 @@ public class ShowReport extends JPanel {
 	private JFrame frame;
 	private CSIGReport report;
 	private ViewController controller;
+	
+	private ResourceBundle lang;
 	
 	private Font conceptFont, conceptFontRed;
 	
@@ -61,6 +69,7 @@ public class ShowReport extends JPanel {
 		frame.setAutoRequestFocus(false);
 		frame.setTitle(strTitle);
 		controller = _controller;
+		lang = controller.getLang();
 		report = r;
 		initialize();
 		if(r != null)
@@ -288,6 +297,21 @@ public class ShowReport extends JPanel {
 		scrPlan.setViewportView(txtPlan);
 		pnlPlan.setLayout(gl_pnlPlan);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		
+		JPanel pnlActions = new JPanel();
+		FlowLayout fl_pnlActions = (FlowLayout) pnlActions.getLayout();
+		fl_pnlActions.setAlignment(FlowLayout.RIGHT);
+		frame.getContentPane().add(pnlActions, BorderLayout.SOUTH);
+		
+		final JButton btnAnalyze = new JButton(lang.getString("btnSave"));
+		btnAnalyze.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				//if(saveReport() == true)
+					frame.dispose();
+			}
+		});
+		pnlActions.add(btnAnalyze);
+		
 		frame.setLocation(
 				  ((int) (screenSize.getWidth()) - frame.getWidth())/2, 
 				  ((int) (screenSize.getHeight()) - frame.getHeight())/2);
