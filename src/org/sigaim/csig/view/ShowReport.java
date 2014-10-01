@@ -127,8 +127,16 @@ public class ShowReport extends JPanel {
 		//Style style = doc.addStyle("JLabel", null);
 		try{
 			for(CSIGConcept c : concepts){
+				if(c.start < 0){
+					System.err.println("[Error] Concept "+c.getCode()+"starts at "+c.start+". Are model and client same version?");
+					continue;
+				}
 				if(textPointer < c.start)
 					doc.insertString(doc.getLength(), text.substring(textPointer, c.start), null);
+				if(c.start > text.length() || c.end > text.length()){
+					System.err.println("[Error] Concept out of bounds, skipping: "+c.getCode());
+					continue;
+				}
 				pane.insertComponent(createConceptLabel(c, text.substring(c.start, c.end)));
 				textPointer = c.end;
 			}

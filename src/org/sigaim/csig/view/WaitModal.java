@@ -59,10 +59,10 @@ public class WaitModal extends JDialog {
 		}		
 	}
 	public static void close(){
-		/*if(modal != null){
+		if(modal != null){
 			modal.dispose();
 			modal = null;
-		}*/
+		}
 	}
 	public static void close(JComponent src){
 		if(modal!=null){
