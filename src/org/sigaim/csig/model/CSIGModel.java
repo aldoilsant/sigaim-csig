@@ -399,10 +399,13 @@ public class CSIGModel implements IntCSIGModel {
 	private void aux_addConcept(CSIGConcept c, List<Item> items, int offset) {
 		Cluster conceptCluster = new Cluster();
 		List<Item> params = conceptCluster.getParts();
-		CDCV code = c.getCDCV();
-		Element el_code = new Element();
-		el_code.setValue(code);
-		params.add(0,el_code);
+		
+		Element code = new Element();
+		code.setValue(c.getCDCV());
+		CDCV code_meaning = new CDCV();
+		code_meaning.setCode(ModelConstants.CD_CONCEPT_CODE);
+		code.setMeaning(code_meaning);
+		params.add(0, code);
 		
 		INT i_start = new INT();
 		Element el_start = new Element();
@@ -411,14 +414,37 @@ public class CSIGModel implements IntCSIGModel {
 		i_start.setValue(c.start+offset);
 		el_start.setValue(i_start);
 		el_start.setMeaning(cd_start);
+		params.add(1, el_start);
+		
 		INT i_end = new INT();
 		CDCV cd_end = new CDCV();
+		cd_end.setCode(ModelConstants.CD_CONCEPT_END);
 		Element el_end = new Element();
 		i_end.setValue(c.end+offset);
 		el_end.setValue(i_end);
-		
-		params.add(1, el_start);
+		el_end.setMeaning(cd_end);
 		params.add(2, el_end);
+		
+		int i = 3;		
+		for(Item param: c.getCluster().getParts()){
+			Element el = (Element)param;
+			if(!param.getMeaning().getCode().equals(ModelConstants.CD_CONCEPT_CODE) &&
+					!param.getMeaning().getCode().equals(ModelConstants.CD_CONCEPT_START) &&
+					!param.getMeaning().getCode().equals(ModelConstants.CD_CONCEPT_END) &&
+					!param.getMeaning().getCode().equals(ModelConstants.CD_CONCEPT_STATUS)){
+				params.add(i++, el);
+			}
+		}
+		
+		ST status = new ST();
+		CDCV cd_status = new CDCV();
+		Element el_status = new Element();
+		cd_status.setCode(ModelConstants.CD_CONCEPT_STATUS);
+		status.setValue("válido");				
+		el_status.setValue(status);
+		el_status.setMeaning(cd_status);
+		params.add(i, el_status);
+		
 		items.add(conceptCluster);
 	}
 	

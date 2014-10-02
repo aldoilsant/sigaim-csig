@@ -91,4 +91,8 @@ public class CSIGConcept {
 		return cdcv;
 	}
 	
+	public Cluster getCluster(){
+		return cluster;
+	}
+	
 }
