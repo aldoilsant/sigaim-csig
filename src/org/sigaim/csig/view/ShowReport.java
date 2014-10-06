@@ -211,7 +211,6 @@ public class ShowReport extends JPanel {
 		);
 		
 		txtBiased = new JTextPane();
-		txtBiased.setEditable(false);
 		scrBiased.setViewportView(txtBiased);
 		pnlBiased.setLayout(gl_pnlBiased);
 		

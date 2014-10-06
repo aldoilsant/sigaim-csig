@@ -84,9 +84,9 @@ public class WaitModal extends JDialog {
 	 * Create the dialog.
 	 */
 	private WaitModal() {
-		setContentPane(new BackgroundImage("/org/sigaim/csig/resources/img/WaitModal.png"));
-		setAlwaysOnTop(true);
-		setModal(true);
+		//setContentPane(new BackgroundImage("/org/sigaim/csig/resources/img/WaitModal.png"));
+		//setAlwaysOnTop(true);
+		//setModal(true);
 		setResizable(false);
 		setUndecorated(true);
 		setBackground(new Color(100,100,100,0));
@@ -104,8 +104,9 @@ public class WaitModal extends JDialog {
 				FormFactory.RELATED_GAP_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,}));
 		
-		ImageIcon imgWait = new ImageIcon("prueba.gif");
-		JLabel lblwait = new JLabel("");
+		ImageIcon imgWait = new ImageIcon(
+				getClass().getResource("/org/sigaim/csig/resources/img/loading.gif"));
+		JLabel lblwait = new JLabel(imgWait);
 		lblwait.setIcon(imgWait);
 		getContentPane().add(lblwait, "1, 2, center, center");
 		
@@ -119,9 +120,9 @@ public class WaitModal extends JDialog {
 		lblMessage.setFont(lato_small);
 		getContentPane().add(lblMessage, "1, 6, center, bottom");
 		
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		/*Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(
 				  ((int) (screenSize.getWidth()) - this.getWidth())/2, 
-				  ((int) (screenSize.getHeight()) - this.getHeight())/2);
+				  ((int) (screenSize.getHeight()) - this.getHeight())/2);*/
 	}
 }

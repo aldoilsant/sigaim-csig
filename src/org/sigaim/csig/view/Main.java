@@ -45,8 +45,8 @@ public class Main implements ViewController {
 	
 	private Session session;
 	private IntCSIGModel model;
-	//static public String wsurl = "http://sigaim.siie.cesga.es:8080/SIIEWS3";
-	static public String wsurl = "http://localhost:8080/SIIEWS3";
+	static public String wsurl = "http://sigaim.siie.cesga.es:8080/SIIEWS3";
+	//static public String wsurl = "http://localhost:8080/SIIEWS3";
 	
 	//static public String transip = "193.147.36.199";
 	static public String transip = "193.144.33.85";
@@ -116,7 +116,7 @@ public class Main implements ViewController {
 				  ((int) (screenSize.getHeight()) - login.getHeight())/2);
 		login.setVisible(true);
 		
-		WaitModal.close();
+		//WaitModal.close();
 		
 		//Testing window
 		JDialog creator = new LoginCreator(this);

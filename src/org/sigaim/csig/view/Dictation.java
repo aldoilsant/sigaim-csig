@@ -162,6 +162,9 @@ public class Dictation extends JPanel implements Observer {
 				JOptionPane.showMessageDialog(frame, lang.getString("Warning.PatientNotSelected"), "Aviso", JOptionPane.WARNING_MESSAGE);
 				return false;
 			}		
+		} else {
+			//Update report
+			
 		}
 		return false;
 	}
