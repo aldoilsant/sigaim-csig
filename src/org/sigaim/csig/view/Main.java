@@ -1,7 +1,9 @@
 package org.sigaim.csig.view;
 
 import java.awt.Dimension;
+
 import javax.swing.UIManager.*;
+
 import java.awt.EventQueue;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
@@ -27,6 +29,7 @@ import org.sigaim.csig.model.CSIGFacultative;
 import org.sigaim.csig.model.CSIGModel;
 import org.sigaim.csig.model.IntCSIGModel;
 import org.sigaim.csig.model.CSIGReport;
+import org.sigaim.csig.theme.CSIGTheme;
 import org.sigaim.siie.iso13606.rm.CDCV;
 import org.sigaim.siie.iso13606.rm.FunctionalRole;
 import org.sigaim.siie.iso13606.rm.II;
@@ -158,6 +161,7 @@ public class Main implements ViewController {
 		            break;
 		        }
 		    }
+		    CSIGTheme.apply();
 		} catch (Exception e) {
 		    // Nimbus is not available, using standard look and feel:
 			try {
