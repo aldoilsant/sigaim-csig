@@ -84,8 +84,8 @@ public class WaitModal extends JDialog {
 	 * Create the dialog.
 	 */
 	private WaitModal() {
-		//setContentPane(new BackgroundImage("/org/sigaim/csig/resources/img/WaitModal.png"));
-		//setAlwaysOnTop(true);
+		setContentPane(new BackgroundImage("/org/sigaim/csig/resources/img/WaitModal.png"));
+		setAlwaysOnTop(true);
 		setModal(true);
 		setResizable(false);
 		setUndecorated(true);
@@ -109,17 +109,19 @@ public class WaitModal extends JDialog {
 		lblwait.setIcon(imgWait);
 		getContentPane().add(lblwait, "1, 2, center, center");
 		
-		//Font lato = FontHelper.getTTF("Lato-Regular.ttf");
+		Font lato = FontHelper.getTTF("Lato-Regular.ttf", 16);
+		Font lato_small = FontHelper.getTTF("Lato-Regular.ttf", 12);
 		JLabel lblPleaseWait = new JLabel("ESPERE, POR FAVOR");
-		//lblPleaseWait.setFont(lato);
+		lblPleaseWait.setFont(lato);
 		getContentPane().add(lblPleaseWait, "1, 4, center, bottom");
 		
 		lblMessage = new JLabel(message);
+		lblMessage.setFont(lato_small);
 		getContentPane().add(lblMessage, "1, 6, center, bottom");
 		
-		/*Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(
 				  ((int) (screenSize.getWidth()) - this.getWidth())/2, 
-				  ((int) (screenSize.getHeight()) - this.getHeight())/2);*/
+				  ((int) (screenSize.getHeight()) - this.getHeight())/2);
 	}
 }
