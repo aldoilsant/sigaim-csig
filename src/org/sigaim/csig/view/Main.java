@@ -7,6 +7,7 @@ import javax.swing.UIManager.*;
 import java.awt.EventQueue;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -21,21 +22,29 @@ import javax.sound.sampled.TargetDataLine;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import org.pushingpixels.substance.api.skin.SubstanceCremeCoffeeLookAndFeel;
+import org.pushingpixels.substance.api.skin.SubstanceCremeLookAndFeel;
+import org.pushingpixels.substance.api.skin.SubstanceGraphiteLookAndFeel;
 import org.sigaim.csig.model.CSIGFacility;
 import org.sigaim.csig.model.CSIGFacultative;
 import org.sigaim.csig.model.CSIGModel;
 import org.sigaim.csig.model.IntCSIGModel;
 import org.sigaim.csig.model.CSIGReport;
 import org.sigaim.csig.theme.CSIGTheme;
+import org.sigaim.csig.theme.SubstanceCSIGLookAndFeel;
+import org.sigaim.csig.theme.SubstanceCSIGSkin;
 import org.sigaim.siie.iso13606.rm.CDCV;
 import org.sigaim.siie.iso13606.rm.FunctionalRole;
 import org.sigaim.siie.iso13606.rm.II;
 import org.sigaim.siie.rm.exceptions.RejectException;
 
 public class Main implements ViewController {
+	
+	private final ViewController self; 
 
 	private class Session {
 		boolean logged = false;
@@ -90,14 +99,18 @@ public class Main implements ViewController {
 	}
 	
 	private Main() {
+		self = this;
 		getLang();
 		
 		model = new CSIGModel(wsurl);
 		
 		//WaitModal.setMessage("Conectando con el servidor SIIE...");
+		
+		session = new Session();
+		
 		List<String> facs;
 		do{
-			facs  = model.getFacilities();
+			facs = model.getFacilities();
 			if(facs == null) {
 				WaitModal.close();
 				JOptionPane.showMessageDialog(WaitModal.getModal(), lang.getString("Error.SIIENotResponding"), "Error", JOptionPane.ERROR_MESSAGE);
@@ -105,23 +118,41 @@ public class Main implements ViewController {
 			}
 		} while(facs == null);
 		
-		session = new Session();
+		final List<String> finalFacs = facs;
 		
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
-		frame = new JFrame();
-		login = new LoginDialog(this, facs);
-		login.setLocation(
-				  ((int) (screenSize.getWidth()) - login.getWidth())/2, 
-				  ((int) (screenSize.getHeight()) - login.getHeight())/2);
-		login.setVisible(true);
+		try {
+			SwingUtilities.invokeAndWait(new Runnable(){
+				public void run() {					
+					Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+					
+					frame = new JFrame();
+					login = new LoginDialog(self, finalFacs);
+					login.setLocation(
+							  ((int) (screenSize.getWidth()) - login.getWidth())/2, 
+							  ((int) (screenSize.getHeight()) - login.getHeight())/2);
+					login.setVisible(true);
+
+					WaitModal.close();
+					
+					//Testing window
+					JDialog creator = new LoginCreator(self);
+					creator.setLocation(0, 0);
+					creator.setVisible(true);
+				}			
+
+			});
+		} catch (InvocationTargetException | InterruptedException e) {
+			e.printStackTrace();
+		}
 		
-		//WaitModal.close();
-		
-		//Testing window
-		JDialog creator = new LoginCreator(this);
-		creator.setLocation(0, 0);
-		creator.setVisible(true);
+
 	}
 	/**
 	 * Launch the application.
@@ -154,44 +185,64 @@ public class Main implements ViewController {
 		}
 		System.out.println("Conecting to web services in "+wsurl+" (change with -wsurl param)");
 
-		try {
-		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-		        if ("Nimbus".equals(info.getName())) {
-		            UIManager.setLookAndFeel(info.getClassName());
-		            break;
-		        }
-		    }
-		    CSIGTheme.apply();
-		} catch (Exception e) {
-		    // Nimbus is not available, using standard look and feel:
-			try {
-				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-			} catch (ClassNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (InstantiationException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (IllegalAccessException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (UnsupportedLookAndFeelException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-
 		
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					WaitModal.open();
-					new Main();
+		SwingUtilities.invokeLater(new Runnable() {
+		    public void run() {
+		    	try {
+					UIManager.setLookAndFeel(new SubstanceCSIGLookAndFeel());
+					JFrame.setDefaultLookAndFeelDecorated(true);
+					JDialog.setDefaultLookAndFeelDecorated(true);
+				    /*for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+				        if ("Nimbus".equals(info.getName())) {
+				            UIManager.setLookAndFeel(info.getClassName());
+				            break;
+				        }
+				    }
+				    CSIGTheme.apply();*/
 				} catch (Exception e) {
 					e.printStackTrace();
-				}
+					try {
+						UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+					} catch (ClassNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (InstantiationException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IllegalAccessException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (UnsupportedLookAndFeelException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}		    	
+		    	EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							WaitModal.open();
+							Thread mainThread = new Thread() {
+								public void run() {
+									new Main();
+								}								
+							};
+							mainThread.start();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+		    }
+		} );
+		
+
+		
+		
+		/*EventQueue.invokeLater(new Runnable() {
+			public void run() {
+
 			}
-		});
+		});*/
 	}
 
 	@Override

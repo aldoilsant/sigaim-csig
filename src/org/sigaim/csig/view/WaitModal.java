@@ -13,6 +13,8 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JRootPane;
+import javax.swing.SwingUtilities;
 
 import java.awt.GridLayout;
 
@@ -30,7 +32,7 @@ public class WaitModal extends JDialog {
 
 
 	private static WaitModal modal;
-	private static Thread thread;
+	//private static Thread thread;
 	
 	private JLabel lblMessage;
 	private static String message = "Esto puede tardar unos minutos";
@@ -45,7 +47,7 @@ public class WaitModal extends JDialog {
 	};
 	public static void open() {
 		if(modal == null) {
-			thread = new Thread() {
+			SwingUtilities.invokeLater(new Runnable() {
 				public void run() {
 					try {
 						modal = new WaitModal();
@@ -54,8 +56,11 @@ public class WaitModal extends JDialog {
 						e.printStackTrace();
 					}
 				} 
+			});
+/*			thread = new Thread() {
+
 			};
-			thread.start();
+			thread.start();*/
 		}		
 	}
 	public static void close(){
@@ -84,18 +89,19 @@ public class WaitModal extends JDialog {
 	 * Create the dialog.
 	 */
 	private WaitModal() {
-		//setContentPane(new BackgroundImage("/org/sigaim/csig/resources/img/WaitModal.png"));
-		//setAlwaysOnTop(true);
+		setContentPane(new BackgroundImage("/org/sigaim/csig/resources/img/WaitModal.png"));
+		setAlwaysOnTop(true);
 		//setModal(true);
 		setResizable(false);
 		setUndecorated(true);
+		getRootPane().setWindowDecorationStyle(JRootPane.NONE); //Needeed by Substance
 		setBackground(new Color(100,100,100,0));
 		setBounds(100, 100, 436, 300);
 		getContentPane().setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("436px"),},
 			new RowSpec[] {
 				FormFactory.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("fill:185px"),
+				RowSpec.decode("fill:165px"),
 				FormFactory.RELATED_GAP_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.RELATED_GAP_ROWSPEC,
@@ -108,17 +114,17 @@ public class WaitModal extends JDialog {
 				getClass().getResource("/org/sigaim/csig/resources/img/loading.gif"));
 		JLabel lblwait = new JLabel(imgWait);
 		lblwait.setIcon(imgWait);
-		getContentPane().add(lblwait, "1, 2, center, center");
+		getContentPane().add(lblwait, "1, 2, center, bottom");
 		
 		Font lato = FontHelper.getTTF("Lato-Regular.ttf", 16);
 		Font lato_small = FontHelper.getTTF("Lato-Regular.ttf", 12);
 		JLabel lblPleaseWait = new JLabel("ESPERE, POR FAVOR");
 		lblPleaseWait.setFont(lato);
-		getContentPane().add(lblPleaseWait, "1, 4, center, bottom");
+		getContentPane().add(lblPleaseWait, "1, 6, center, bottom");
 		
 		lblMessage = new JLabel(message);
 		lblMessage.setFont(lato_small);
-		getContentPane().add(lblMessage, "1, 6, center, bottom");
+		getContentPane().add(lblMessage, "1, 9, center, bottom");
 		
 		/*Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(
