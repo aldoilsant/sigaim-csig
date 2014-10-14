@@ -230,7 +230,7 @@ public class CSIGReport extends CSIGIdentifiedObject {
 		unbiased.setMeaning(meaning0);
 		ST st_unbiased = new ST();
 		st_unbiased.setValue(this.unbiased.trim());
-		unbiased.setValue(st_biased);
+		unbiased.setValue(st_unbiased);
 		items.add(unbiased);
 		
 		Element impression = new Element();

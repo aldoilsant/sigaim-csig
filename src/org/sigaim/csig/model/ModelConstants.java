@@ -13,7 +13,7 @@ public abstract class ModelConstants {
 	public static final String CD_CONCEPT_STATUS = "at0015";
 	
 	//Offset between real note start andd concept position reported
-	public static final int OFFSET_BIAS = 39;
+	public static final int OFFSET_BIAS = 38;
 	public static final int OFFSET_UNBIAS = 16;
 	public static final int OFFSET_IMPRESSION = 17;
 	public static final int OFFSET_PLAN = 12;

@@ -158,8 +158,14 @@ public class ShowReport extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				CSIGConcept con = concept;
+				try {
 				ConceptView c = new ConceptView(concept, originalText, rtn, 
 						report.getSynonyms().get(concept.getConceptId()));
+				} catch(NullPointerException npe) {
+					System.err.println("Synonyms for report are not set (ShowReport:"+
+							Thread.currentThread().getStackTrace()[1].getLineNumber()+")" );
+				}
+				
 			}
 		});
 		return rtn;

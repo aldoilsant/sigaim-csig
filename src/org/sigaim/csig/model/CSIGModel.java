@@ -320,7 +320,11 @@ public class CSIGModel implements IntCSIGModel {
 				//TODO add path & node
 			}
 			
+			System.out.println("Concept: "+code.getCode()+" codeSystemName: "+code.getCodeSystemName()+
+					" codeSystemVersion: "+code.getCodeSystemVersion());
+			
 			try {
+				if(code.getCodeSystemName().equals("MED")) break;
 				conceptsCDCV.add(dadlManager.serialize(model.unbind(code),false));	
 			} catch (ReferenceModelException e) {
 				System.err.println("Error serializing CDCV concept");
@@ -330,7 +334,7 @@ public class CSIGModel implements IntCSIGModel {
 			//ST term = (ST)((Element)params.get(5)).getValue();
 			if(start.getValue() < biasEnd)
 				biasConcepts.add(new CSIGConcept(conceptCluster,
-						start.getValue()-39, end.getValue()-39));
+						start.getValue()-ModelConstants.OFFSET_BIAS, end.getValue()-ModelConstants.OFFSET_BIAS));
 			else if (start.getValue() < unbiasEnd)
 				unbiasConcepts.add(new CSIGConcept(conceptCluster,
 						start.getValue()-biasEnd-16, end.getValue()-biasEnd-16));
@@ -339,7 +343,7 @@ public class CSIGModel implements IntCSIGModel {
 						start.getValue()-unbiasEnd-17, end.getValue()-unbiasEnd-17));
 			else
 				planConcepts.add(new CSIGConcept(conceptCluster,
-						start.getValue()-impresEnd-12, end.getValue()-impresEnd-12));		
+						start.getValue()-impresEnd-12, end.getValue()-impresEnd-12));	
 		}
 		
 		ConceptsOrderer orderer = new ConceptsOrderer();

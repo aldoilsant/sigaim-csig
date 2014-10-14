@@ -113,19 +113,24 @@ public class Main implements ViewController {
 			facs = model.getFacilities();
 			if(facs == null) {
 				WaitModal.close();
-				JOptionPane.showMessageDialog(WaitModal.getModal(), lang.getString("Error.SIIENotResponding"), "Error", JOptionPane.ERROR_MESSAGE);
+				try {
+					SwingUtilities.invokeAndWait(new Runnable(){
+						public void run() {					
+							JOptionPane.showMessageDialog(
+									WaitModal.getModal(), 
+									lang.getString("Error.SIIENotResponding"), 
+									"Error", 
+									JOptionPane.ERROR_MESSAGE);
+						}
+					});
+				} catch (InvocationTargetException | InterruptedException e) {
+					e.printStackTrace();
+				}
 				System.exit(0);
 			}
 		} while(facs == null);
 		
 		final List<String> finalFacs = facs;
-		
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 		
 		try {
 			SwingUtilities.invokeAndWait(new Runnable(){
