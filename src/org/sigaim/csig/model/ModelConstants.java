@@ -14,8 +14,8 @@ public abstract class ModelConstants {
 	
 	//Offset between real note start andd concept position reported
 	public static final int OFFSET_BIAS = 38;
-	public static final int OFFSET_UNBIAS = 16;
-	public static final int OFFSET_IMPRESSION = 17;
-	public static final int OFFSET_PLAN = 12;
+	public static final int OFFSET_UNBIAS = 14;
+	public static final int OFFSET_IMPRESSION = 15;
+	public static final int OFFSET_PLAN = 10;
 	
 }

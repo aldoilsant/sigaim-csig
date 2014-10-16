@@ -239,15 +239,6 @@ public class Main implements ViewController {
 				});
 		    }
 		} );
-		
-
-		
-		
-		/*EventQueue.invokeLater(new Runnable() {
-			public void run() {
-
-			}
-		});*/
 	}
 
 	@Override

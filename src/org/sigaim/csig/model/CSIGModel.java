@@ -321,10 +321,10 @@ public class CSIGModel implements IntCSIGModel {
 			}
 			
 			System.out.println("Concept: "+code.getCode()+" codeSystemName: "+code.getCodeSystemName()+
-					" codeSystemVersion: "+code.getCodeSystemVersion());
+					" codeSystemVersion: "+code.getCodeSystemVersion()+" - "+code.getDisplayName().getValue());
 			
 			try {
-				if(code.getCodeSystemName().equals("MED")) break;
+				//if(code.getCodeSystemName().equals("MED")) break;
 				conceptsCDCV.add(dadlManager.serialize(model.unbind(code),false));	
 			} catch (ReferenceModelException e) {
 				System.err.println("Error serializing CDCV concept");
@@ -334,16 +334,20 @@ public class CSIGModel implements IntCSIGModel {
 			//ST term = (ST)((Element)params.get(5)).getValue();
 			if(start.getValue() < biasEnd)
 				biasConcepts.add(new CSIGConcept(conceptCluster,
-						start.getValue()-ModelConstants.OFFSET_BIAS, end.getValue()-ModelConstants.OFFSET_BIAS));
+						start.getValue()-ModelConstants.OFFSET_BIAS, 
+						end.getValue()-ModelConstants.OFFSET_BIAS));
 			else if (start.getValue() < unbiasEnd)
 				unbiasConcepts.add(new CSIGConcept(conceptCluster,
-						start.getValue()-biasEnd-16, end.getValue()-biasEnd-16));
+						start.getValue()-biasEnd-ModelConstants.OFFSET_UNBIAS, 
+						end.getValue()-biasEnd-ModelConstants.OFFSET_UNBIAS));
 			else if(start.getValue() < impresEnd)
 				impresConcepts.add(new CSIGConcept(conceptCluster, 
-						start.getValue()-unbiasEnd-17, end.getValue()-unbiasEnd-17));
+						start.getValue()-unbiasEnd-ModelConstants.OFFSET_IMPRESSION,
+						end.getValue()-unbiasEnd-ModelConstants.OFFSET_IMPRESSION));
 			else
 				planConcepts.add(new CSIGConcept(conceptCluster,
-						start.getValue()-impresEnd-12, end.getValue()-impresEnd-12));	
+						start.getValue()-impresEnd-ModelConstants.OFFSET_PLAN,
+						end.getValue()-impresEnd-ModelConstants.OFFSET_PLAN));	
 		}
 		
 		ConceptsOrderer orderer = new ConceptsOrderer();

@@ -18,7 +18,7 @@ public class ColorScheme extends BaseLightColorScheme {
 	/**
 	 * The main light color.
 	 */
-	private static final Color mainLightColor = new Color(235, 234, 225);
+	private static final Color mainLightColor = new Color(0, 0, 0);
 
 	/**
 	 * The main medium color.

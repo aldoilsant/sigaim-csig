@@ -91,6 +91,11 @@ public class CSIGReport extends CSIGIdentifiedObject {
 		versions.add(this);
 	}
 	
+	public void fillConcepts(){
+		if(biasedConcepts == null)
+			modelController.fillSoipConcepts(this);
+	}
+	
 	public List<CSIGConcept> getBiasedConcepts() {
 		if(biasedConcepts == null)
 			modelController.fillSoipConcepts(this);

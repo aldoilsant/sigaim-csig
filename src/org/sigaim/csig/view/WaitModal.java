@@ -46,21 +46,22 @@ public class WaitModal extends JDialog {
 			setMessage(msg);
 	};
 	public static void open() {
+		Runnable doit = new Runnable() {
+			public void run() {
+				try {
+					modal = new WaitModal();
+					modal.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			} 
+		};
+		
 		if(modal == null) {
-			SwingUtilities.invokeLater(new Runnable() {
-				public void run() {
-					try {
-						modal = new WaitModal();
-						modal.setVisible(true);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				} 
-			});
-/*			thread = new Thread() {
-
-			};
-			thread.start();*/
+			if(SwingUtilities.isEventDispatchThread())
+				doit.run();
+			else
+				SwingUtilities.invokeLater(doit);
 		}		
 	}
 	public static void close(){
@@ -71,7 +72,7 @@ public class WaitModal extends JDialog {
 	}
 	public static void close(JComponent src){
 		if(modal!=null){
-			modal.setLocationRelativeTo(src);
+			//modal.setLocationRelativeTo(src);
 			close();
 		}
 	}
@@ -126,9 +127,9 @@ public class WaitModal extends JDialog {
 		lblMessage.setFont(lato_small);
 		getContentPane().add(lblMessage, "1, 9, center, bottom");
 		
-		/*Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(
 				  ((int) (screenSize.getWidth()) - this.getWidth())/2, 
-				  ((int) (screenSize.getHeight()) - this.getHeight())/2);*/
+				  ((int) (screenSize.getHeight()) - this.getHeight())/2);
 	}
 }

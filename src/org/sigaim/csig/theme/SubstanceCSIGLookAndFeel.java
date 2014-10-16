@@ -1,10 +1,11 @@
 package org.sigaim.csig.theme;
 
-import org.pushingpixels.substance.api.skin.SubstanceCremeLookAndFeel;
+import org.pushingpixels.substance.api.SubstanceLookAndFeel;
 
-public class SubstanceCSIGLookAndFeel extends SubstanceCremeLookAndFeel {
+
+public class SubstanceCSIGLookAndFeel extends SubstanceLookAndFeel {
 	
 	public SubstanceCSIGLookAndFeel() {
-		super();
+		super(new SubstanceCSIGSkin());
 	}
 }

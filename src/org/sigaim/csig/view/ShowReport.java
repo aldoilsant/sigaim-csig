@@ -17,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.font.TextAttribute;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,8 @@ import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 
@@ -63,7 +66,7 @@ public class ShowReport extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public ShowReport(CSIGReport r, ViewController _controller) {
+	public ShowReport(final CSIGReport r, ViewController _controller) {
 		frame = new JFrame();
 		frame.setVisible(false);
 		frame.setAutoRequestFocus(false);
@@ -71,11 +74,31 @@ public class ShowReport extends JPanel {
 		controller = _controller;
 		lang = controller.getLang();
 		report = r;
+		final ShowReport self = this;
 		initialize();
-		if(r != null)
-			updateReportView(r);
-		WaitModal.close(this);
-		frame.setVisible(true);
+		
+		SwingWorker worker = new SwingWorker<Void,Void>(){
+
+			@Override
+			protected Void doInBackground() throws Exception {
+				r.fillConcepts();
+				return null;
+			}
+			
+			@Override
+			protected void done() {
+				updateReportView(r);
+				frame.setVisible(true);
+				WaitModal.close(self);
+				frame.toFront();
+			}
+
+			
+		};
+		
+		if(r!=null)
+			worker.execute();
+		
 		//frame.toFront();
 		//this.requestFocus();
 	}
@@ -128,7 +151,7 @@ public class ShowReport extends JPanel {
 		try{
 			for(CSIGConcept c : concepts){
 				if(c.start < 0){
-					System.err.println("[Error] Concept "+c.getCode()+"starts at "+c.start+". Are model and client same version?");
+					System.err.println("[Error] Concept "+c.getConceptId()+" ("+c.text+") starts at "+c.start+". Are model and client same version?");
 					continue;
 				}
 				if(textPointer < c.start)
