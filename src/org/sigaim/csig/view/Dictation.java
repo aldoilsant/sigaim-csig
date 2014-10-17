@@ -1,46 +1,12 @@
 package org.sigaim.csig.view;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.TargetDataLine;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
-
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JScrollPane;
-
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.ResourceBundle;
-
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import com.jgoodies.forms.factories.FormFactory;
-
-import es.udc.tic.rnasa.sigaim_transcriptor_client.TranscriptionClientApi;
-import es.udc.tic.rnasa.sigaim_transcriptor_client.TranscriptionClientApiImpl;
-
-import javax.swing.JComboBox;
-
-import org.sigaim.csig.model.CSIGPatient;
-import org.sigaim.csig.model.CSIGReport;
-
-import javax.swing.JButton;
-
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -49,12 +15,39 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.ResourceBundle;
 import javaFlacEncoder.FLACFileWriter;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.TargetDataLine;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.SwingWorker;
+
+import org.sigaim.csig.model.CSIGPatient;
+import org.sigaim.csig.model.CSIGReport;
+
+import com.jgoodies.forms.factories.FormFactory;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.layout.Sizes;
 
-import java.awt.FlowLayout;
+import es.udc.tic.rnasa.sigaim_transcriptor_client.TranscriptionClientApi;
+import es.udc.tic.rnasa.sigaim_transcriptor_client.TranscriptionClientApiImpl;
 
 public class Dictation extends JPanel implements Observer {
 	
@@ -105,15 +98,31 @@ public class Dictation extends JPanel implements Observer {
 		if(r != null)
 			updateReportView(r);
 		
-		transcriptor = new TranscriptionClientApiImpl();
-		if( transcriptor.connect(new InetSocketAddress(
-				controller.getTranscriptionIP(),
-				controller.getTranscriptionPort())) != true) {
-			System.out.println("Error connecting to transcription service");
-		} else {
-			btnRecord.setEnabled(true);
-			transcriptor.addObserver(this);
-		}
+		final Observer self = this;
+		SwingWorker<Void,Void> connectTranscription = new SwingWorker<Void,Void>(){
+			
+			boolean connected = false;
+
+			@Override
+			protected Void doInBackground() throws Exception {
+				transcriptor = new TranscriptionClientApiImpl();
+				connected = transcriptor.connect(new InetSocketAddress(
+						controller.getTranscriptionIP(),
+						controller.getTranscriptionPort()));
+				return null;
+			}
+			
+			@Override
+			protected void done(){
+				if(connected) {
+					btnRecord.setEnabled(true);
+					transcriptor.addObserver(self);
+				} else
+					System.out.println("Error connecting to transcription service");
+			}
+			
+		};
+		connectTranscription.execute();
 		
 		frame.requestFocus();
 	}
