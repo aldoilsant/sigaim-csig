@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,6 +20,8 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutionException;
+
 import javaFlacEncoder.FLACFileWriter;
 
 import javax.sound.sampled.AudioInputStream;
@@ -151,31 +154,83 @@ public class Dictation extends JPanel implements Observer {
 		}
 	}
 	
-	private boolean saveReport(){
-		//TODO: implement
+	private void saveReport(){
+		final Dictation self = this;
 		if(report == null) { //New report
 			if(ddlPatient.getSelectedIndex() > 0) {
+				
+				SwingWorker<Boolean,Void> createWorker = new SwingWorker<Boolean,Void>(){
+
+					@Override
+					protected Boolean doInBackground() throws Exception {
+						return controller.createReport(txtBiased.getText(), txtUnbiased.getText(), txtImpression.getText(), txtPlan.getText(),
+								(String)ddlPatient.getSelectedItem());
+					}
+					
+					@Override
+					protected void done(){
+						try {
+							if(this.get())
+								frame.dispose();
+							else{
+								WaitModal.close();
+								self.setVisible(true);
+								JOptionPane.showMessageDialog(frame, lang.getString("Error.CouldNotCreateReport"), "Error", JOptionPane.ERROR_MESSAGE);
+							}
+						} catch (HeadlessException | InterruptedException
+								| ExecutionException e) {
+							e.printStackTrace();
+							WaitModal.close();
+							self.setVisible(true);
+							JOptionPane.showMessageDialog(frame, lang.getString("Error.InternalError"), "Error", JOptionPane.ERROR_MESSAGE);
+						}
+					}
+				};
+				
 				WaitModal.open("Creando informe");
 				this.setVisible(false);
-				boolean created = controller.createReport(txtBiased.getText(), txtUnbiased.getText(), txtImpression.getText(), txtPlan.getText(),
-						(String)ddlPatient.getSelectedItem());
-				if(created)
-					return true;
-				else{
-					WaitModal.close();
-					this.setVisible(true);
-					JOptionPane.showMessageDialog(frame, lang.getString("Error.CouldNotCreateReport"), "Error", JOptionPane.ERROR_MESSAGE);
-					return false;
-				}
+				createWorker.execute();
 			} else {
 				JOptionPane.showMessageDialog(frame, lang.getString("Warning.PatientNotSelected"), "Aviso", JOptionPane.WARNING_MESSAGE);
-				return false;
 			}		
 		} else {
-			//Update report
+			SwingWorker<Boolean,Void> updateWorker = new SwingWorker<Boolean,Void>(){
+
+				@Override
+				protected Boolean doInBackground() throws Exception {
+					return controller.updateReport(report, false);
+				}
+				
+				@Override
+				protected void done(){
+					try {
+						if(this.get())
+							frame.dispose();
+						else{
+							WaitModal.close();
+							self.setVisible(true);
+							JOptionPane.showMessageDialog(frame, lang.getString("Error.CouldNotUpdateReport"), "Error", JOptionPane.ERROR_MESSAGE);
+						}
+					} catch (HeadlessException | InterruptedException
+							| ExecutionException e) {
+						e.printStackTrace();
+						WaitModal.close();
+						self.setVisible(true);
+						JOptionPane.showMessageDialog(frame, lang.getString("Error.InternalError"), "Error", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			};
 			
+			WaitModal.open("Actualizando informe");
+			//Update CSIGReport in memory
+			report.setBiased(txtBiased.getText());
+			report.setUnbiased(txtUnbiased.getText());
+			report.setImpressions(txtImpression.getText());
+			report.setPlan(txtPlan.getText());
+			this.setVisible(false);
+			//And send it to update in SIIE
+			updateWorker.execute();
 		}
-		return false;
 	}
 	
 	private void startRecord() {
@@ -463,8 +518,7 @@ public class Dictation extends JPanel implements Observer {
 		final JButton btnAnalyze = new JButton(lang.getString("Dictation.btnAnalyze"));
 		btnAnalyze.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
-				if(saveReport() == true)
-					frame.dispose();
+				saveReport();
 			}
 		});
 		pnlActions.add(btnAnalyze);

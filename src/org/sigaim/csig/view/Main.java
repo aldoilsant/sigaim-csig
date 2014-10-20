@@ -288,10 +288,8 @@ public class Main implements ViewController {
 	public IntCSIGModel getModelController() {
 		return model;
 	}
-
-	@Override
-	public boolean createReport(String bias, String unbias, String impressions,
-			String plan, String patient) {
+	
+	private FunctionalRole currentComposer(){
 		//FIXME: use stored II in session
 		FunctionalRole composer=new FunctionalRole();
 		II facultative = new II();
@@ -302,6 +300,13 @@ public class Main implements ViewController {
 		facility.setExtension(Long.toString(session.centre));
 		composer.setHealthcareFacility(facility);
 		composer.setPerformer(facultative);
+		return composer;
+	}
+
+	@Override
+	public boolean createReport(String bias, String unbias, String impressions,
+			String plan, String patient) {
+		FunctionalRole composer = currentComposer();
 		II rootArchetypeId = new II();
 		rootArchetypeId.setRoot("CEN-EN13606-COMPOSITION.InformeClinicoNotaSOIP.v1");
 		CDCV reportStatus=new CDCV();
@@ -323,6 +328,14 @@ public class Main implements ViewController {
 		}
 		return true;
 	}
+	
+	@Override
+	public boolean updateReport(CSIGReport report, boolean confirmed) {
+		FunctionalRole composer = currentComposer();
+		model.updateReport(report, composer, confirmed);
+		
+		return false;
+	}	
 	
 	@Override
 	public ResourceBundle getLang() {

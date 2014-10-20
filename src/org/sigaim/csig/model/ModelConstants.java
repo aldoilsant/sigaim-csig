@@ -1,5 +1,7 @@
 package org.sigaim.csig.model;
 
+import org.sigaim.siie.iso13606.rm.II;
+
 public abstract class ModelConstants {
 
 	public static final String CD_BIAS = "at0003";
@@ -17,5 +19,11 @@ public abstract class ModelConstants {
 	public static final int OFFSET_UNBIAS = 14;
 	public static final int OFFSET_IMPRESSION = 15;
 	public static final int OFFSET_PLAN = 10;
+	
+	public static II soipRootArchetypeId(){
+		II rootArchetypeId = new II();
+		rootArchetypeId.setRoot("CEN-EN13606-COMPOSITION.InformeClinicoNotaSOIP.v1");
+		return rootArchetypeId;
+	}
 	
 }

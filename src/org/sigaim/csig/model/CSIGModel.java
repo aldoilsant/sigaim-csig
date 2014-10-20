@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
+import org.openehr.am.parser.ContentObject;
 import org.sigaim.csig.view.ReportList;
 import org.sigaim.siie.clients.IntSIIE001EQLClient;
 import org.sigaim.siie.clients.IntSIIE004ReportManagementClient;
@@ -490,8 +491,7 @@ public class CSIGModel implements IntCSIGModel {
 
 		try {
 			text = dadlManager.serialize(model.unbind(csig_report.toCluster()), false);
-			II rootArchetypeId= new II();
-			rootArchetypeId.setRoot("CEN-EN13606-COMPOSITION.InformeClinicoNotaSOIP.v1");
+			II rootArchetypeId = ModelConstants.soipRootArchetypeId();
 			newReport = reportClient.createReport("createReport", ehrId, composer, text, true, rootArchetypeId);
 		} catch (RejectException e) {
 			e.printStackTrace();
@@ -506,6 +506,42 @@ public class CSIGModel implements IntCSIGModel {
 			r.setId(newReport.getRcId());
 			return r;
 		} else return null;
+	}
+	
+	@Override
+	public CSIGReport updateReport(CSIGReport report, FunctionalRole composer, boolean confirmed){
+		Composition newReport = null;
+		II ehr = this.getEHRIdFromPatient(report.getPatient().getId());
+		II rootArchetypeId = ModelConstants.soipRootArchetypeId();
+		
+		//SOIP text to dadl
+		ContentObject soipobj;
+		try {
+			soipobj = model.unbind(report.toCluster());
+		} catch (ReferenceModelException e1) {
+			e1.printStackTrace();
+			return null;
+		}
+		String serializedsoip = dadlManager.serialize(soipobj, false);
+		
+		try {
+			newReport = reportClient.updateReport("updateReport", ehr, report.getII(), composer,
+					serializedsoip,	 false, false, confirmed, rootArchetypeId, null);
+		} catch (RejectException e) {
+			System.err.println("[Error] Could not update report.");
+			e.printStackTrace();
+			return null;
+		}
+		
+		//Create a new empty CSIGReport to clean and update things
+		if(newReport != null) {
+			CSIGReport r = new CSIGReport(this);
+			r.setPatient(new CSIGPatient(ehr));
+			r.setFacultative(composer.getPerformer().getRoot() + "/" + composer.getPerformer().getExtension());
+			r.setId(newReport.getRcId());
+			return r;
+		} else return null;
+		
 	}
 
 }

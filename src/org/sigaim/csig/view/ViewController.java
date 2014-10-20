@@ -28,7 +28,7 @@ public interface ViewController {
 	long createFacultative();
 	long createFacility();
 	boolean createReport(String bias, String unbias, String impressions, String plan, String patient);
-	//boolean updateReport(String bias, String unbias, String impressions, String plan, );
+	boolean updateReport(CSIGReport report, boolean confirmed);
 	ResourceBundle getLang();
 	TargetDataLine getLine();
 
