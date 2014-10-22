@@ -41,7 +41,7 @@ public class UpdateReportTest {
 
 	@Test
 	public void testCreateReportSerialization() throws Exception {
-		IntCSIGModel csig = new CSIGModel("http://localhost:8080/SIIEWS3");
+		IntCSIGModel csig = new CSIGModel("http://sigaim.siie.cesga.es:8080/SIIEWS3");
 		List<CSIGReport> reports = csig.getReports();
 		CSIGReport r = reports.get(0);
 		System.out.println("Report: "+r.getId());
@@ -61,6 +61,10 @@ public class UpdateReportTest {
 		
 		ContentObject obj = model.unbind(newConcepts);
 		String text = dadlManager.serialize(obj, false);
+		
+		ContentObject obj2 = dadlManager.parseDADL(new ByteArrayInputStream(text.getBytes()));
+		Cluster c = (Cluster)model.bind(obj2);
+		
 		
 		PrintWriter out = new PrintWriter("UpateReportTestDADL.txt");
 		

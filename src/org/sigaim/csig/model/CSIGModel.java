@@ -63,10 +63,11 @@ public class CSIGModel implements IntCSIGModel {
 			List<IntSIIEReportSummary> list = eqlClient.getAllReportSummaries();
 			for(IntSIIEReportSummary rs : list){
 				CSIGReport r = new CSIGReport(this);
-				r.setCreation(rs.getCreationDate().toGregorianCalendar());
+				r.setCreation(rs.getCommisionDate().toGregorianCalendar());
 				r.setPatient(new CSIGPatient(rs.getSubject()));
 				r.setFacultative(rs.getPerformer().getRoot() + "/" + rs.getPerformer().getExtension());
 				r.setId(rs.getId());
+				r.setVersionSet(rs.getVersionSet());
 				rtn.add(r);
 			}
 		} catch (RejectException e) {
@@ -75,7 +76,25 @@ public class CSIGModel implements IntCSIGModel {
 		return rtn;
 	}
 	
-	
+	@Override
+	public List<CSIGReport> getVersions(CSIGReport report) {
+		ArrayList<CSIGReport> rtn = new ArrayList<CSIGReport>();
+		try {
+			List<IntSIIEReportSummary> list = eqlClient.getAllReportSummariesForVersionSet(report.getVersionSet());
+			for(IntSIIEReportSummary rs : list){
+				CSIGReport r = new CSIGReport(this);
+				r.setCreation(rs.getCreationDate().toGregorianCalendar());
+				r.setPatient(new CSIGPatient(rs.getSubject()));
+				r.setFacultative(rs.getPerformer().getRoot() + "/" + rs.getPerformer().getExtension());
+				r.setId(rs.getId());
+				r.setVersionSet(rs.getVersionSet());
+				rtn.add(r);
+			}
+		} catch (RejectException e) {
+			e.printStackTrace();
+		}
+		return rtn;
+	}
 
 	@Override
 	public CSIGReport fillSoip(CSIGReport report) {
@@ -524,9 +543,11 @@ public class CSIGModel implements IntCSIGModel {
 		}
 		String serializedsoip = dadlManager.serialize(soipobj, false);
 		
+		Cluster newConcepts = this.conceptsToCluster(report);
+		
 		try {
 			newReport = reportClient.updateReport("updateReport", ehr, report.getII(), composer,
-					serializedsoip,	 false, false, confirmed, rootArchetypeId, null);
+					serializedsoip,	 false, false, confirmed, rootArchetypeId, newConcepts);
 		} catch (RejectException e) {
 			System.err.println("[Error] Could not update report.");
 			e.printStackTrace();

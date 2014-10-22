@@ -42,6 +42,7 @@ public class ReportList {
 
 	
 	private List<CSIGReport> reportList;
+	private List<CSIGReport> versionList;
 	private CSIGReport selectedReport;
 	
 	public JFrame frame;
@@ -69,6 +70,28 @@ public class ReportList {
 	public void updateList(List<CSIGReport> newList){
 		reportList = newList;
 		tblInformes.setModel(new ReportTableModel(reportList));
+		tblInformes.getColumnModel().getColumn(0).setPreferredWidth(100);
+		tblInformes.getColumnModel().getColumn(0).setMinWidth(100);
+		tblInformes.getColumnModel().getColumn(0).setMaxWidth(100);
+		tblInformes.getColumnModel().getColumn(1).setPreferredWidth(100);
+		tblInformes.getColumnModel().getColumn(1).setMinWidth(100);
+		tblInformes.getColumnModel().getColumn(1).setMaxWidth(100);
+		tblInformes.getColumnModel().getColumn(2).setResizable(false);
+		tblInformes.getColumnModel().getColumn(2).setPreferredWidth(200);
+		tblInformes.getColumnModel().getColumn(2).setMinWidth(200);
+		tblInformes.getColumnModel().getColumn(2).setMaxWidth(200);
+		tblInformes.getColumnModel().getColumn(3).setPreferredWidth(200);
+		tblInformes.getColumnModel().getColumn(3).setMinWidth(200);
+		tblInformes.getColumnModel().getColumn(3).setMaxWidth(200);
+	}
+	public void updateVersionList(List<CSIGReport> newList){
+		versionList = newList;
+		tblVersions.setModel( new ReportVersionTableModel(versionList));
+		tblVersions.getColumnModel().getColumn(0).setPreferredWidth(20);
+		tblVersions.getColumnModel().getColumn(0).setMinWidth(20);
+		int lastrow = tblVersions.getRowCount()-1;
+		if(lastrow > 0)
+			tblVersions.setRowSelectionInterval(lastrow, lastrow);
 	}
 	
 	public void show() {
@@ -91,21 +114,6 @@ public class ReportList {
 		JPanel panel = new JPanel();
 		pnlVistaInformes.add(panel);
 		panel.setLayout(new GridLayout(0, 1, 0, 0));
-		/*tblInformes.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, null, null},
-			},
-			new String[] {
-				"Creaci\u00F3n", "Ult. versi\u00F3n", "Paciente", "Facultativo", "Informe", "Notas"
-			}
-		) {
-			boolean[] columnEditables = new boolean[] {
-				true, true, false, true, true, true
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});*/
 		
 		JPanel pnlInformList = new JPanel();
 		panel.add(pnlInformList);
@@ -115,20 +123,8 @@ public class ReportList {
 		
 		//reportTableModel = ;
 		
-		tblInformes = new JTable(new ReportTableModel(reportList));
-		tblInformes.getColumnModel().getColumn(0).setPreferredWidth(100);
-		tblInformes.getColumnModel().getColumn(0).setMinWidth(100);
-		tblInformes.getColumnModel().getColumn(0).setMaxWidth(100);
-		tblInformes.getColumnModel().getColumn(1).setPreferredWidth(100);
-		tblInformes.getColumnModel().getColumn(1).setMinWidth(100);
-		tblInformes.getColumnModel().getColumn(1).setMaxWidth(100);
-		tblInformes.getColumnModel().getColumn(2).setResizable(false);
-		tblInformes.getColumnModel().getColumn(2).setPreferredWidth(200);
-		tblInformes.getColumnModel().getColumn(2).setMinWidth(200);
-		tblInformes.getColumnModel().getColumn(2).setMaxWidth(200);
-		tblInformes.getColumnModel().getColumn(3).setPreferredWidth(200);
-		tblInformes.getColumnModel().getColumn(3).setMinWidth(200);
-		tblInformes.getColumnModel().getColumn(3).setMaxWidth(200);
+		tblInformes = new JTable();
+		updateList(reportList);  //Set TableModel and column sizes
 		tblInformes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		ListSelectionModel lsm = tblInformes.getSelectionModel();
@@ -175,7 +171,8 @@ public class ReportList {
 					.addContainerGap())
 		);
 		
-		tblVersions = new JTable(new ReportVersionTableModel(new ArrayList<CSIGReport>()));
+		tblVersions = new JTable();
+		updateVersionList(new ArrayList<CSIGReport>());
 		scrVersions.setViewportView(tblVersions);
 		pnlVersions.setLayout(gl_pnlVersions);
 		
@@ -285,10 +282,12 @@ public class ReportList {
 		selectedReport = i;
 		if(selectedReport == null) {
 			txtReport.setText("");
+			versionList = new ArrayList<CSIGReport>(0);
 		} else {
 			txtReport.setText(i.getFullText());
+			versionList = controller.getModelController().getVersions(i);	
 		}
-		//txtNotes.setText("Notas");
+		updateVersionList(versionList);
 	}
 	
 	class TblReportListSelectionHandler implements ListSelectionListener {

@@ -12,6 +12,7 @@ public interface IntCSIGModel {
 	boolean checkLoginInfo(long user, String centre, char[] password);
 	
 	List<CSIGReport> getReports();
+	List<CSIGReport> getVersions(CSIGReport report);
 	List<String> getFacilities();
 	List<CSIGFacultative> getFacultatives();
 	List<CSIGPatient> getPatients();

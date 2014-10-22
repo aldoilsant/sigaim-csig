@@ -6,6 +6,8 @@ import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -92,7 +94,6 @@ public class ShowReport extends JPanel {
 				WaitModal.close(self);
 				frame.toFront();
 			}
-
 			
 		};
 		
@@ -132,6 +133,18 @@ public class ShowReport extends JPanel {
 	
 	private void saveReport(){
 		//TODO: implement
+		//probando como recuperar los concceptos y texto modificados
+		StyledDocument doc = txtBiased.getStyledDocument();
+		doc.getCharacterElement(0);		
+		System.out.println(txtBiased.getText());
+		/*for(Component c : txtBiased.getComponents()){
+			System.out.println(c);
+			Container hi;
+			if(c instanceof Container)
+				for(Component c1 : ((Container)c).getComponents()){
+					System.out.println(">"+c1);
+				}
+		}*/
 	}
 	
 	private void setTextPane(JTextPane pane, String text, List<CSIGConcept>concepts){
@@ -342,8 +355,9 @@ public class ShowReport extends JPanel {
 		final JButton btnAnalyze = new JButton(lang.getString("btnSave"));
 		btnAnalyze.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
+				saveReport();
 				//if(saveReport() == true)
-					frame.dispose();
+				//	frame.dispose();
 			}
 		});
 		pnlActions.add(btnAnalyze);

@@ -32,6 +32,7 @@ public class CSIGReport extends CSIGIdentifiedObject {
 	private CSIGPatient patient;
 	private String facultative;
 	private Long ehr;
+	private II versionSet;
 	//private String reportId;
 	
 	private String biased;
@@ -216,6 +217,13 @@ public class CSIGReport extends CSIGIdentifiedObject {
 	public HashMap<String, List<CSIGConcept>> getSynonyms(){
 		return synonyms;
 	}
+	public void setVersionSet(II versionset){
+		versionSet = versionset;
+	}
+	public II getVersionSet(){
+		return versionSet;
+	}
+	
 	public Cluster toCluster(){
 		Cluster rtn = new Cluster();
 		List<Item> items = rtn.getParts();

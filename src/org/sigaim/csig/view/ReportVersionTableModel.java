@@ -34,9 +34,10 @@ public class ReportVersionTableModel extends AbstractTableModel {
     public Object getValueAt(int row, int col) {
     	switch(col) {
     		case 0:
-    			return data.get(row).getVersion();
+    			//return data.get(row).getVersion();
+    			return row+1; //FIXME: get actual version
     		case 1:
-    			return data.get(row).getCreation();
+    			return data.get(row).getCreation().getTime();
     		case 2:
     			return data.get(row).getFacultative();
     		default:
