@@ -5,20 +5,24 @@ import java.awt.Color;
 import org.pushingpixels.substance.api.colorscheme.BaseLightColorScheme;
 
 public class ColorScheme extends BaseLightColorScheme {
+	
+	public static final Color textColor = new Color(74, 89, 107);
+	private static final Color backgroundColor = new Color(255,255,255);
+	
 	/**
 	 * The main ultra-light color.
 	 */
-	private static final Color mainUltraLightColor = new Color(254, 254, 252);
+	private static final Color mainUltraLightColor = backgroundColor;
 
 	/**
 	 * The main extra-light color.
 	 */
-	private static final Color mainExtraLightColor = new Color(238, 243, 230);
+	private static final Color mainExtraLightColor = backgroundColor;
 
 	/**
 	 * The main light color.
 	 */
-	private static final Color mainLightColor = new Color(0, 0, 0);
+	private static final Color mainLightColor = backgroundColor;
 
 	/**
 	 * The main medium color.
@@ -38,13 +42,13 @@ public class ColorScheme extends BaseLightColorScheme {
 	/**
 	 * The foreground color.
 	 */
-	private static final Color foregroundColor = Color.black;
+	private static final Color foregroundColor = textColor;
 
 	/**
 	 * Creates a new <code>Creme</code> color scheme.
 	 */
 	public ColorScheme() {
-		super("Creme");
+		super("CSIG");
 	}
 
 	/*

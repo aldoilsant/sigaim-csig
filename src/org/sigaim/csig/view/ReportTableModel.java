@@ -15,7 +15,7 @@ public class ReportTableModel extends AbstractTableModel {
 	
 	SimpleDateFormat sdf;
 	
-	private String[] columnNames = {"Creaci\u00F3n", "Ult. versi\u00F3n", "Paciente", "Facultativo", "Informe", "Notas"};
+	private String[] columnNames = {"Ult. versi\u00F3n", "Paciente", "Facultativo", "Informe"};
 	private List<CSIGReport> data; 
 
 	public ReportTableModel(List<CSIGReport> _data)
@@ -42,16 +42,11 @@ public class ReportTableModel extends AbstractTableModel {
     		case 0:
     			return sdf.format(data.get(row).getCreation().getTime());
     		case 1:
-    			List<CSIGReport> versions = data.get(row).getVersions();
-    			return sdf.format(versions.get(versions.size()-1).getCreation().getTime());
-    		case 2:
     			return data.get(row).getPatient();
-    		case 3:
+    		case 2:
     			return data.get(row).getFacultative();
-    		case 4:
+    		case 3:
     			return data.get(row).getId();
-    		case 5:
-    			return new String("");
     		default:
     			return new Object();
     	}
@@ -60,12 +55,10 @@ public class ReportTableModel extends AbstractTableModel {
         //return getValueAt(0, c).getClass();
     	switch(c) {
 			case 0:
-			case 1:
 				return String.class;
+			case 1:
 			case 2:
 			case 3:
-			case 4:
-			case 5:
 				return String.class;
 			default:
 				return Object.class;

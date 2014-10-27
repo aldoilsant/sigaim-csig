@@ -34,7 +34,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.Element;
+import javax.swing.text.ElementIterator;
+import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
 import org.sigaim.csig.model.CSIGReport;
@@ -44,6 +49,9 @@ import net.java.balloontip.*;
 import net.java.balloontip.styles.BalloonTipStyle;
 
 public class ShowReport extends JPanel {
+	
+	private static final String ELEM = AbstractDocument.ElementNameAttribute;
+    private static final String COMP = StyleConstants.ComponentElementName;
 
 	private JFrame frame;
 	private CSIGReport report;
@@ -64,6 +72,43 @@ public class ShowReport extends JPanel {
 	private JTextPane txtBiased;
 	private JTextPane txtImpression;
 	private JTextPane txtPlan;
+	
+	private class ConceptLabel extends JLabel {
+		private CSIGConcept concept;
+		private String originalText;
+		
+		public ConceptLabel(String ot, final CSIGReport report, CSIGConcept c){
+			concept = c;
+			this.originalText = ot;
+			//final JLabel rtn = new JLabel(concept.text);
+			this.setText(c.text);
+			this.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			this.setFont(conceptFont);
+			if(!originalText.toLowerCase().equals(c.text.toLowerCase()))
+				this.setForeground(new Color(124, 90, 0));
+			this.setAlignmentY(.80f);
+			
+			final JLabel self = this;
+			this.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					CSIGConcept con = concept;
+					try {
+					ConceptView c = new ConceptView(concept, originalText, self, 
+							report.getSynonyms().get(concept.getConceptId()));
+					} catch(NullPointerException npe) {
+						System.err.println("Synonyms for report are not set (ShowReport:"+
+								Thread.currentThread().getStackTrace()[1].getLineNumber()+")" );
+					}
+					
+				}
+			});
+		}
+		
+		public CSIGConcept getConcept() {
+			return concept;
+		}
+	}
 	
 	/**
 	 * Create the panel.
@@ -131,20 +176,48 @@ public class ShowReport extends JPanel {
 		}
 	}
 	
+	
+	/*
+	 * Recovering JLabels and full text from JTextPane is a bit tricky and may change in new
+	 * JDK versions, so it remains separated here.
+	 * 
+	 * This will update the List<CSIGConcept> with the actual (non deleted from TextPane) concepts,
+	 * update their posisiton and...
+	 * returns the String with the full string (concatenating plain text and labels text).
+	 */
+	private String updatePart(JTextPane pane, String text, List<CSIGConcept> concepts){
+		
+		concepts.clear(); //Reset the list, we will introduce only non deleted concepts
+		
+		StringBuilder sb = new StringBuilder(text.length());
+		StyledDocument doc = pane.getStyledDocument();
+		String paneText = pane.getText(); //Not same as real text in the pane due to JLabel considered as 1 empty char.
+		int paneTextPos = 0;
+
+		ElementIterator iterator = new ElementIterator(doc);
+        Element element;
+        while ((element = iterator.next()) != null) {
+            AttributeSet as = element.getAttributes();
+            if (as.containsAttribute(ELEM, COMP)) {
+            	if(StyleConstants.getComponent(as) instanceof ConceptLabel){
+            		sb.append(paneText.substring(paneTextPos, element.getStartOffset()));
+            		paneTextPos = element.getEndOffset(); //This is different from actual position in full text
+            		ConceptLabel label = (ConceptLabel)StyleConstants.getComponent(as);
+            		CSIGConcept c = label.getConcept();
+            		c.start = sb.length();
+            		sb.append(label.getText());
+            		c.end = sb.length();
+            		concepts.add(c);
+            	}
+            }
+        }
+        sb.append(paneText.substring(paneTextPos, paneText.length()));
+        return sb.toString();
+	}
+	
 	private void saveReport(){
-		//TODO: implement
-		//probando como recuperar los concceptos y texto modificados
-		StyledDocument doc = txtBiased.getStyledDocument();
-		doc.getCharacterElement(0);		
-		System.out.println(txtBiased.getText());
-		/*for(Component c : txtBiased.getComponents()){
-			System.out.println(c);
-			Container hi;
-			if(c instanceof Container)
-				for(Component c1 : ((Container)c).getComponents()){
-					System.out.println(">"+c1);
-				}
-		}*/
+		report.setBiased(
+				updatePart(txtBiased, report.getBiased(), report.getBiasedConcepts()));
 	}
 	
 	private void setTextPane(JTextPane pane, String text, List<CSIGConcept>concepts){
@@ -173,7 +246,7 @@ public class ShowReport extends JPanel {
 					System.err.println("[Error] Concept out of bounds, skipping: "+c.getCode());
 					continue;
 				}
-				pane.insertComponent(createConceptLabel(c, text.substring(c.start, c.end)));
+				pane.insertComponent(new ConceptLabel(text.substring(c.start, c.end), report, c));
 				textPointer = c.end;
 			}
 			if(textPointer < text.length())
@@ -181,30 +254,6 @@ public class ShowReport extends JPanel {
 		} catch(BadLocationException ble) {
 			throw new IllegalStateException("Trying to append text to JTextPane", ble);
 		}
-	}
-	
-	private JLabel createConceptLabel(final CSIGConcept concept, final String originalText) {
-		final JLabel rtn = new JLabel(concept.text);
-		rtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		rtn.setFont(conceptFont);
-		if(!originalText.toLowerCase().equals(concept.text.toLowerCase()))
-			rtn.setForeground(new Color(124, 90, 0));
-		rtn.setAlignmentY(.80f);
-		rtn.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				CSIGConcept con = concept;
-				try {
-				ConceptView c = new ConceptView(concept, originalText, rtn, 
-						report.getSynonyms().get(concept.getConceptId()));
-				} catch(NullPointerException npe) {
-					System.err.println("Synonyms for report are not set (ShowReport:"+
-							Thread.currentThread().getStackTrace()[1].getLineNumber()+")" );
-				}
-				
-			}
-		});
-		return rtn;
 	}
 
 	private void initialize() {

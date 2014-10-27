@@ -6,24 +6,28 @@ import org.pushingpixels.substance.api.colorscheme.LightGrayColorScheme;
 import org.pushingpixels.substance.api.painter.border.ClassicBorderPainter;
 import org.pushingpixels.substance.api.painter.border.CompositeBorderPainter;
 import org.pushingpixels.substance.api.painter.border.DelegateBorderPainter;
+import org.pushingpixels.substance.api.painter.border.FlatBorderPainter;
+import org.pushingpixels.substance.api.painter.border.GlassBorderPainter;
 import org.pushingpixels.substance.api.painter.decoration.ArcDecorationPainter;
+import org.pushingpixels.substance.api.painter.decoration.FlatDecorationPainter;
+import org.pushingpixels.substance.api.painter.decoration.MatteDecorationPainter;
 import org.pushingpixels.substance.api.painter.fill.ClassicFillPainter;
 import org.pushingpixels.substance.api.painter.highlight.ClassicHighlightPainter;
 import org.pushingpixels.substance.api.shaper.ClassicButtonShaper;
 import org.pushingpixels.substance.api.skin.CremeSkin;
 
-public class SubstanceCSIGSkin extends CremeSkin {
+public class SubstanceCSIGSkin extends SubstanceSkin {
 
 	public static final String NAME = "CSIGTheme";
 
 	public SubstanceCSIGSkin () {
-		super();
+		//super();
 		
-		SubstanceColorScheme activeScheme = new LightAquaColorScheme()
-		.tint(0.3).named("Creme Active");
+		SubstanceColorScheme activeScheme = new ColorScheme()
+		.tint(0.3).named("CSIG");
 		SubstanceColorScheme enabledScheme = new ColorScheme();
-		SubstanceColorScheme disabledScheme = new LightGrayColorScheme().tint(
-				0.35).named("Creme Disabled");
+		SubstanceColorScheme disabledScheme = new ColorScheme().tint(
+				0.35).named("CSIG Disabled");
 
 		SubstanceColorSchemeBundle defaultSchemeBundle = new SubstanceColorSchemeBundle(
 				activeScheme, enabledScheme, disabledScheme);
@@ -40,23 +44,18 @@ public class SubstanceCSIGSkin extends CremeSkin {
 				DecorationAreaType.PRIMARY_TITLE_PANE_INACTIVE,
 				DecorationAreaType.SECONDARY_TITLE_PANE_INACTIVE);*/
 
-		setSelectedTabFadeStart(0.2);
-		setSelectedTabFadeEnd(0.4);
+		/*setSelectedTabFadeStart(0.2);
+		setSelectedTabFadeEnd(0.4);*/
 
+		this.decorationPainter = new FlatDecorationPainter();
+		this.borderPainter = new FlatBorderPainter();
+		
+		//this.fillPainter = new SubstanceCSIGFillPainter();
+		
 		this.buttonShaper = new ClassicButtonShaper();
 		this.fillPainter = new ClassicFillPainter();
-		this.decorationPainter = new ArcDecorationPainter();
 		this.highlightPainter = new ClassicHighlightPainter();
-		this.borderPainter = new CompositeBorderPainter("Creme",
-				new ClassicBorderPainter(), new DelegateBorderPainter(
-						"Creme Inner", new ClassicBorderPainter(),
-						new ColorSchemeTransform() {
-							@Override
-							public SubstanceColorScheme transform(
-									SubstanceColorScheme scheme) {
-								return scheme.tint(0.9f);
-							}
-						}));
+		
 	}
 
 	@Override

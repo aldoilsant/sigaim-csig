@@ -25,6 +25,7 @@ import com.jgoodies.forms.factories.FormFactory;
 
 import javax.swing.JLabel;
 
+import org.sigaim.csig.theme.ColorScheme;
 import org.sigaim.csig.view.helper.BackgroundImage;
 import org.sigaim.csig.view.helper.FontHelper;
 
@@ -121,10 +122,12 @@ public class WaitModal extends JDialog {
 		Font lato_small = FontHelper.getTTF("Lato-Regular.ttf", 12);
 		JLabel lblPleaseWait = new JLabel("ESPERE, POR FAVOR");
 		lblPleaseWait.setFont(lato);
+		lblPleaseWait.setForeground(ColorScheme.textColor);
 		getContentPane().add(lblPleaseWait, "1, 6, center, bottom");
 		
 		lblMessage = new JLabel(message);
 		lblMessage.setFont(lato_small);
+		lblMessage.setForeground(ColorScheme.textColor);
 		getContentPane().add(lblMessage, "1, 9, center, bottom");
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

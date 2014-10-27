@@ -1,7 +1,10 @@
 package org.sigaim.csig.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -45,6 +48,7 @@ public class LoginDialog extends JDialog {
 		controller = _controller;
 		
 		setBounds(100, 100, 338, 312);
+		
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);

@@ -197,13 +197,6 @@ public class Main implements ViewController {
 					UIManager.setLookAndFeel(new SubstanceCSIGLookAndFeel());
 					JFrame.setDefaultLookAndFeelDecorated(true);
 					JDialog.setDefaultLookAndFeelDecorated(true);
-				    /*for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-				        if ("Nimbus".equals(info.getName())) {
-				            UIManager.setLookAndFeel(info.getClassName());
-				            break;
-				        }
-				    }
-				    CSIGTheme.apply();*/
 				} catch (Exception e) {
 					e.printStackTrace();
 					try {
