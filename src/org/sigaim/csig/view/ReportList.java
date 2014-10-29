@@ -86,11 +86,11 @@ public class ReportList {
 	}
 	public void updateVersionList(List<CSIGReport> newList){
 		versionList = newList;
-		tblVersions.setModel( new ReportVersionTableModel(versionList));
+		tblVersions.setModel(new ReportVersionTableModel(versionList));
 		tblVersions.getColumnModel().getColumn(0).setPreferredWidth(20);
 		tblVersions.getColumnModel().getColumn(0).setMinWidth(20);
 		int lastrow = tblVersions.getRowCount()-1;
-		if(lastrow > 0)
+		if(lastrow >= 0)
 			tblVersions.setRowSelectionInterval(lastrow, lastrow);
 	}
 	
@@ -130,21 +130,21 @@ public class ReportList {
 		ListSelectionModel lsm = tblInformes.getSelectionModel();
 		lsm.addListSelectionListener(new TblReportListSelectionHandler(tblInformes));
 		
-				scrListaInformes.setViewportView(tblInformes);
-				GroupLayout gl_pnlInformList = new GroupLayout(pnlInformList);
-				gl_pnlInformList.setHorizontalGroup(
-					gl_pnlInformList.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_pnlInformList.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(scrListaInformes, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
-							.addContainerGap())
-				);
-				gl_pnlInformList.setVerticalGroup(
-					gl_pnlInformList.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrListaInformes, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
-				);
-				pnlInformList.setLayout(gl_pnlInformList);
-				scrListaInformes.setVisible(true);
+		scrListaInformes.setViewportView(tblInformes);
+		GroupLayout gl_pnlInformList = new GroupLayout(pnlInformList);
+		gl_pnlInformList.setHorizontalGroup(
+			gl_pnlInformList.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_pnlInformList.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(scrListaInformes, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		gl_pnlInformList.setVerticalGroup(
+			gl_pnlInformList.createParallelGroup(Alignment.LEADING)
+				.addComponent(scrListaInformes, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
+		);
+		pnlInformList.setLayout(gl_pnlInformList);
+		scrListaInformes.setVisible(true);
 		
 		JPanel pnlVersions = new JPanel();
 		panel.add(pnlVersions);
@@ -172,6 +172,9 @@ public class ReportList {
 		);
 		
 		tblVersions = new JTable();
+		lsm = tblVersions.getSelectionModel();
+		lsm.addListSelectionListener(new TblVersionListSelectionHandler(tblVersions));
+		
 		updateVersionList(new ArrayList<CSIGReport>());
 		scrVersions.setViewportView(tblVersions);
 		pnlVersions.setLayout(gl_pnlVersions);
@@ -284,11 +287,20 @@ public class ReportList {
 			txtReport.setText("");
 			versionList = new ArrayList<CSIGReport>(0);
 		} else {
-			txtReport.setText(i.getFullText());
+			//txtReport.setText(i.getFullText());
 			versionList = controller.getModelController().getVersions(i);	
 		}
 		updateVersionList(versionList);
 	}
+	private void setSelectedReportVersion(CSIGReport i) {
+		selectedReport = i;
+		if(selectedReport == null) {
+			txtReport.setText("");
+		} else {
+			txtReport.setText(i.getFullText());
+		}
+	}
+	
 	
 	class TblReportListSelectionHandler implements ListSelectionListener {
 		int selectedIndex = -1;
@@ -310,6 +322,32 @@ public class ReportList {
 				else {
 					selectedIndex = table.getSelectedRow();
 					setSelectedReport(reportList.get(selectedIndex));
+					//btnReview.setEnabled(true);
+					//btnShow.setEnabled(true);
+				}
+			}
+	        
+	    }
+	}
+	class TblVersionListSelectionHandler implements ListSelectionListener {
+		int selectedIndex = -1;
+		JTable table;
+
+		public TblVersionListSelectionHandler(JTable parent) {
+			super();
+			table = parent;			
+		}
+		
+		@Override
+	    public void valueChanged(ListSelectionEvent e) {
+			if(selectedIndex != table.getSelectedRow()){
+				if(table.getSelectedRow() < 0) {
+					selectedIndex = table.getSelectedRow();
+					setSelectedReportVersion(null);
+				}
+				else {
+					selectedIndex = table.getSelectedRow();
+					setSelectedReportVersion(versionList.get(selectedIndex));
 					btnReview.setEnabled(true);
 					btnShow.setEnabled(true);
 				}
