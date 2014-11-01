@@ -547,7 +547,7 @@ public class CSIGModel implements IntCSIGModel {
 		
 		try {
 			newReport = reportClient.updateReport("updateReport", ehr, report.getII(), composer,
-					serializedsoip,	 false, false, confirmed, rootArchetypeId, newConcepts);
+					serializedsoip,	 true, true, confirmed, rootArchetypeId, newConcepts);
 		} catch (RejectException e) {
 			System.err.println("[Error] Could not update report.");
 			e.printStackTrace();

@@ -13,6 +13,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,6 +25,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -216,8 +218,44 @@ public class ShowReport extends JPanel {
 	}
 	
 	private void saveReport(){
-		report.setBiased(
-				updatePart(txtBiased, report.getBiased(), report.getBiasedConcepts()));
+		final ShowReport self = this;
+		
+		SwingWorker<Boolean,Void> updateWorker = new SwingWorker<Boolean,Void>(){
+			@Override
+			protected Boolean doInBackground() throws Exception {
+				report.setBiased(
+						updatePart(txtBiased, report.getBiased(), report.getBiasedConcepts()));
+				report.setUnbiased(
+						updatePart(txtUnbiased, report.getUnbiased(), report.getUnbiasedConcepts()));
+				report.setPlan(
+						updatePart(txtPlan, report.getPlan(), report.getPlanConcepts()));
+				report.setImpressions(
+						updatePart(txtImpression, report.getImpressions(), report.getImpressionsConcepts()));
+				return controller.updateReport(report, false);
+			}
+			
+			@Override
+			protected void done(){
+				try {
+					if(this.get())
+						frame.dispose();
+					else{
+						WaitModal.close();
+						self.setVisible(true);
+						JOptionPane.showMessageDialog(frame, lang.getString("Error.CouldNotUpdateReport"), "Error", JOptionPane.ERROR_MESSAGE);
+					}
+				} catch (HeadlessException | InterruptedException
+						| ExecutionException e) {
+					e.printStackTrace();
+					WaitModal.close();
+					self.setVisible(true);
+					JOptionPane.showMessageDialog(frame, lang.getString("Error.InternalError"), "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		};
+		
+		WaitModal.open("Actualizando informe");
+		updateWorker.execute();
 	}
 	
 	private void setTextPane(JTextPane pane, String text, List<CSIGConcept>concepts){

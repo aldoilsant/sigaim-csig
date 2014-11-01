@@ -1,5 +1,6 @@
 package org.sigaim.csig.view;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -11,11 +12,14 @@ public class ReportVersionTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = -5826567355596416470L;
 	
-	private String[] columnNames = {"Versi\u00F3n", "Creaci\u00F3n", "Facultativo"};
+	private String[] columnNames = {"Versi\u00F3n", "Informe", "Creaci\u00F3n", "Facultativo"};
 	private List<CSIGReport> data;
+	
+	SimpleDateFormat sdf;
 
 	public ReportVersionTableModel(List<CSIGReport> _data)
 	{
+		sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
 		data = _data;
 	}
 
@@ -35,10 +39,12 @@ public class ReportVersionTableModel extends AbstractTableModel {
     	switch(col) {
     		case 0:
     			//return data.get(row).getVersion();
-    			return data.get(row).getId();
+    			return row;
     		case 1:
-    			return data.get(row).getCreation().getTime();
+    			return data.get(row).getId();
     		case 2:
+    			return sdf.format(data.get(row).getCreation().getTime());
+    		case 3:
     			return data.get(row).getFacultative();
     		default:
     			return new Object();
@@ -52,6 +58,7 @@ public class ReportVersionTableModel extends AbstractTableModel {
 			case 1:
 				return String.class; //Date
 			case 2:
+			case 3:
 				return String.class;
 			default:
 				return Object.class;
