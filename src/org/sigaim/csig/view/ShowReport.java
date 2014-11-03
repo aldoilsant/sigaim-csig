@@ -36,6 +36,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
@@ -64,6 +66,31 @@ public class ShowReport extends JPanel {
 	private Font conceptFont, conceptFontRed;
 	
 	private boolean edited = false; //Is any concept edited?
+	private DocumentListener textChangeListener = new DocumentListener() {
+
+		private void edited(){
+			if(!edited){
+				edited = true;
+				btnAnalyze.setEnabled(true);
+				btnFinalize.setEnabled(false);
+			}
+		}
+		
+        @Override
+        public void removeUpdate(DocumentEvent e) {
+        	edited();        		
+        }
+
+        @Override
+        public void insertUpdate(DocumentEvent e) {
+        	edited();
+        }
+
+        @Override
+        public void changedUpdate(DocumentEvent arg0) {
+        	edited();
+        }
+    };
 	
 	//String constants
 	static String strAskSave = "¿Quiere guardar los cambios realizados en el informe antes de cerrarlo?";
@@ -74,6 +101,8 @@ public class ShowReport extends JPanel {
 	private JTextPane txtBiased;
 	private JTextPane txtImpression;
 	private JTextPane txtPlan;
+	private JButton btnFinalize;
+	private JButton btnAnalyze;
 	
 	private class ConceptLabel extends JLabel {
 		private CSIGConcept concept;
@@ -340,6 +369,7 @@ public class ShowReport extends JPanel {
 		);
 		
 		txtBiased = new JTextPane();
+		txtBiased.getDocument().addDocumentListener(textChangeListener);
 		scrBiased.setViewportView(txtBiased);
 		pnlBiased.setLayout(gl_pnlBiased);
 		
@@ -369,7 +399,7 @@ public class ShowReport extends JPanel {
 		);
 		
 		txtUnbiased = new JTextPane();
-		txtUnbiased.setEditable(false);
+		txtUnbiased.getDocument().addDocumentListener(textChangeListener);
 		scrUnbiased.setViewportView(txtUnbiased);
 		pnlUnbiased.setLayout(gl_pnlUnbiased);
 		
@@ -399,7 +429,7 @@ public class ShowReport extends JPanel {
 		);
 		
 		txtImpression = new JTextPane();
-		txtImpression.setEditable(false);
+		txtImpression.getDocument().addDocumentListener(textChangeListener);
 		scrImpression.setViewportView(txtImpression);
 		pnlImpression.setLayout(gl_pnlImpression);
 		
@@ -429,7 +459,7 @@ public class ShowReport extends JPanel {
 		);
 		
 		txtPlan = new JTextPane();
-		txtPlan.setEditable(false);
+		txtPlan.getDocument().addDocumentListener(textChangeListener);
 		scrPlan.setViewportView(txtPlan);
 		pnlPlan.setLayout(gl_pnlPlan);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -439,15 +469,26 @@ public class ShowReport extends JPanel {
 		fl_pnlActions.setAlignment(FlowLayout.RIGHT);
 		frame.getContentPane().add(pnlActions, BorderLayout.SOUTH);
 		
-		final JButton btnAnalyze = new JButton(lang.getString("btnSave"));
+		btnAnalyze = new JButton(lang.getString("btnReanalize"));
+		btnAnalyze.setEnabled(false);
 		btnAnalyze.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				saveReport();
-				//if(saveReport() == true)
-				//	frame.dispose();
 			}
 		});
 		pnlActions.add(btnAnalyze);
+		
+		btnFinalize = new JButton(lang.getString("btnFinalize"));
+		btnFinalize.setEnabled(true);
+		btnFinalize.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ev) {
+				if(edited)
+					saveReport();
+				else
+					frame.dispose();
+			}
+		});
+		pnlActions.add(btnFinalize);
 		
 		frame.setLocation(
 				  ((int) (screenSize.getWidth()) - frame.getWidth())/2, 

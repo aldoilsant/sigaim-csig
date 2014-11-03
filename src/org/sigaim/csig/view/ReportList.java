@@ -216,7 +216,7 @@ public class ReportList {
 		pnlInforme.setLayout(glInforme);
 		lblInformeCompleto.setHorizontalAlignment(SwingConstants.LEFT);
 		
-		JToolBar toolFilter = new JToolBar();
+		/*JToolBar toolFilter = new JToolBar();
 		toolFilter.setFloatable(false);
 		toolFilter.setBounds(new Rectangle(10, 10, 1, 1));
 		pnlVistaInformes.add(toolFilter, BorderLayout.SOUTH);
@@ -238,7 +238,7 @@ public class ReportList {
 		
 		txtKeywords = new JTextField();
 		toolFilter.add(txtKeywords);
-		txtKeywords.setColumns(10);
+		txtKeywords.setColumns(10);*/
 		
 		frame.getContentPane().add(pnlVistaInformes);
 		
