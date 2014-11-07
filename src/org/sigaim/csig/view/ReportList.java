@@ -50,7 +50,7 @@ public class ReportList {
 	private JTextField txtFiltreFacultative;
 	private JTextField txtKeywords;
 	private JPanel pnlVistaInformes;
-	private JTable tblInformes;
+	private JTable tblReports;
 	private ViewController controller;
 	private JTextArea txtReport;
 	private JButton btnShow;
@@ -69,20 +69,20 @@ public class ReportList {
 	
 	public void updateList(List<CSIGReport> newList){
 		reportList = newList;
-		tblInformes.setModel(new ReportTableModel(reportList));
-		tblInformes.getColumnModel().getColumn(0).setPreferredWidth(100);
-		tblInformes.getColumnModel().getColumn(0).setMinWidth(100);
-		tblInformes.getColumnModel().getColumn(0).setMaxWidth(100);
-		tblInformes.getColumnModel().getColumn(1).setPreferredWidth(100);
-		tblInformes.getColumnModel().getColumn(1).setMinWidth(100);
-		tblInformes.getColumnModel().getColumn(1).setMaxWidth(100);
-		tblInformes.getColumnModel().getColumn(2).setResizable(false);
-		tblInformes.getColumnModel().getColumn(2).setPreferredWidth(200);
-		tblInformes.getColumnModel().getColumn(2).setMinWidth(200);
-		tblInformes.getColumnModel().getColumn(2).setMaxWidth(200);
-		tblInformes.getColumnModel().getColumn(3).setPreferredWidth(200);
-		tblInformes.getColumnModel().getColumn(3).setMinWidth(200);
-		tblInformes.getColumnModel().getColumn(3).setMaxWidth(200);
+		tblReports.setModel(new ReportTableModel(reportList));
+		tblReports.getColumnModel().getColumn(0).setPreferredWidth(100);
+		tblReports.getColumnModel().getColumn(0).setMinWidth(100);
+		tblReports.getColumnModel().getColumn(0).setMaxWidth(100);
+		tblReports.getColumnModel().getColumn(1).setPreferredWidth(100);
+		tblReports.getColumnModel().getColumn(1).setMinWidth(100);
+		tblReports.getColumnModel().getColumn(1).setMaxWidth(100);
+		tblReports.getColumnModel().getColumn(2).setResizable(false);
+		tblReports.getColumnModel().getColumn(2).setPreferredWidth(200);
+		tblReports.getColumnModel().getColumn(2).setMinWidth(200);
+		tblReports.getColumnModel().getColumn(2).setMaxWidth(200);
+		tblReports.getColumnModel().getColumn(3).setPreferredWidth(200);
+		tblReports.getColumnModel().getColumn(3).setMinWidth(200);
+		tblReports.getColumnModel().getColumn(3).setMaxWidth(200);
 	}
 	public void updateVersionList(List<CSIGReport> newList){
 		versionList = newList;
@@ -123,14 +123,15 @@ public class ReportList {
 		
 		//reportTableModel = ;
 		
-		tblInformes = new JTable();
+		tblReports = new JTable();
+		tblReports.setAutoCreateRowSorter(true);
 		updateList(reportList);  //Set TableModel and column sizes
-		tblInformes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tblReports.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
-		ListSelectionModel lsm = tblInformes.getSelectionModel();
-		lsm.addListSelectionListener(new TblReportListSelectionHandler(tblInformes));
+		ListSelectionModel lsm = tblReports.getSelectionModel();
+		lsm.addListSelectionListener(new TblReportListSelectionHandler(tblReports));
 		
-		scrListaInformes.setViewportView(tblInformes);
+		scrListaInformes.setViewportView(tblReports);
 		GroupLayout gl_pnlInformList = new GroupLayout(pnlInformList);
 		gl_pnlInformList.setHorizontalGroup(
 			gl_pnlInformList.createParallelGroup(Alignment.LEADING)

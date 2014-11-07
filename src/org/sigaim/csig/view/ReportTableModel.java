@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
+import org.sigaim.csig.model.CSIGPatient;
 import org.sigaim.csig.model.CSIGReport;
 
 public class ReportTableModel extends AbstractTableModel {
@@ -57,9 +58,11 @@ public class ReportTableModel extends AbstractTableModel {
 			case 0:
 				return String.class;
 			case 1:
+				return CSIGPatient.class;
 			case 2:
-			case 3:
 				return String.class;
+			case 3:
+				return Long.class;
 			default:
 				return Object.class;
     	}

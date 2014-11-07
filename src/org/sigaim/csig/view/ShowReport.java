@@ -185,6 +185,9 @@ public class ShowReport extends JPanel {
 		setTextPane(txtUnbiased, r.getUnbiased(), r.getUnbiasedConcepts());
 		setTextPane(txtImpression, r.getImpressions(), r.getImpressionsConcepts());
 		setTextPane(txtPlan, r.getPlan(), r.getPlanConcepts());
+		edited = false;
+		btnAnalyze.setEnabled(false);
+		btnFinalize.setEnabled(true);
 	}
 	private void showSaveDialog(){
 		int response;
@@ -470,7 +473,7 @@ public class ShowReport extends JPanel {
 		frame.getContentPane().add(pnlActions, BorderLayout.SOUTH);
 		
 		btnAnalyze = new JButton(lang.getString("btnReanalize"));
-		btnAnalyze.setEnabled(false);
+		//btnAnalyze.setEnabled(false);
 		btnAnalyze.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				saveReport();
@@ -479,7 +482,7 @@ public class ShowReport extends JPanel {
 		pnlActions.add(btnAnalyze);
 		
 		btnFinalize = new JButton(lang.getString("btnFinalize"));
-		btnFinalize.setEnabled(true);
+		//btnFinalize.setEnabled(true);
 		btnFinalize.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent ev) {
 				if(edited)
