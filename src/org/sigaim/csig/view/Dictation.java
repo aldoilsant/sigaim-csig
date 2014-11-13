@@ -1,6 +1,7 @@
 package org.sigaim.csig.view;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -9,13 +10,16 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -42,6 +46,8 @@ import javax.swing.SwingWorker;
 
 import org.sigaim.csig.model.CSIGPatient;
 import org.sigaim.csig.model.CSIGReport;
+import org.sigaim.csig.persistence.PersistenceManager;
+import org.sigaim.csig.persistence.PersistentObject;
 
 import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -52,7 +58,7 @@ import com.jgoodies.forms.layout.Sizes;
 import es.udc.tic.rnasa.sigaim_transcriptor_client.TranscriptionClientApi;
 import es.udc.tic.rnasa.sigaim_transcriptor_client.TranscriptionClientApiImpl;
 
-public class Dictation extends JPanel implements Observer {
+public class Dictation extends JPanel implements Observer, PersistentObject {
 	
 	//private String transcriptionServiceUrl = "193.147.36.199";
 
@@ -528,6 +534,8 @@ public class Dictation extends JPanel implements Observer {
 				  ((int) (screenSize.getWidth()) - frame.getWidth())/2, 
 				  ((int) (screenSize.getHeight()) - frame.getHeight())/2);
 		frame.setVisible(true);
+		
+		PersistenceManager.watch(this);
 	}
 	
 	private void translate() {
@@ -578,5 +586,32 @@ public class Dictation extends JPanel implements Observer {
 			}
 		}
 		
+	}
+
+	@Override
+	public byte[] toData() {
+		Hashtable<String, Component> status = new Hashtable<String,Component>();
+		for(Component c : frame.getComponents()) {
+			status.put(c.getName(), c);
+		}	
+		ByteArrayOutputStream bs= new ByteArrayOutputStream();
+		try {			
+			ObjectOutputStream os = new ObjectOutputStream (bs);
+			os.writeObject(status);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return bs.toByteArray();
+	}
+
+	@Override
+	public void restore() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getUID() {
+		return Long.toString(report.getId());
 	}
 }
