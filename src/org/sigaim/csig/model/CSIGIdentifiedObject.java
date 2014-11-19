@@ -3,7 +3,7 @@ package org.sigaim.csig.model;
 import org.sigaim.siie.iso13606.rm.II;
 
 public abstract class CSIGIdentifiedObject {
-
+	
 	private long id;
 	private String root;
 	private II ii;
@@ -12,6 +12,14 @@ public abstract class CSIGIdentifiedObject {
 		id = Long.parseLong(siieObject.getExtension());		
 		root = siieObject.getRoot();
 		ii = siieObject;
+	}
+	
+	protected CSIGIdentifiedObject(String code) {
+		id = Long.parseLong(code.split("/")[1]);
+		root = code.split("/")[0];
+		ii = new II();
+		ii.setExtension(code);
+		ii.setRoot(root);
 	}
 	
 	protected CSIGIdentifiedObject() {

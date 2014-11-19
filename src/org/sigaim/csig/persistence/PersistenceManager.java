@@ -27,7 +27,7 @@ public class PersistenceManager {
 			try {
 				File folder = file.getParentFile();
 				if(!folder.exists()) {
-					folder.mkdir();
+					folder.mkdirs();
 				}
 				file.createNewFile();
 			} catch (IOException e) {
@@ -82,7 +82,7 @@ public class PersistenceManager {
 	}
 	
 	public static void watch(PersistentObject obj) {
-		watching.put(obj, new PersistenceManager(obj));		
+		//watching.put(obj, new PersistenceManager(obj));		
 	}
 	public static void discard(PersistentObject obj) {
 		PersistenceManager man = watching.get(obj);

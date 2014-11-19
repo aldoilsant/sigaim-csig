@@ -32,6 +32,7 @@ import org.pushingpixels.substance.api.skin.SubstanceGraphiteLookAndFeel;
 import org.sigaim.csig.model.CSIGFacility;
 import org.sigaim.csig.model.CSIGFacultative;
 import org.sigaim.csig.model.CSIGModel;
+import org.sigaim.csig.model.CSIGPatient;
 import org.sigaim.csig.model.IntCSIGModel;
 import org.sigaim.csig.model.CSIGReport;
 import org.sigaim.csig.theme.CSIGTheme;
@@ -306,10 +307,13 @@ public class Main implements ViewController {
 		reportStatus.setCode("RSTA02");
 		II ehr = model.getEHRIdFromPatient(Long.parseLong(patient.split("/")[1]));
 		
+		
 		final CSIGReport r = model.createReport(bias, unbias, impressions, plan, composer, ehr, reportStatus);
 		
 		if(r==null)
 			return false;
+		else
+			r.setPatient(new CSIGPatient(patient));
 		
 		WaitModal.setMessage("Recuperando análisis del servidor");
 		model.fillSoip(r);
@@ -335,9 +339,8 @@ public class Main implements ViewController {
 	@Override
 	public boolean updateReport(CSIGReport report, boolean confirmed) {
 		FunctionalRole composer = currentComposer();
-		model.updateReport(report, composer, confirmed);
-		
-		return false;
+		CSIGReport newReport = model.updateReport(report, composer, confirmed);
+		return newReport != null;
 	}	
 	
 	@Override

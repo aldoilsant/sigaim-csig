@@ -28,7 +28,7 @@ public interface IntCSIGModel {
 	CSIGPatient createPatient();
 	II getEHRIdFromPatient(long patientId);
 	CSIGReport createReport(String bias, String unbias, String impressions, String plan, FunctionalRole composer,
-			II ehrId, CDCV status);
+			II subjectOfCare, CDCV status);
 	CSIGReport updateReport(CSIGReport report, FunctionalRole composer, boolean confirmed);
 	
 	Cluster conceptsToCluster(CSIGReport r);

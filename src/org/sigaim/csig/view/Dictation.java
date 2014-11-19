@@ -35,6 +35,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -204,7 +205,21 @@ public class Dictation extends JPanel implements Observer, PersistentObject {
 
 				@Override
 				protected Boolean doInBackground() throws Exception {
-					return controller.updateReport(report, false);
+					CSIGReport cleanR = null;
+					try {
+						//Update CSIGReport in memory
+						cleanR = report.clone();
+						cleanR.setBiased(txtBiased.getText());
+						cleanR.setUnbiased(txtUnbiased.getText());
+						cleanR.setImpressions(txtImpression.getText());
+						cleanR.setPlan(txtPlan.getText());
+					} catch (CloneNotSupportedException e) {
+						e.printStackTrace();
+						JOptionPane.showMessageDialog(frame, lang.getString("Error.InternalError"), "Error", JOptionPane.ERROR_MESSAGE);
+						return false;
+					}
+					
+					return controller.updateReport(cleanR, false);
 				}
 				
 				@Override
@@ -228,11 +243,6 @@ public class Dictation extends JPanel implements Observer, PersistentObject {
 			};
 			
 			WaitModal.open("Actualizando informe");
-			//Update CSIGReport in memory
-			report.setBiased(txtBiased.getText());
-			report.setUnbiased(txtUnbiased.getText());
-			report.setImpressions(txtImpression.getText());
-			report.setPlan(txtPlan.getText());
 			this.setVisible(false);
 			//And send it to update in SIIE
 			updateWorker.execute();
@@ -584,16 +594,19 @@ public class Dictation extends JPanel implements Observer, PersistentObject {
 			} catch (Exception e){
 				e.printStackTrace();
 			}
-		}
-		
+		}	
 	}
 
 	@Override
 	public byte[] toData() {
-		Hashtable<String, Component> status = new Hashtable<String,Component>();
-		for(Component c : frame.getComponents()) {
-			status.put(c.getName(), c);
-		}	
+		
+		Hashtable<String, JComponent> status = new Hashtable<String,JComponent>();
+		status.put("txtBiased", txtBiased);
+		status.put("txtUnbiased", txtUnbiased);
+		status.put("txtImpression", txtImpression);
+		status.put("txtPlan", txtPlan);
+		//status.put("ddlPatient", ddlPatient);
+			
 		ByteArrayOutputStream bs= new ByteArrayOutputStream();
 		try {			
 			ObjectOutputStream os = new ObjectOutputStream (bs);

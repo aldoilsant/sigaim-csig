@@ -63,6 +63,7 @@ public class CSIGModel implements IntCSIGModel {
 			List<IntSIIEReportSummary> list = eqlClient.getAllReportSummaries();
 			for(IntSIIEReportSummary rs : list){
 				CSIGReport r = new CSIGReport(this);
+				r.isLastVersion(true);
 				r.setCreation(rs.getCommisionDate().toGregorianCalendar());
 				r.setPatient(new CSIGPatient(rs.getSubject()));
 				r.setFacultative(rs.getPerformer().getRoot() + "/" + rs.getPerformer().getExtension());
@@ -520,7 +521,8 @@ public class CSIGModel implements IntCSIGModel {
 		
 		if(newReport != null) {
 			CSIGReport r = new CSIGReport(this);
-			r.setPatient(new CSIGPatient(ehrId));
+			r.isLastVersion(true);
+			//r.setPatient(new CSIGPatient());
 			r.setFacultative(composer.getPerformer().getRoot() + "/" + composer.getPerformer().getExtension());
 			r.setId(newReport.getRcId());
 			return r;
@@ -556,8 +558,9 @@ public class CSIGModel implements IntCSIGModel {
 		
 		//Create a new empty CSIGReport to clean and update things
 		if(newReport != null) {
+			report.isLastVersion(false);
 			CSIGReport r = new CSIGReport(this);
-			r.setPatient(new CSIGPatient(ehr));
+			r.setPatient(new CSIGPatient(report.getPatient().getII()));
 			r.setFacultative(composer.getPerformer().getRoot() + "/" + composer.getPerformer().getExtension());
 			r.setId(newReport.getRcId());
 			return r;

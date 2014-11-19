@@ -7,5 +7,10 @@ public class CSIGPatient extends CSIGIdentifiedObject {
 	CSIGPatient(II siieObject) {
 		super(siieObject);
 	}
+	
+	//TODO: this patch is ugly, best case if we can delete this constructor and the super(string)
+	public CSIGPatient(String id){
+		super(id);
+	}
 
 }

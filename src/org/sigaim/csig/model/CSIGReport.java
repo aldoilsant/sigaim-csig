@@ -20,20 +20,21 @@ import org.sigaim.siie.iso13606.rm.Item;
 import org.sigaim.siie.iso13606.rm.ST;
 
 
-public class CSIGReport extends CSIGIdentifiedObject {
+public class CSIGReport extends CSIGIdentifiedObject implements Cloneable {
 	
 	private List<CSIGConcept> biasedConcepts;
 	private List<CSIGConcept> unbiasedConcepts;
 	private List<CSIGConcept> impressionsConcepts;
 	private List<CSIGConcept> planConcepts;
 	private Calendar creation;
-	private int versionNumber;
-	private ArrayList<CSIGReport> versions;
+	//private int versionNumber;
+	//private ArrayList<CSIGReport> versions;
 	private CSIGPatient patient;
 	private String facultative;
-	private Long ehr;
+	private long ehr;
 	private II versionSet;
 	//private String reportId;
+	private boolean lastVersion = false;
 	
 	private String biased;
 	private String unbiased;
@@ -43,45 +44,26 @@ public class CSIGReport extends CSIGIdentifiedObject {
 	private HashMap<String, List<CSIGConcept>> synonyms;
 	
 	private IntCSIGModel modelController;
-
-	/*private ArrayList<Object> copySoip(ArrayList<Object> list) {
-		ArrayList<Object> rtn = new ArrayList<Object>(list.size());
-		for(Object o : list){
-			if(o instanceof String)
-				rtn.add(o);
-			else if (o instanceof CSIGConcept)
-				rtn.add((new CSIGConcept( (CSIGConcept)o )));
-			else
-				throw new IllegalStateException("Soip containing Object that is not String nor SnomeConcept");
-		}
-		return rtn;
-	}*/
 	
-	/*private String getPlainText(ArrayList<Object> soipNote) {
-		String rtn = new String();
-		for(Object o : soipNote) {
-			if(o instanceof String)
-				rtn = rtn.concat((String)o);
-			else if (o instanceof CSIGConcept)
-				rtn = rtn.concat(((CSIGConcept)o).text);
-			else
-				throw new IllegalStateException("Soip containing Object that is not String nor SnomeConcept");
-		}
-		return rtn;		
-	}*/
+	/**
+	 * Does not copy referenced objects.
+	 */
+	public CSIGReport clone() throws CloneNotSupportedException {
+		return (CSIGReport) super.clone();
+	}
 	
 	public CSIGReport(IntCSIGModel controller) {
 		modelController = controller;
-		versionNumber = 1;
+		//versionNumber = 1;
 		creation = Calendar.getInstance();
-		versions = new ArrayList<CSIGReport>();
-		versions.add(this);
+		//versions = new ArrayList<CSIGReport>();
+		//versions.add(this);
 	}
 	public CSIGReport(CSIGReport prev) {
 		modelController = prev.modelController;
-		versionNumber = prev.versionNumber + 1;
+		//versionNumber = prev.versionNumber + 1;
 		creation = Calendar.getInstance();
-		versions = prev.versions;
+		//versions = prev.versions;
 		/*biased = copySoip(prev.biased);
 		unbiased = copySoip(prev.unbiased);
 		impressions = copySoip(prev.impressions);
@@ -89,7 +71,7 @@ public class CSIGReport extends CSIGIdentifiedObject {
 		
 		patient = prev.patient;
 		facultative = prev.facultative;
-		versions.add(this);
+		//versions.add(this);
 	}
 	
 	public void fillConcepts(){
@@ -97,6 +79,8 @@ public class CSIGReport extends CSIGIdentifiedObject {
 			modelController.fillSoipConcepts(this);
 	}
 	
+	
+	/* GETERS & SETTERS */
 	public List<CSIGConcept> getBiasedConcepts() {
 		if(biasedConcepts == null)
 			modelController.fillSoipConcepts(this);
@@ -136,9 +120,9 @@ public class CSIGReport extends CSIGIdentifiedObject {
 	public void setCreation(Calendar creation) {
 		this.creation = creation;
 	}
-	public List<CSIGReport> getVersions() {
+	/*public List<CSIGReport> getVersions() {
 		return versions;
-	}
+	}*/
 	public String getFullText() {
 		return "S: "+getBiased()+ "\n\nO: "+getUnbiased()+ "\n\nI: "+getImpressions()+ "\n\nP: "+getPlan();
 	}
@@ -147,8 +131,8 @@ public class CSIGReport extends CSIGIdentifiedObject {
 		return patient;
 	}
 	public void setPatient(CSIGPatient patient) {
-		for(CSIGReport i : versions)
-			i.patient = patient;
+		//for(CSIGReport i : versions)
+			this.patient = patient;
 	}
 	public String getFacultative() {
 		return facultative;
@@ -201,9 +185,9 @@ public class CSIGReport extends CSIGIdentifiedObject {
 		this.plan = dictationPlan;
 	}
 	
-	public int getVersion(){
+	/*public int getVersion(){
 		return this.versionNumber;
-	}
+	}*/
 	
 	public long getEhr() {
 		return this.ehr;
@@ -223,6 +207,15 @@ public class CSIGReport extends CSIGIdentifiedObject {
 	public II getVersionSet(){
 		return versionSet;
 	}
+	
+	public void isLastVersion(boolean isit){
+		lastVersion = isit;
+	}
+	public boolean isLastVersion(){
+		return lastVersion;
+	}
+	
+	/* SERIALIZATION */
 	
 	public Cluster toCluster(){
 		Cluster rtn = new Cluster();

@@ -92,7 +92,7 @@ public class WaitModal extends JDialog {
 	 */
 	private WaitModal() {
 		setContentPane(new BackgroundImage("/org/sigaim/csig/resources/img/WaitModal.png"));
-		setAlwaysOnTop(true);
+		//setAlwaysOnTop(true);
 		//setModal(true);
 		setResizable(false);
 		setUndecorated(true);
