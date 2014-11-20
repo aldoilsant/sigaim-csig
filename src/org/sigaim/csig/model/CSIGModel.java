@@ -103,7 +103,10 @@ public class CSIGModel implements IntCSIGModel {
 		String bias=null, unbias=null, impress=null, plan=null;
 		
 		try {
-			soip = eqlClient.getReportSoip(report.getId());
+			if(report.isLastVersion())
+				soip = eqlClient.getReportSoip(report.getId());
+			else
+				soip = eqlClient.getOldReportSoip(report.getId());
 		} catch (RejectException e) {
 			e.printStackTrace();
 		}
@@ -121,7 +124,6 @@ public class CSIGModel implements IntCSIGModel {
 			else if(code.equals("at0006"))
 				plan = ((ST)e.getValue()).getValue();
 		}
-		
 		
 		if(bias != null)
 			report.setBiased(bias);
@@ -157,7 +159,6 @@ public class CSIGModel implements IntCSIGModel {
 			return false;
 		}
 	}
-
 
 	@Override
 	public List<String> getFacilities() {
@@ -319,7 +320,10 @@ public class CSIGModel implements IntCSIGModel {
 		report.setPlanConcepts(planConcepts);
 		
 		try {
-			concepts = eqlClient.getConceptInformationForReportId(report.getII());
+			if(report.isLastVersion())
+				concepts = eqlClient.getConceptInformationForReportId(report.getII());
+			else
+				concepts = eqlClient.getConceptInformationForOldReportId(report.getII());				
 		} catch (RejectException e) {
 			e.printStackTrace();
 			return null;
