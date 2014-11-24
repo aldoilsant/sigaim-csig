@@ -1,38 +1,19 @@
 package org.sigaim.csig.tests;
 
-import static org.junit.Assert.fail;
-
 import java.io.ByteArrayInputStream;
-import java.net.InetSocketAddress;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
-import java.util.Observer;
-
 import org.junit.Test;
 import org.openehr.am.parser.ContentObject;
 import org.sigaim.csig.model.CSIGModel;
-import org.sigaim.csig.model.CSIGPatient;
 import org.sigaim.csig.model.CSIGReport;
 import org.sigaim.csig.model.ModelConstants;
-import org.sigaim.siie.clients.ws.WSIntSIIE004ReportManagementClient;
 import org.sigaim.siie.dadl.DADLManager;
 import org.sigaim.siie.dadl.OpenEHRDADLManager;
-import org.sigaim.siie.iso13606.rm.CDCV;
 import org.sigaim.siie.iso13606.rm.Cluster;
-import org.sigaim.siie.iso13606.rm.EHRExtract;
 import org.sigaim.siie.iso13606.rm.Element;
-import org.sigaim.siie.iso13606.rm.FunctionalRole;
-import org.sigaim.siie.iso13606.rm.HealthcareFacility;
-import org.sigaim.siie.iso13606.rm.II;
 import org.sigaim.siie.iso13606.rm.Item;
-import org.sigaim.siie.iso13606.rm.Performer;
 import org.sigaim.siie.iso13606.rm.ST;
 import org.sigaim.siie.rm.ReferenceModelManager;
 import org.sigaim.siie.rm.ReflectorReferenceModelManager;
-import org.sigaim.siie.rm.exceptions.RejectException;
-
-import es.udc.tic.rnasa.sigaim_transcriptor_client.TranscriptionClientApiImpl;
 
 public class CreateReportTest {
 
