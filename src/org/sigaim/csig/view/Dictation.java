@@ -56,8 +56,8 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.layout.Sizes;
 
-import es.udc.tic.rnasa.sigaim_transcriptor_client.TranscriptionClientApi;
-import es.udc.tic.rnasa.sigaim_transcriptor_client.TranscriptionClientApiImpl;
+import es.udc.tic.rnasa.sigaim_transcriptor.client.TranscriptionClientApi;
+import es.udc.tic.rnasa.sigaim_transcriptor.client.TranscriptionClientApiImpl;
 
 public class Dictation extends JPanel implements Observer, PersistentObject {
 	
@@ -115,10 +115,11 @@ public class Dictation extends JPanel implements Observer, PersistentObject {
 
 			@Override
 			protected Void doInBackground() throws Exception {
-				transcriptor = new TranscriptionClientApiImpl();
-				connected = transcriptor.connect(new InetSocketAddress(
+				InetSocketAddress addr = new InetSocketAddress(
 						controller.getTranscriptionIP(),
-						controller.getTranscriptionPort()));
+						controller.getTranscriptionPort());
+				transcriptor = new TranscriptionClientApiImpl(addr);
+				transcriptor.connect();
 				return null;
 			}
 			
