@@ -1,0 +1,10110 @@
+
+<
+	reference_model_class_name = 
+	<
+		"Cluster"
+	>
+	links = 
+	<
+		
+	>
+	parts = 
+	<
+		[1]=
+		<
+			reference_model_class_name = 
+			<
+				"Cluster"
+			>
+			links = 
+			<
+				
+			>
+			parts = 
+			<
+				[1]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0010"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"386661006"
+						>
+						code_system_name = 
+						<
+							"SCTSPA"
+						>
+						code_system_version = 
+						<
+							"1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"fiebre (hallazgo)"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					
+				>
+				[2]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0011"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							114
+						>
+						
+					>
+					
+				>
+				[3]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0012"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							120
+						>
+						
+					>
+					
+				>
+				[4]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0013"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0013"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Path"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"94"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"content[at0003]/members[at0012]/members[at0004]/items[at0005][0]/parts[at0025]/parts[at0029]/parts[at0002]"
+						>
+						
+					>
+					
+				>
+				[5]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0014"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0014"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Nodo"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"99"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"at0002"
+						>
+						
+					>
+					
+				>
+				[6]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0015"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"válido"
+						>
+						
+					>
+					
+				>
+				
+			>
+			policy_ids = 
+			<
+				
+			>
+			synthesised = 
+			<
+				false
+			>
+			
+		>
+		[2]=
+		<
+			reference_model_class_name = 
+			<
+				"Cluster"
+			>
+			links = 
+			<
+				
+			>
+			parts = 
+			<
+				[1]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0010"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"27991004"
+						>
+						code_system_name = 
+						<
+							"SNOMED-CT"
+						>
+						code_system_version = 
+						<
+							"1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"termometrada"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					
+				>
+				[2]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0011"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							121
+						>
+						
+					>
+					
+				>
+				[3]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0012"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							133
+						>
+						
+					>
+					
+				>
+				[4]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0013"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0013"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Path"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"190"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					
+				>
+				[5]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0014"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0014"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Nodo"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"187"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"at0005"
+						>
+						
+					>
+					
+				>
+				[6]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0015"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"válido"
+						>
+						
+					>
+					
+				>
+				
+			>
+			policy_ids = 
+			<
+				
+			>
+			synthesised = 
+			<
+				false
+			>
+			
+		>
+		[3]=
+		<
+			reference_model_class_name = 
+			<
+				"Cluster"
+			>
+			links = 
+			<
+				
+			>
+			parts = 
+			<
+				[1]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0010"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"409596002"
+						>
+						code_system_name = 
+						<
+							"SCTSPA"
+						>
+						code_system_version = 
+						<
+							"1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"tos no productiva (hallazgo)"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					
+				>
+				[2]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0011"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							159
+						>
+						
+					>
+					
+				>
+				[3]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0012"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							175
+						>
+						
+					>
+					
+				>
+				[4]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0013"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0013"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Path"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"129"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"content[at0003]/members[at0012]/members[at0004]/items[at0005][1]/parts[at0025]/parts[at0029]/parts[at0002]"
+						>
+						
+					>
+					
+				>
+				[5]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0014"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0014"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Nodo"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"131"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"at0002"
+						>
+						
+					>
+					
+				>
+				[6]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0015"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"válido"
+						>
+						
+					>
+					
+				>
+				
+			>
+			policy_ids = 
+			<
+				
+			>
+			synthesised = 
+			<
+				false
+			>
+			
+		>
+		[4]=
+		<
+			reference_model_class_name = 
+			<
+				"Cluster"
+			>
+			links = 
+			<
+				
+			>
+			parts = 
+			<
+				[1]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0010"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"135815002"
+						>
+						code_system_name = 
+						<
+							"SNOMED-CT"
+						>
+						code_system_version = 
+						<
+							"1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Buen estado general"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					
+				>
+				[2]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0011"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							192
+						>
+						
+					>
+					
+				>
+				[3]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0012"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							211
+						>
+						
+					>
+					
+				>
+				[4]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0013"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0013"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Path"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"136"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"content[at0003]/members[at0013]/members[at0001]/members[at0001]/members[at0001]/items[at0002]"
+						>
+						
+					>
+					
+				>
+				[5]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0014"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0014"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Nodo"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"137"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"at0002"
+						>
+						
+					>
+					
+				>
+				[6]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0015"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"válido"
+						>
+						
+					>
+					
+				>
+				
+			>
+			policy_ids = 
+			<
+				
+			>
+			synthesised = 
+			<
+				false
+			>
+			
+		>
+		[5]=
+		<
+			reference_model_class_name = 
+			<
+				"Cluster"
+			>
+			links = 
+			<
+				
+			>
+			parts = 
+			<
+				[1]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0010"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"S0000001"
+						>
+						code_system_name = 
+						<
+							"SIGAIM"
+						>
+						code_system_version = 
+						<
+							"1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"consciente, orientado y colaborador"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					
+				>
+				[2]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0011"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							213
+						>
+						
+					>
+					
+				>
+				[3]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0012"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							248
+						>
+						
+					>
+					
+				>
+				[4]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0013"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0013"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Path"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"152"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					
+				>
+				[5]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0014"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0014"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Nodo"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"151"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"at0035"
+						>
+						
+					>
+					
+				>
+				[6]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0015"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"válido"
+						>
+						
+					>
+					
+				>
+				
+			>
+			policy_ids = 
+			<
+				
+			>
+			synthesised = 
+			<
+				false
+			>
+			
+		>
+		[6]=
+		<
+			reference_model_class_name = 
+			<
+				"Cluster"
+			>
+			links = 
+			<
+				
+			>
+			parts = 
+			<
+				[1]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0010"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"22803001"
+						>
+						code_system_name = 
+						<
+							"SNOMED-CT"
+						>
+						code_system_version = 
+						<
+							"1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"eupneico"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					
+				>
+				[2]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0011"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							250
+						>
+						
+					>
+					
+				>
+				[3]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0012"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							258
+						>
+						
+					>
+					
+				>
+				[4]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0013"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0013"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Path"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"143"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"content[at0003]/members[at0013]/members[at0001]/members[at0001]/members[at0029]/members[at0032]/items[at0008]"
+						>
+						
+					>
+					
+				>
+				[5]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0014"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0014"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Nodo"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"145"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"at0008"
+						>
+						
+					>
+					
+				>
+				[6]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0015"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"válido"
+						>
+						
+					>
+					
+				>
+				
+			>
+			policy_ids = 
+			<
+				
+			>
+			synthesised = 
+			<
+				false
+			>
+			
+		>
+		[7]=
+		<
+			reference_model_class_name = 
+			<
+				"Cluster"
+			>
+			links = 
+			<
+				
+			>
+			parts = 
+			<
+				[1]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0010"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"271825005"
+						>
+						code_system_name = 
+						<
+							"SNOMED-CT"
+						>
+						code_system_version = 
+						<
+							"1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"distrés respiratorio"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					
+				>
+				[2]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0011"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							274
+						>
+						
+					>
+					
+				>
+				[3]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0012"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							294
+						>
+						
+					>
+					
+				>
+				[4]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0013"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0013"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Path"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"157"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"content[at0003]/members[at0013]/members[at0001]/members[at0001]/members[at0003]/items[at0004]"
+						>
+						
+					>
+					
+				>
+				[5]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0014"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0014"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Nodo"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"160"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"at0004"
+						>
+						
+					>
+					
+				>
+				[6]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0015"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"válido"
+						>
+						
+					>
+					
+				>
+				
+			>
+			policy_ids = 
+			<
+				
+			>
+			synthesised = 
+			<
+				false
+			>
+			
+		>
+		[8]=
+		<
+			reference_model_class_name = 
+			<
+				"Cluster"
+			>
+			links = 
+			<
+				
+			>
+			parts = 
+			<
+				[1]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0010"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"164623002"
+						>
+						code_system_name = 
+						<
+							"SNOMED-CT"
+						>
+						code_system_version = 
+						<
+							"1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"exantemas"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					
+				>
+				[2]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0011"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							299
+						>
+						
+					>
+					
+				>
+				[3]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0012"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							308
+						>
+						
+					>
+					
+				>
+				[4]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0013"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0013"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Path"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"101"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					
+				>
+				[5]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0014"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0014"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Nodo"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"106"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"at0013"
+						>
+						
+					>
+					
+				>
+				[6]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0015"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"válido"
+						>
+						
+					>
+					
+				>
+				
+			>
+			policy_ids = 
+			<
+				
+			>
+			synthesised = 
+			<
+				false
+			>
+			
+		>
+		[9]=
+		<
+			reference_model_class_name = 
+			<
+				"Cluster"
+			>
+			links = 
+			<
+				
+			>
+			parts = 
+			<
+				[1]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0010"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"164331003"
+						>
+						code_system_name = 
+						<
+							"SNOMED-CT"
+						>
+						code_system_version = 
+						<
+							"1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"petequias"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					
+				>
+				[2]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0011"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							312
+						>
+						
+					>
+					
+				>
+				[3]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0012"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							321
+						>
+						
+					>
+					
+				>
+				[4]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0013"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0013"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Path"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"213"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					
+				>
+				[5]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0014"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0014"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Nodo"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"217"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"at0015"
+						>
+						
+					>
+					
+				>
+				[6]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0015"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"válido"
+						>
+						
+					>
+					
+				>
+				
+			>
+			policy_ids = 
+			<
+				
+			>
+			synthesised = 
+			<
+				false
+			>
+			
+		>
+		[10]=
+		<
+			reference_model_class_name = 
+			<
+				"Cluster"
+			>
+			links = 
+			<
+				
+			>
+			parts = 
+			<
+				[1]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0010"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"312450001"
+						>
+						code_system_name = 
+						<
+							"SNOMED-CT"
+						>
+						code_system_version = 
+						<
+							"1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Bien hidratado"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					
+				>
+				[2]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0011"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							323
+						>
+						
+					>
+					
+				>
+				[3]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0012"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							337
+						>
+						
+					>
+					
+				>
+				[4]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0013"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0013"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Path"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"122"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"content[at0003]/members[at0013]/members[at0001]/members[at0001]/members[at0009]/members[at0036]/items[at0037]"
+						>
+						
+					>
+					
+				>
+				[5]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0014"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0014"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Nodo"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"123"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"at0037"
+						>
+						
+					>
+					
+				>
+				[6]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0015"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"válido"
+						>
+						
+					>
+					
+				>
+				
+			>
+			policy_ids = 
+			<
+				
+			>
+			synthesised = 
+			<
+				false
+			>
+			
+		>
+		[11]=
+		<
+			reference_model_class_name = 
+			<
+				"Cluster"
+			>
+			links = 
+			<
+				
+			>
+			parts = 
+			<
+				[1]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0010"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"S0000002"
+						>
+						code_system_name = 
+						<
+							"SIGAIM"
+						>
+						code_system_version = 
+						<
+							"1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"bien perfundido"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					
+				>
+				[2]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0011"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							340
+						>
+						
+					>
+					
+				>
+				[3]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0012"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							355
+						>
+						
+					>
+					
+				>
+				[4]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0013"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0013"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Path"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"207"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"content[at0003]/members[at0013]/members[at0001]/members[at0001]/members[at0009]/members[at0010]/items[at0011]"
+						>
+						
+					>
+					
+				>
+				[5]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0014"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0014"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Nodo"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"211"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"at0011"
+						>
+						
+					>
+					
+				>
+				[6]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0015"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"válido"
+						>
+						
+					>
+					
+				>
+				
+			>
+			policy_ids = 
+			<
+				
+			>
+			synthesised = 
+			<
+				false
+			>
+			
+		>
+		[12]=
+		<
+			reference_model_class_name = 
+			<
+				"Cluster"
+			>
+			links = 
+			<
+				
+			>
+			parts = 
+			<
+				[1]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0010"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"262004005"
+						>
+						code_system_name = 
+						<
+							"SIGAIM"
+						>
+						code_system_version = 
+						<
+							"1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Afebril"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					
+				>
+				[2]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0011"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							357
+						>
+						
+					>
+					
+				>
+				[3]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0012"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							364
+						>
+						
+					>
+					
+				>
+				[4]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0013"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0013"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Path"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"222"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"content[at0003]/members[at0013]/members[at0001]/members[at0001]/members[at0029]/members[at0030]/items[at0006]"
+						>
+						
+					>
+					
+				>
+				[5]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0014"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0014"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Nodo"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"225"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"at0006"
+						>
+						
+					>
+					
+				>
+				[6]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0015"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"válido"
+						>
+						
+					>
+					
+				>
+				
+			>
+			policy_ids = 
+			<
+				
+			>
+			synthesised = 
+			<
+				false
+			>
+			
+		>
+		[13]=
+		<
+			reference_model_class_name = 
+			<
+				"Cluster"
+			>
+			links = 
+			<
+				
+			>
+			parts = 
+			<
+				[1]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0010"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"301344003"
+						>
+						code_system_name = 
+						<
+							"SNOMED-CT"
+						>
+						code_system_version = 
+						<
+							"1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"36.3 grados"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					
+				>
+				[2]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0011"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							365
+						>
+						
+					>
+					
+				>
+				[3]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0012"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							376
+						>
+						
+					>
+					
+				>
+				[4]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0013"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0013"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Path"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"174"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					
+				>
+				[5]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0014"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0014"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Nodo"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"173"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"at0001"
+						>
+						
+					>
+					
+				>
+				[6]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0015"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"válido"
+						>
+						
+					>
+					
+				>
+				
+			>
+			policy_ids = 
+			<
+				
+			>
+			synthesised = 
+			<
+				false
+			>
+			
+		>
+		[14]=
+		<
+			reference_model_class_name = 
+			<
+				"Cluster"
+			>
+			links = 
+			<
+				
+			>
+			parts = 
+			<
+				[1]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0010"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"30098003"
+						>
+						code_system_name = 
+						<
+							"SNOMED-CT"
+						>
+						code_system_version = 
+						<
+							"1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Hiperemia"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					
+				>
+				[2]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0011"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							400
+						>
+						
+					>
+					
+				>
+				[3]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0012"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							409
+						>
+						
+					>
+					
+				>
+				[4]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0013"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0013"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Path"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"165"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					
+				>
+				[5]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0014"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0014"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Nodo"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"164"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"at0033"
+						>
+						
+					>
+					
+				>
+				[6]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0015"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"válido"
+						>
+						
+					>
+					
+				>
+				
+			>
+			policy_ids = 
+			<
+				
+			>
+			synthesised = 
+			<
+				false
+			>
+			
+		>
+		[15]=
+		<
+			reference_model_class_name = 
+			<
+				"Cluster"
+			>
+			links = 
+			<
+				
+			>
+			parts = 
+			<
+				[1]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0010"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"46449008"
+						>
+						code_system_name = 
+						<
+							"SNOMED-CT"
+						>
+						code_system_version = 
+						<
+							"1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"exudados"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					
+				>
+				[2]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0011"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							436
+						>
+						
+					>
+					
+				>
+				[3]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0012"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							444
+						>
+						
+					>
+					
+				>
+				[4]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0013"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0013"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Path"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"117"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					
+				>
+				[5]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0014"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0014"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Nodo"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"119"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"at0109"
+						>
+						
+					>
+					
+				>
+				[6]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0015"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"válido"
+						>
+						
+					>
+					
+				>
+				
+			>
+			policy_ids = 
+			<
+				
+			>
+			synthesised = 
+			<
+				false
+			>
+			
+		>
+		[16]=
+		<
+			reference_model_class_name = 
+			<
+				"Cluster"
+			>
+			links = 
+			<
+				
+			>
+			parts = 
+			<
+				[1]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0010"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"S0000038"
+						>
+						code_system_name = 
+						<
+							"SIGAIM"
+						>
+						code_system_version = 
+						<
+							"1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Murmullo vesicular conservado"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					
+				>
+				[2]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0011"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							480
+						>
+						
+					>
+					
+				>
+				[3]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0012"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							509
+						>
+						
+					>
+					
+				>
+				[4]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0013"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0013"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Path"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"180"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"content[at0003]/members[at0013]/members[at0001]/members[at0004]/members[at0001]/members[at0015]/items[at0016]/parts[at0017]"
+						>
+						
+					>
+					
+				>
+				[5]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0014"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0014"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Nodo"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"178"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"at0017"
+						>
+						
+					>
+					
+				>
+				[6]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0015"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"válido"
+						>
+						
+					>
+					
+				>
+				
+			>
+			policy_ids = 
+			<
+				
+			>
+			synthesised = 
+			<
+				false
+			>
+			
+		>
+		[17]=
+		<
+			reference_model_class_name = 
+			<
+				"Cluster"
+			>
+			links = 
+			<
+				
+			>
+			parts = 
+			<
+				[1]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0010"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"162896002"
+						>
+						code_system_name = 
+						<
+							"SNOMED-CT"
+						>
+						code_system_version = 
+						<
+							"1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"estertores"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					
+				>
+				[2]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0011"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							514
+						>
+						
+					>
+					
+				>
+				[3]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0012"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							524
+						>
+						
+					>
+					
+				>
+				[4]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0013"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0013"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Path"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"199"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					
+				>
+				[5]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0014"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0014"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Nodo"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"202"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"at0073"
+						>
+						
+					>
+					
+				>
+				[6]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0015"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"válido"
+						>
+						
+					>
+					
+				>
+				
+			>
+			policy_ids = 
+			<
+				
+			>
+			synthesised = 
+			<
+				false
+			>
+			
+		>
+		[18]=
+		<
+			reference_model_class_name = 
+			<
+				"Cluster"
+			>
+			links = 
+			<
+				
+			>
+			parts = 
+			<
+				[1]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0010"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"82272006"
+						>
+						code_system_name = 
+						<
+							"SNOMED-CT"
+						>
+						code_system_version = 
+						<
+							"1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Síndrome catarral"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					
+				>
+				[2]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0011"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							542
+						>
+						
+					>
+					
+				>
+				[3]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0012"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							559
+						>
+						
+					>
+					
+				>
+				[4]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0013"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0013"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Path"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"193"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					
+				>
+				[5]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0014"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0014"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Nodo"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"192"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"at0001"
+						>
+						
+					>
+					
+				>
+				[6]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0015"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"válido"
+						>
+						
+					>
+					
+				>
+				
+			>
+			policy_ids = 
+			<
+				
+			>
+			synthesised = 
+			<
+				false
+			>
+			
+		>
+		[19]=
+		<
+			reference_model_class_name = 
+			<
+				"Cluster"
+			>
+			links = 
+			<
+				
+			>
+			parts = 
+			<
+				[1]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0010"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"38268001"
+						>
+						code_system_name = 
+						<
+							"SNOMED-CT"
+						>
+						code_system_version = 
+						<
+							"1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Ibuprofeno"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					
+				>
+				[2]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0011"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							571
+						>
+						
+					>
+					
+				>
+				[3]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0012"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							581
+						>
+						
+					>
+					
+				>
+				[4]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0013"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0013"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Path"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"112"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"content[at0003]/members[at0015]/members[at0003]/members[at0004][0]/items[at0001]/parts[at0004]"
+						>
+						
+					>
+					
+				>
+				[5]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0014"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0014"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Nodo"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"108"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"at0004"
+						>
+						
+					>
+					
+				>
+				[6]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0015"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"válido"
+						>
+						
+					>
+					
+				>
+				
+			>
+			policy_ids = 
+			<
+				
+			>
+			synthesised = 
+			<
+				false
+			>
+			
+		>
+		[20]=
+		<
+			reference_model_class_name = 
+			<
+				"Cluster"
+			>
+			links = 
+			<
+				
+			>
+			parts = 
+			<
+				[1]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0010"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"M0000001"
+						>
+						code_system_name = 
+						<
+							"SIGAIM"
+						>
+						code_system_version = 
+						<
+							"1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Iniston antitusivo"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					
+				>
+				[2]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0011"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							606
+						>
+						
+					>
+					
+				>
+				[3]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0012"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"INT"
+						>
+						value = 
+						<
+							624
+						>
+						
+					>
+					
+				>
+				[4]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					>
+					archetype_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"at0013"
+						>
+						root = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						
+					>
+					links = 
+					<
+						
+					>
+					meaning = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						code = 
+						<
+							"at0013"
+						>
+						code_system_name = 
+						<
+							"CEN-EN13606-ENTRY.Informacion.v1"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					name = 
+					<
+						reference_model_class_name = 
+						<
+							"CDCV"
+						>
+						coding_rationale = 
+						<
+							
+						>
+						display_name = 
+						<
+							reference_model_class_name = 
+							<
+								"ST"
+							>
+							translation = 
+							<
+								
+							>
+							value = 
+							<
+								"Path"
+							>
+							
+						>
+						translation = 
+						<
+							
+						>
+						
+					>
+					policy_ids = 
+					<
+						
+					>
+					rc_id = 
+					<
+						reference_model_class_name = 
+						<
+							"II"
+						>
+						extension = 
+						<
+							"92"
+						>
+						root = 
+						<
+							"org.sigaim"
+						>
+						
+					>
+					synthesised = 
+					<
+						false
+					>
+					value = 
+					<
+						reference_model_class_name = 
+						<
+							"ST"
+						>
+						translation = 
+						<
+							
+						>
+						value = 
+						<
+							"content[at0003]/members[at0015]/members[at0003]/members[at0004][1]/items[at0001]/parts[at0004]"
+						>
+						
+					>
+					
+				>
+				[5]=
+				<
+					reference_model_class_name = 
+					<
+						"Element"
+					

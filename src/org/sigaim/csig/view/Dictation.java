@@ -42,9 +42,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingWorker;
 
+import org.junit.Assert;
 import org.sigaim.csig.model.CSIGPatient;
 import org.sigaim.csig.model.CSIGReport;
 import org.sigaim.csig.persistence.PersistenceManager;
@@ -58,8 +60,11 @@ import com.jgoodies.forms.layout.Sizes;
 
 import es.udc.tic.rnasa.sigaim_transcriptor.client.TranscriptionClientApi;
 import es.udc.tic.rnasa.sigaim_transcriptor.client.TranscriptionClientApiImpl;
+import es.udc.tic.rnasa.sigaim_transcriptor.client.util.TranscriptionBundle;
+import es.udc.tic.rnasa.sigaim_transcriptor.client.util.TranscriptionStateEvent;
+import es.udc.tic.rnasa.sigaim_transcriptor.client.ui.event.*;
 
-public class Dictation extends JPanel implements Observer, PersistentObject {
+public class Dictation extends JPanel implements TranscriptionListener, PersistentObject {
 	
 	//private String transcriptionServiceUrl = "193.147.36.199";
 
@@ -108,10 +113,10 @@ public class Dictation extends JPanel implements Observer, PersistentObject {
 		if(r != null)
 			updateReportView(r);
 		
-		final Observer self = this;
+		final TranscriptionListener self = this;
 		SwingWorker<Void,Void> connectTranscription = new SwingWorker<Void,Void>(){
 			
-			boolean connected = false;
+			//boolean connected = false;
 
 			@Override
 			protected Void doInBackground() throws Exception {
@@ -119,17 +124,17 @@ public class Dictation extends JPanel implements Observer, PersistentObject {
 						controller.getTranscriptionIP(),
 						controller.getTranscriptionPort());
 				transcriptor = new TranscriptionClientApiImpl(addr);
-				transcriptor.connect();
+				((TranscriptionClientApiImpl) transcriptor).addTranscriptionListener(self);
+				/*connected = */transcriptor.connect();
 				return null;
 			}
 			
 			@Override
 			protected void done(){
-				if(connected) {
+				/*if(connected) {
 					btnRecord.setEnabled(true);
-					transcriptor.addObserver(self);
 				} else
-					System.out.println("Error connecting to transcription service");
+					System.out.println("Error connecting to transcription service");*/
 			}
 			
 		};
@@ -553,8 +558,8 @@ public class Dictation extends JPanel implements Observer, PersistentObject {
 		
 	}
 	
-	//Observer for transcription service
-	@Override
+	//Listener for transcription service
+	/*@Override
 	public void update(Observable arg0, Object arg1) {
 		System.out.println("Receiving transcription");
 		Path transcription = (Path) arg1;
@@ -578,10 +583,88 @@ public class Dictation extends JPanel implements Observer, PersistentObject {
 			System.err.println("Error reading transcription file");
 			x.printStackTrace();
 		}
+	}*/
+	@Override
+	public void transcriptionActionPerformed(TranscriptionEvent event) {
+		final TranscriptionBundle transcriptionBundle = event.getTranscriptionBundle();
+		final TranscriptionStateEvent stateEvent = event.getTranscriptionStateEvent();
+		
+		switch(stateEvent)
+		{
+		case CONNECTION_CLOSED:
+		case CONNECTION_FAILED:
+			SwingUtilities.invokeLater(new Runnable(){
+				@Override
+				public void run() {
+					btnRecord.setEnabled(false);
+					btnPause.setEnabled(false);
+					if(isRecording) {
+						line.stop();
+						line.close();
+						isRecording = false;
+					}
+				}
+			});
+			System.err.println("[Transcription] Connection failed.");
+			break;
+		case NOT_CONNECTED:
+			System.err.println("[Transcription] NOT_CONNECTED");
+			break;
+		case PING_SENT:
+			System.out.println("[Transcription] PING_SENT");
+			break;
+		case PONG_RECEIVED:
+			System.out.println("[Transcription] PONG_RECEIVED");
+			break;
+		case READY_FOR_DATA:
+			SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					btnRecord.setEnabled(true);
+				}
+			});
+			break;
+		case TRANSCRIPTION_FAILED:
+			System.err.println("[Transcription] TRANSCRIPTION_FAILED");
+			break;
+		case TRANSCRIPTION_RECEIVED:
+			// Read transcription from file
+			try(BufferedReader reader = Files.newBufferedReader(transcriptionBundle.getTranscription(), Charset.forName("UTF-8")))
+			{
+				String line = null;
+				StringBuilder transcription = new StringBuilder();
+				while((line = reader.readLine()) != null)
+				{
+					JTextArea txt = mantainCaretFocusListener.getLastTextArea();
+					if(txt == null) {
+						System.err.println("No text area selected");
+						break;
+					} else {
+						txt.insert(line, txt.getCaretPosition());
+						txt.setCaretPosition(txt.getCaretPosition()+line.length());
+					}
+				}
+			}
+			catch(IOException e)
+			{
+				e.printStackTrace();
+			}
+			break;
+		case AUDIO_SENT:
+			System.out.println("AUDIO_SENT");
+			break;
+		case EXCEPTION:
+			System.out.println("EXCEPTION");
+			System.out.println(stateEvent.getDescription());
+			break;
+		default:
+			System.err.println("[Transcription] Unknown response, is jar same version?");
+			break;
+		}		
 	}
 	
 	class CaptureThread extends Thread{
-		private boolean isPaused;
+		//private boolean isPaused;
 		
 		public void run(){
 			btnPause.setEnabled(true);
@@ -595,7 +678,11 @@ public class Dictation extends JPanel implements Observer, PersistentObject {
 			} catch (Exception e){
 				e.printStackTrace();
 			}
-		}	
+		}
+		
+		public void terminate(){
+			
+		}
 	}
 
 	@Override

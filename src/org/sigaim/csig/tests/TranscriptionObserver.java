@@ -4,16 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
-import java.util.Observable;
-import java.util.Observer;
 
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-
-import org.junit.internal.runners.statements.Fail;
 import org.junit.Assert;
 
-import es.udc.tic.rnasa.sigaim_transcriptor.client.ui.SwingClientFrame;
 import es.udc.tic.rnasa.sigaim_transcriptor.client.util.TranscriptionStateEvent;
 import es.udc.tic.rnasa.sigaim_transcriptor.client.ui.event.*;
 import es.udc.tic.rnasa.sigaim_transcriptor.client.util.TranscriptionBundle;

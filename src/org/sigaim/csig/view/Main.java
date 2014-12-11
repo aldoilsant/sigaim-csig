@@ -60,7 +60,7 @@ public class Main implements ViewController {
 	
 	//static public String transip = "193.147.36.199";
 	static public String transip = "193.144.33.85";
-	static public int transport = 8000;
+	static public int transport = 8080;
 	
 	public JFrame frame;
 	private JDialog login;
