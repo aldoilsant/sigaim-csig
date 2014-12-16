@@ -10,9 +10,11 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
@@ -95,15 +97,26 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 	
 	private MantainCaretFocusListener mantainCaretFocusListener = new MantainCaretFocusListener();
 	
+	public Dictation(ViewController _controller){
+		controller = _controller;
+		lang = controller.getLang();
+		
+		frame = new JFrame();
+		frame.setTitle(lang.getString("Dictation.TitleEdit"));
+		initialize();
+		connectTranscriptionService();
+	}
+	
+	
 	/**
 	 * Create the panel.
 	 */
 	public Dictation(CSIGReport r, ViewController _controller) {
 		controller = _controller;
 		lang = controller.getLang();
-
-
+		
 		frame = new JFrame();
+
 		if(r != null)
 			frame.setTitle(lang.getString("Dictation.TitleEdit"));
 		else
@@ -113,6 +126,12 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 		if(r != null)
 			updateReportView(r);
 		
+		connectTranscriptionService();
+		
+		frame.requestFocus();
+	}
+	
+	private void connectTranscriptionService(){
 		final TranscriptionListener self = this;
 		SwingWorker<Void,Void> connectTranscription = new SwingWorker<Void,Void>(){
 			
@@ -139,8 +158,6 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 			
 		};
 		connectTranscription.execute();
-		
-		frame.requestFocus();
 	}
 	
 	private void updateReportView(CSIGReport r) {
@@ -554,10 +571,6 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 		PersistenceManager.watch(this);
 	}
 	
-	private void translate() {
-		
-	}
-	
 	//Listener for transcription service
 	/*@Override
 	public void update(Observable arg0, Object arg1) {
@@ -706,9 +719,35 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 	}
 
 	@Override
-	public void restore() {
-		// TODO Auto-generated method stub
+	public void restore(byte[] data) {
+		ByteArrayInputStream is = new ByteArrayInputStream(data);
+		Hashtable<String, JComponent> status;
 		
+		try {
+			ObjectInputStream os = new ObjectInputStream(is);
+			status = (Hashtable<String, JComponent>) os.readObject();
+		} catch(IOException e){
+			e.printStackTrace();
+			return;
+		} catch(ClassNotFoundException e){
+			e.printStackTrace();
+			//TODO message, discard object & wrong version?
+			return;
+		}
+		JTextArea txtarea = (JTextArea) status.get("txtBiased");
+		txtBiased.setText(txtarea.getText());
+		txtBiased.setCaret(txtarea.getCaret());
+		txtarea = (JTextArea) status.get("txtUnbiased");
+		txtUnbiased.setText(txtarea.getText());
+		txtUnbiased.setCaret(txtarea.getCaret());
+		txtarea = (JTextArea) status.get("txtImpression");
+		txtImpression.setText(txtarea.getText());
+		txtImpression.setCaret(txtarea.getCaret());
+		txtarea = (JTextArea) status.get("txtPlan");
+		txtPlan.setText(txtarea.getText());
+		txtPlan.setCaret(txtarea.getCaret());
+		
+		frame.requestFocus();
 	}
 
 	@Override

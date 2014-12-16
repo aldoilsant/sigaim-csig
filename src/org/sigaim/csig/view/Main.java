@@ -35,6 +35,7 @@ import org.sigaim.csig.model.CSIGModel;
 import org.sigaim.csig.model.CSIGPatient;
 import org.sigaim.csig.model.IntCSIGModel;
 import org.sigaim.csig.model.CSIGReport;
+import org.sigaim.csig.persistence.PersistenceManager;
 import org.sigaim.csig.theme.CSIGTheme;
 import org.sigaim.csig.theme.SubstanceCSIGLookAndFeel;
 import org.sigaim.csig.theme.SubstanceCSIGSkin;
@@ -92,6 +93,9 @@ public class Main implements ViewController {
 			//frame.removeAll();
 			if(reportList==null)
 				reportList = new ReportList(frame, this);
+			
+			PersistenceManager.check(this);
+			
 			return true;
 		} else {
 			JOptionPane.showMessageDialog(null, lang.getString("Error.InvalidLoginInfo"), "Error", JOptionPane.ERROR_MESSAGE);

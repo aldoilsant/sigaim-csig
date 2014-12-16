@@ -5,9 +5,15 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileLock;
+import java.nio.file.Files;
 import java.util.Hashtable;
+import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javax.swing.JOptionPane;
+
+import org.sigaim.csig.view.ViewController;
 
 public class PersistenceManager {
 	
@@ -89,5 +95,48 @@ public class PersistenceManager {
 		if(man != null) {
 			man.discard();
 		}
+	}
+	/**
+	 * Checks persistence storage to tell user if any lost work in progress to restore.
+	 */
+	public static void check(ViewController controller) {
+		 File storage = new File("tmp");
+		 if(!storage.exists() || !storage.isDirectory()){
+			 System.out.println("[PersistenceManager] No persistence storage detected.");
+		 } else {
+			 for(File classFolder : storage.listFiles()){
+				 
+				 if(!classFolder.isDirectory()) continue;
+				 for(File objectFile : classFolder.listFiles()){
+					
+					Class objectClass;
+					PersistentObject object;
+					try {
+						objectClass = Class.forName(classFolder.getName());
+					} catch (ClassNotFoundException e){
+						System.err.println("[PersistenceManager] Unknown class "+classFolder.getName() + 
+								" the folder " +classFolder.getAbsolutePath()+ "should not be in there if no class equivalence.");
+						break;
+					}
+					
+					String question = "Dictation.ConfirmExit"+objectClass.getName();
+					int response = JOptionPane.showConfirmDialog(null, question, "Confirme",
+					      JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+					
+					switch(response){
+						case JOptionPane.YES_OPTION:
+						try {
+							object = (PersistentObject) objectClass
+									.getDeclaredConstructor(ViewController.class)
+									.newInstance(controller);
+							object.restore(Files.readAllBytes(objectFile.toPath()));
+						} catch (Exception e) {
+							e.printStackTrace();
+							continue;
+						}
+					}
+				 }
+			 }
+		 }
 	}
 }
