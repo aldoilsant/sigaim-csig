@@ -39,6 +39,7 @@ import org.sigaim.csig.persistence.PersistenceManager;
 import org.sigaim.csig.theme.CSIGTheme;
 import org.sigaim.csig.theme.SubstanceCSIGLookAndFeel;
 import org.sigaim.csig.theme.SubstanceCSIGSkin;
+import org.sigaim.csig.view.helper.Audio;
 import org.sigaim.siie.iso13606.rm.CDCV;
 import org.sigaim.siie.iso13606.rm.FunctionalRole;
 import org.sigaim.siie.iso13606.rm.II;
@@ -65,14 +66,17 @@ public class Main implements ViewController {
 	
 	public JFrame frame;
 	private JDialog login;
-	private ReportList reportList;
+	private ReportList reportListWindow;
+	
+	List<CSIGReport> reportList;
 	
 	public ResourceBundle lang;
 	
 	private TargetDataLine line;
 	
 	public List<CSIGReport> getReports() {
-		return model.getReports();
+		reportList = model.getReports(); //Keep local reference to reportList updated 
+		return reportList;
 	}
 	
 	public boolean doLogin(String user, String centre, char[] password) {
@@ -91,8 +95,8 @@ public class Main implements ViewController {
 			login.dispose();
 			login = null;
 			//frame.removeAll();
-			if(reportList==null)
-				reportList = new ReportList(frame, this);
+			if(reportListWindow==null)
+				reportListWindow = new ReportList(frame, this);
 			
 			PersistenceManager.check(this);
 			
@@ -207,16 +211,12 @@ public class Main implements ViewController {
 					try {
 						UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 					} catch (ClassNotFoundException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					} catch (InstantiationException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					} catch (IllegalAccessException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					} catch (UnsupportedLookAndFeelException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}		    	
@@ -334,8 +334,8 @@ public class Main implements ViewController {
 				
 			});
 		
-		if(reportList != null) {
-			reportList.updateList(this.getReports());
+		if(reportListWindow != null) {
+			reportListWindow.updateList(this.getReports());
 		}
 		return true;
 	}
@@ -353,57 +353,6 @@ public class Main implements ViewController {
 			lang = ResourceBundle.getBundle("org.sigaim.csig.resources.lang.Text",new Locale("es"));
 		return lang;
 	}
-	
-	@Override
-	public TargetDataLine getLine() {
-		AudioFormat af = new AudioFormat(16000, 16, 1, true, false);
-		
-		final String inputTypeString = "MICROPHONE"; // or COMPACT_DISC or MICROPHONE etc ...
-		final Port.Info myInputType = new Port.Info((Port.class), inputTypeString, true);
-		final DataLine.Info targetDataLineInfo = new DataLine.Info(TargetDataLine.class, af);
-
-	    //Go through the System audio mixer
-	    for (Mixer.Info mixerInfo : AudioSystem.getMixerInfo()) {
-	    	try {
-	    		Mixer targetMixer = AudioSystem.getMixer(mixerInfo);
-	    		targetMixer.open();
-	    		//Check if it supports the desired format
-	    		if (targetMixer.isLineSupported(targetDataLineInfo)) {
-	    			//System.out.println(mixerInfo.getName() + " supports recording @" + af);
-	    			//now go back and start again trying to match a mixer to a port
-	    			//the only way I figured how is by matching name, because 
-	    			//the port mixer name is the same as the actual mixer with "Port " in front of it
-	    			//there MUST be a better way
-	    			for (Mixer.Info mifo : AudioSystem.getMixerInfo()) {
-	    				String port_string = "Port ";
-	    				if ((port_string + mixerInfo.getName()).equals(mifo.getName())) {
-	    					System.out.println("Matched Port to Mixer:" + mixerInfo.getName());
-	    					Mixer portMixer = AudioSystem.getMixer(mifo);
-	    					portMixer.open();
-	    					portMixer.isLineSupported((Line.Info) myInputType);
-	    					//now check the mixer has the right input type eg LINE_IN
-	    					if (portMixer.isLineSupported((Line.Info) myInputType)) {
-	    						//OK we have a supported Port Type for the Mixer
-	    						//This has all matched (hopefully)
-	    						//now just get the record line
-	    						//There should be at least 1 line, usually 32 and possible unlimited
-	    						//which would be "AudioSystem.Unspecified" if we ask the mixer 
-	    						//but I haven't checked any of this
-	    						line = (TargetDataLine) targetMixer.getLine(targetDataLineInfo);
-	    						System.out.println("Got TargetDataLine from :" + targetMixer.getMixerInfo().getName());
-	    						//targetMixer.close();
-	    						return line;
-	    					}
-	    				}
-	    			}
-	    		}
-	    		targetMixer.close();
-	    	} catch (Exception e) {
-	    		e.printStackTrace();
-	    	}
-	    }
-		return null;
-	}
 
 	@Override
 	public String getTranscriptionIP() {
@@ -413,6 +362,22 @@ public class Main implements ViewController {
 	@Override
 	public int getTranscriptionPort() {
 		return transport;
+	}
+
+	@Override
+	public CSIGReport getReport(long reportId) {
+		//Currently that should be faster than calling back SIIE client again
+		//TODO: this should change with pagination
+		for(CSIGReport r : reportList) {
+			if(r.getId() == reportId)
+				return r;
+		}
+		return null;
+	}
+
+	@Override
+	public TargetDataLine getLine() {
+		return Audio.getLine();
 	}
 	
 }

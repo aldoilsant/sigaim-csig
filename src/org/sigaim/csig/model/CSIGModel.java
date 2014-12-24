@@ -78,6 +78,11 @@ public class CSIGModel implements IntCSIGModel {
 	}
 	
 	@Override
+	public CSIGReport getReport(long reportId) {
+		return null;
+	}
+	
+	@Override
 	public List<CSIGReport> getVersions(CSIGReport report) {
 		ArrayList<CSIGReport> rtn = new ArrayList<CSIGReport>();
 		try {

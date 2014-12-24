@@ -18,6 +18,7 @@ public interface IntCSIGModel {
 	List<CSIGPatient> getPatients();
 	CSIGReport fillSoip(CSIGReport report);
 	CSIGReport fillSoipConcepts(CSIGReport report);
+	CSIGReport getReport(long reportId);
 	
 	/*
 	 * Returns a new facultative after creating it in SIIE.

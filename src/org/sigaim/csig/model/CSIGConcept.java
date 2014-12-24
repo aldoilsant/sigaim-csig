@@ -1,5 +1,7 @@
 package org.sigaim.csig.model;
 
+import java.io.Serializable;
+
 import org.sigaim.siie.iso13606.rm.CDCV;
 import org.sigaim.siie.iso13606.rm.Cluster;
 import org.sigaim.siie.iso13606.rm.Element;
@@ -7,7 +9,7 @@ import org.sigaim.siie.iso13606.rm.INT;
 import org.sigaim.siie.iso13606.rm.Item;
 import org.sigaim.siie.iso13606.rm.ST;
 
-public class CSIGConcept {	
+public class CSIGConcept implements Serializable{	
 	//public String code;
 	public CDCV cdcv;
 	//public String terminology;

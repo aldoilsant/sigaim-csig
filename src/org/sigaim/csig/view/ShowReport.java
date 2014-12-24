@@ -20,8 +20,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.font.TextAttribute;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -41,6 +48,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
 import javax.swing.text.Element;
 import javax.swing.text.ElementIterator;
 import javax.swing.text.StyleConstants;
@@ -48,11 +56,16 @@ import javax.swing.text.StyledDocument;
 
 import org.sigaim.csig.model.CSIGReport;
 import org.sigaim.csig.model.CSIGConcept;
+import org.sigaim.csig.persistence.PersistenceManager;
+import org.sigaim.csig.persistence.PersistentObject;
 
 import net.java.balloontip.*;
 import net.java.balloontip.styles.BalloonTipStyle;
 
-public class ShowReport extends JPanel {
+public class ShowReport extends JPanel implements PersistentObject {
+	
+	private long uuid = (new Date()).getTime();
+	final ShowReport self;
 	
 	private static final String ELEM = AbstractDocument.ElementNameAttribute;
     private static final String COMP = StyleConstants.ComponentElementName;
@@ -63,7 +76,7 @@ public class ShowReport extends JPanel {
 	
 	private ResourceBundle lang;
 	
-	private Font conceptFont, conceptFontRed;
+	private Font conceptFont;
 	
 	private boolean edited = false; //Is any concept edited?
 	private DocumentListener textChangeListener = new DocumentListener() {
@@ -123,9 +136,9 @@ public class ShowReport extends JPanel {
 			this.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					CSIGConcept con = concept;
+					//CSIGConcept con = concept;
 					try {
-					ConceptView c = new ConceptView(concept, originalText, self, 
+					/*ConceptView c = */new ConceptView(concept, originalText, self, 
 							report.getSynonyms().get(concept.getConceptId()));
 					} catch(NullPointerException npe) {
 						System.err.println("Synonyms for report are not set (ShowReport:"+
@@ -141,21 +154,27 @@ public class ShowReport extends JPanel {
 		}
 	}
 	
-	/**
-	 * Create the panel.
-	 */
-	public ShowReport(final CSIGReport r, ViewController _controller) {
+	//PersistenceManager constructor
+	public ShowReport(ViewController _controller){
+		self = this;
 		frame = new JFrame();
 		frame.setVisible(false);
 		frame.setAutoRequestFocus(false);
 		frame.setTitle(strTitle);
 		controller = _controller;
 		lang = controller.getLang();
-		report = r;
-		final ShowReport self = this;
 		initialize();
+	}
+	
+	/**
+	 * Create the panel.
+	 */
+	public ShowReport(final CSIGReport r, ViewController _controller) {
+		this(_controller);
+		final ShowReport self = this;
+		report = r;
 		
-		SwingWorker worker = new SwingWorker<Void,Void>(){
+		SwingWorker<Void,Void> worker = new SwingWorker<Void,Void>(){
 
 			@Override
 			protected Void doInBackground() throws Exception {
@@ -175,6 +194,8 @@ public class ShowReport extends JPanel {
 		
 		if(r!=null)
 			worker.execute();
+		
+		PersistenceManager.watch(this);
 		
 		//frame.toFront();
 		//this.requestFocus();
@@ -249,9 +270,7 @@ public class ShowReport extends JPanel {
         return sb.toString();
 	}
 	
-	private void saveReport(){
-		final ShowReport self = this;
-		
+	private void saveReport(){		
 		SwingWorker<Boolean,Void> updateWorker = new SwingWorker<Boolean,Void>(){
 			@Override
 			protected Boolean doInBackground() throws Exception {
@@ -269,9 +288,10 @@ public class ShowReport extends JPanel {
 			@Override
 			protected void done(){
 				try {
-					if(this.get())
+					if(this.get()){
+						PersistenceManager.discard(self);
 						frame.dispose();
-					else{
+					} else{
 						WaitModal.close();
 						self.setVisible(true);
 						JOptionPane.showMessageDialog(frame, lang.getString("Error.CouldNotUpdateReport"), "Error", JOptionPane.ERROR_MESSAGE);
@@ -297,7 +317,7 @@ public class ShowReport extends JPanel {
 //		concepts.sort(new ConceptsOrderer()); 
 		pane.setText("");
 		Font f = new Font(Font.SANS_SERIF, Font.PLAIN, 14);
-		Map attributes = f.getAttributes();
+		Map<TextAttribute, Object> attributes = (Map<TextAttribute, Object>)f.getAttributes();
         attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
         conceptFont = f.deriveFont(attributes);
         //conceptFontRed = f.deriveFont(attributes);
@@ -497,5 +517,60 @@ public class ShowReport extends JPanel {
 				  ((int) (screenSize.getWidth()) - frame.getWidth())/2, 
 				  ((int) (screenSize.getHeight()) - frame.getHeight())/2);
 		//frame.setVisible(true);
+	}
+	
+	@Override
+	public byte[] toData() {
+		
+		Hashtable<String, Object> status = new Hashtable<String,Object>();
+		status.put("uuid", new Long(uuid));
+		
+		status.put("test", report.getBiasedConcepts().get(0));
+			
+		ByteArrayOutputStream bs= new ByteArrayOutputStream();
+		try {			
+			ObjectOutputStream os = new ObjectOutputStream (bs);
+			os.writeObject(status);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return bs.toByteArray();
+	}
+
+	@Override
+	public void restore(byte[] data) {
+		ByteArrayInputStream is = new ByteArrayInputStream(data);
+		Hashtable<String, Object> status;
+		
+		try {
+			ObjectInputStream os = new ObjectInputStream(is);
+			status = (Hashtable<String, Object>) os.readObject();
+		} catch(IOException e){
+			e.printStackTrace();
+			return;
+		} catch(ClassNotFoundException e){
+			e.printStackTrace();
+			//TODO message, discard object & wrong version?
+			return;
+		}
+		this.uuid = ((Long)status.get("uuid")).longValue();
+		Long reportId = (Long) status.get("reportId");
+		report = controller.getReport(reportId.longValue());
+		
+		txtBiased.setDocument((Document)status.get("txtBiased"));
+		//txtBiased.setText((String)status.get("txtBiased"));
+		/*txtUnbiased.setText((String)status.get("txtUnbiased"));
+		txtImpression.setText((String)status.get("txtImpression"));
+		txtPlan.setText((String)status.get("txtPlan"));
+		
+		frame.requestFocus();*/
+	}
+
+	@Override
+	public String getUID() {
+		if(report != null)
+			return "RID"+report.getId()/*+"TS"+uuid Want to differentiate windows from same report?*/;
+		else
+			return "TS"+uuid;
 	}
 }

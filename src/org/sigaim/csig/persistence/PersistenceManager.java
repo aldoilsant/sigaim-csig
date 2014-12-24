@@ -29,6 +29,7 @@ public class PersistenceManager {
 		object = obj;
 		timer = new Timer();
 		file = new File("tmp/"+object.getClass().getName()+"/"+object.getUID());
+		System.out.println("Creating persistence file "+file.getPath());
 		if(!file.exists()) {
 			try {
 				File folder = file.getParentFile();
@@ -71,7 +72,7 @@ public class PersistenceManager {
 				System.out.println("Saved status in "+file.getAbsolutePath());				
 			}
 		}; 
-		timer.scheduleAtFixedRate(task, 60000*2 /*2 min*/, 60000*2 /*2 min*/);
+		timer.scheduleAtFixedRate(task, 3000 /*first run*/, 60000*2 /*2 min*/);
 	}
 	
 	private void discard() {
@@ -88,12 +89,14 @@ public class PersistenceManager {
 	}
 	
 	public static void watch(PersistentObject obj) {
-		//watching.put(obj, new PersistenceManager(obj));		
+		watching.put(obj, new PersistenceManager(obj));	
 	}
 	public static void discard(PersistentObject obj) {
 		PersistenceManager man = watching.get(obj);
 		if(man != null) {
 			man.discard();
+		} else {
+			System.err.println("PersistenceManager, unable to find object to discard(): "+obj.toString());
 		}
 	}
 	/**
@@ -107,17 +110,25 @@ public class PersistenceManager {
 			 for(File classFolder : storage.listFiles()){
 				 
 				 if(!classFolder.isDirectory()) continue;
+				 
+				 Class objectClass;
+				 try {
+					 objectClass = Class.forName(classFolder.getName());
+				 } catch (ClassNotFoundException e){
+					 System.err.println("[PersistenceManager] Unknown class "+classFolder.getName() + 
+							 " the folder " +classFolder.getAbsolutePath()+ "should not be in there if no class equivalence.");
+					 continue;
+				 }
+
 				 for(File objectFile : classFolder.listFiles()){
 					
-					Class objectClass;
-					PersistentObject object;
-					try {
-						objectClass = Class.forName(classFolder.getName());
-					} catch (ClassNotFoundException e){
-						System.err.println("[PersistenceManager] Unknown class "+classFolder.getName() + 
-								" the folder " +classFolder.getAbsolutePath()+ "should not be in there if no class equivalence.");
-						break;
+					if(objectFile.isDirectory()) continue;
+					if(objectFile.length() == 0) {
+						objectFile.delete();
+						continue;
 					}
+					 
+					PersistentObject object;
 					
 					String question = "Dictation.ConfirmExit"+objectClass.getName();
 					int response = JOptionPane.showConfirmDialog(null, question, "Confirme",
@@ -130,6 +141,7 @@ public class PersistenceManager {
 									.getDeclaredConstructor(ViewController.class)
 									.newInstance(controller);
 							object.restore(Files.readAllBytes(objectFile.toPath()));
+							watch(object);
 						} catch (Exception e) {
 							e.printStackTrace();
 							continue;

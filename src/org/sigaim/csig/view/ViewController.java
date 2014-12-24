@@ -31,5 +31,7 @@ public interface ViewController {
 	boolean updateReport(CSIGReport report, boolean confirmed);
 	ResourceBundle getLang();
 	TargetDataLine getLine();
+	
+	CSIGReport getReport(long reportId);
 
 }

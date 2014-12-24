@@ -1,7 +1,6 @@
 package org.sigaim.csig.view;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -21,10 +20,9 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
 
@@ -37,7 +35,6 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -48,7 +45,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingWorker;
 
-import org.junit.Assert;
 import org.sigaim.csig.model.CSIGPatient;
 import org.sigaim.csig.model.CSIGReport;
 import org.sigaim.csig.persistence.PersistenceManager;
@@ -71,6 +67,7 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 	//private String transcriptionServiceUrl = "193.147.36.199";
 
 	private ResourceBundle lang;
+	private long uuid = (new Date()).getTime();
 	
 	private JFrame frame;
 	private CSIGReport report;
@@ -97,6 +94,7 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 	
 	private MantainCaretFocusListener mantainCaretFocusListener = new MantainCaretFocusListener();
 	
+	//Persistence manager
 	public Dictation(ViewController _controller){
 		controller = _controller;
 		lang = controller.getLang();
@@ -127,6 +125,8 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 			updateReportView(r);
 		
 		connectTranscriptionService();
+		
+		PersistenceManager.watch(this);
 		
 		frame.requestFocus();
 	}
@@ -178,6 +178,7 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 				//saveReport();				
 				break;*/
 			case JOptionPane.YES_OPTION:
+				PersistenceManager.discard(this);
 				frame.dispose();
 			/*case JOptionPane.CANCEL_OPTION:
 			case JOptionPane.CLOSED_OPTION:*/// Do nothing				
@@ -290,7 +291,7 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
        
         Path path = Paths.get("session.flac").toAbsolutePath();
         System.out.println("Sending audio and waiting for transcription...");
-        transcriptor.transcribeFlac(path);
+        //transcriptor.transcribeFlac(path);
 	}
 	
 	private void switchRecord(){
@@ -567,36 +568,9 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 				  ((int) (screenSize.getWidth()) - frame.getWidth())/2, 
 				  ((int) (screenSize.getHeight()) - frame.getHeight())/2);
 		frame.setVisible(true);
-		
-		PersistenceManager.watch(this);
 	}
 	
 	//Listener for transcription service
-	/*@Override
-	public void update(Observable arg0, Object arg1) {
-		System.out.println("Receiving transcription");
-		Path transcription = (Path) arg1;
-		Charset charset = Charset.forName("UTF-8");
-		
-		try (BufferedReader reader = Files.newBufferedReader(transcription, charset))
-		{
-			String line = null;
-			while ((line = reader.readLine()) != null)
-			{
-				//System.out.println(line);
-				JTextArea txt = mantainCaretFocusListener.getLastTextArea();
-				if(txt == null)
-					System.err.println("No text area selected");
-				else {
-					txt.insert(line, txt.getCaretPosition());
-				}
-			}
-		} catch (IOException x)
-		{
-			System.err.println("Error reading transcription file");
-			x.printStackTrace();
-		}
-	}*/
 	@Override
 	public void transcriptionActionPerformed(TranscriptionEvent event) {
 		final TranscriptionBundle transcriptionBundle = event.getTranscriptionBundle();
@@ -676,6 +650,7 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 		}		
 	}
 	
+	//Audio capture thread
 	class CaptureThread extends Thread{
 		//private boolean isPaused;
 		
@@ -684,10 +659,16 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 			try{
 				line.open(line.getFormat());
 				line.start();
+				
+				AudioInputStream ais = new AudioInputStream(line);
 				AudioSystem.write(
-						new AudioInputStream(line),
+						ais, //new AudioInputStream(line),
 						FLACFileWriter.FLAC,//fileType,
 						new File("session.flac"));
+				AudioSystem.write(
+						ais, //new AudioInputStream(line), 
+						FLACFileWriter.FLAC,
+						new File("session2.flac"));
 			} catch (Exception e){
 				e.printStackTrace();
 			}
@@ -701,12 +682,16 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 	@Override
 	public byte[] toData() {
 		
-		Hashtable<String, JComponent> status = new Hashtable<String,JComponent>();
-		status.put("txtBiased", txtBiased);
-		status.put("txtUnbiased", txtUnbiased);
-		status.put("txtImpression", txtImpression);
-		status.put("txtPlan", txtPlan);
-		//status.put("ddlPatient", ddlPatient);
+		Hashtable<String, Object> status = new Hashtable<String,Object>();
+		status.put("uuid", new Long(uuid));
+		status.put("txtBiased", txtBiased.getText());
+		status.put("txtUnbiased", txtUnbiased.getText());
+		status.put("txtImpression", txtImpression.getText());
+		status.put("txtPlan", txtPlan.getText());
+		if(report != null)
+			status.put("reportId", new Long(report.getId()));
+		else //If not enabled, patient is already set
+			status.put("ddlPatient", ddlPatient.getSelectedItem());
 			
 		ByteArrayOutputStream bs= new ByteArrayOutputStream();
 		try {			
@@ -721,11 +706,11 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 	@Override
 	public void restore(byte[] data) {
 		ByteArrayInputStream is = new ByteArrayInputStream(data);
-		Hashtable<String, JComponent> status;
+		Hashtable<String, Object> status;
 		
 		try {
 			ObjectInputStream os = new ObjectInputStream(is);
-			status = (Hashtable<String, JComponent>) os.readObject();
+			status = (Hashtable<String, Object>) os.readObject();
 		} catch(IOException e){
 			e.printStackTrace();
 			return;
@@ -734,24 +719,32 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 			//TODO message, discard object & wrong version?
 			return;
 		}
-		JTextArea txtarea = (JTextArea) status.get("txtBiased");
-		txtBiased.setText(txtarea.getText());
-		txtBiased.setCaret(txtarea.getCaret());
-		txtarea = (JTextArea) status.get("txtUnbiased");
-		txtUnbiased.setText(txtarea.getText());
-		txtUnbiased.setCaret(txtarea.getCaret());
-		txtarea = (JTextArea) status.get("txtImpression");
-		txtImpression.setText(txtarea.getText());
-		txtImpression.setCaret(txtarea.getCaret());
-		txtarea = (JTextArea) status.get("txtPlan");
-		txtPlan.setText(txtarea.getText());
-		txtPlan.setCaret(txtarea.getCaret());
+		this.uuid = ((Long)status.get("uuid")).longValue();
+		Long reportId = (Long) status.get("reportId");
+		if(reportId != null){
+			report = controller.getReport(reportId.longValue());
+			ddlPatient.setEnabled(false);
+			btnNewPatient.setEnabled(false);
+			ddlPatient.setSelectedItem(report.getPatient().toString());
+		} else {
+			String patientSelected = (String) status.get("ddlPatient");
+			if(patientSelected != null)
+				ddlPatient.setSelectedItem(patientSelected);
+		}
+		
+		txtBiased.setText((String)status.get("txtBiased"));
+		txtUnbiased.setText((String)status.get("txtUnbiased"));
+		txtImpression.setText((String)status.get("txtImpression"));
+		txtPlan.setText((String)status.get("txtPlan"));
 		
 		frame.requestFocus();
 	}
 
 	@Override
 	public String getUID() {
-		return Long.toString(report.getId());
+		if(report != null)
+			return "RID"+report.getId()/*+"TS"+uuid Want to differentiate windows from same report?*/;
+		else
+			return "TS"+uuid;
 	}
 }
