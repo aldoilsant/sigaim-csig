@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Hashtable;
@@ -171,7 +172,6 @@ public class ShowReport extends JPanel implements PersistentObject {
 	 */
 	public ShowReport(final CSIGReport r, ViewController _controller) {
 		this(_controller);
-		final ShowReport self = this;
 		report = r;
 		
 		SwingWorker<Void,Void> worker = new SwingWorker<Void,Void>(){
@@ -524,8 +524,21 @@ public class ShowReport extends JPanel implements PersistentObject {
 		
 		Hashtable<String, Object> status = new Hashtable<String,Object>();
 		status.put("uuid", new Long(uuid));
+		status.put("reportId", new Long(report.getId()));
 		
-		status.put("test", report.getBiasedConcepts().get(0));
+		List<CSIGConcept> clist = new ArrayList<CSIGConcept>();
+		
+		status.put("txtBiased", updatePart(txtBiased, report.getBiased(), clist));
+		status.put("clistBiased", clist);
+		clist = new ArrayList<CSIGConcept>();
+		status.put("txtUnbiased", updatePart(txtUnbiased, report.getUnbiased(), clist));
+		status.put("clistUnbiased", clist);
+		clist = new ArrayList<CSIGConcept>();
+		status.put("txtImpression", updatePart(txtImpression, report.getImpressions(), clist));
+		status.put("clistImpression", clist);
+		clist = new ArrayList<CSIGConcept>();
+		status.put("txtPlan", updatePart(txtPlan, report.getPlan(), clist));
+		status.put("clistPlan", clist);
 			
 		ByteArrayOutputStream bs= new ByteArrayOutputStream();
 		try {			
@@ -535,6 +548,11 @@ public class ShowReport extends JPanel implements PersistentObject {
 			e.printStackTrace();
 		}
 		return bs.toByteArray();
+	}
+	
+	@Override
+	public boolean changed(){
+		return edited;
 	}
 
 	@Override
@@ -557,13 +575,25 @@ public class ShowReport extends JPanel implements PersistentObject {
 		Long reportId = (Long) status.get("reportId");
 		report = controller.getReport(reportId.longValue());
 		
-		txtBiased.setDocument((Document)status.get("txtBiased"));
-		//txtBiased.setText((String)status.get("txtBiased"));
-		/*txtUnbiased.setText((String)status.get("txtUnbiased"));
-		txtImpression.setText((String)status.get("txtImpression"));
-		txtPlan.setText((String)status.get("txtPlan"));
+		setTextPane(txtBiased, 
+				(String) status.get("txtBiased"), 
+				(List<CSIGConcept>) status.get("clistBiased"));
+		setTextPane(txtUnbiased, 
+				(String) status.get("txtUnbiased"), 
+				(List<CSIGConcept>) status.get("clistUnbiased"));
+		setTextPane(txtImpression, 
+				(String) status.get("txtImpression"), 
+				(List<CSIGConcept>) status.get("clistImpression"));
+		setTextPane(txtPlan, 
+				(String) status.get("txtPlan"), 
+				(List<CSIGConcept>) status.get("clistPlan"));
 		
-		frame.requestFocus();*/
+		edited = false;
+		btnAnalyze.setEnabled(false);
+		btnFinalize.setEnabled(true);
+		
+		frame.setVisible(true);
+		frame.requestFocus();
 	}
 
 	@Override

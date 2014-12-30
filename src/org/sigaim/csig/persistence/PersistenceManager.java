@@ -13,6 +13,7 @@ import java.util.TimerTask;
 
 import javax.swing.JOptionPane;
 
+import org.sigaim.csig.model.ModelConstants;
 import org.sigaim.csig.view.ViewController;
 
 public class PersistenceManager {
@@ -55,21 +56,23 @@ public class PersistenceManager {
 		{
 			@Override
 			public void run() {
-				byte[] data = object.toData();
-				try {
-					FileLock lock = file_out.getChannel().lock();
-					file_out.getChannel().position(0);
-					file_out.getChannel().truncate(0);
-					file_out.write(data);
-					file_out.flush();
-					file_out.getChannel().force(false);
-					lock.release();
-				} catch (IOException e) {
-					System.err.println("Error saving status for class "+object.getClass().getName()+
-							" with UID "+ object.getUID());
-					e.printStackTrace();
+				if(object.changed()) {
+					byte[] data = object.toData();
+					try {
+						FileLock lock = file_out.getChannel().lock();
+						file_out.getChannel().position(0);
+						file_out.getChannel().truncate(0);
+						file_out.write(data);
+						file_out.flush();
+						file_out.getChannel().force(false);
+						lock.release();
+					} catch (IOException e) {
+						System.err.println("Error saving status for class "+object.getClass().getName()+
+								" with UID "+ object.getUID());
+						e.printStackTrace();
+					}
+					System.out.println("Saved status in "+file.getAbsolutePath());
 				}
-				System.out.println("Saved status in "+file.getAbsolutePath());				
 			}
 		}; 
 		timer.scheduleAtFixedRate(task, 3000 /*first run*/, 60000*2 /*2 min*/);
@@ -129,13 +132,26 @@ public class PersistenceManager {
 					}
 					 
 					PersistentObject object;
-					
-					String question = "Dictation.ConfirmExit"+objectClass.getName();
-					int response = JOptionPane.showConfirmDialog(null, question, "Confirme",
-					      JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+					ResourceBundle lang = controller.getLang();
+					String question = lang.getString("Persistence.askRestore");
+					question = question.replaceAll("%type", lang.getString("Persistence."+classFolder.getName()));
+					/*int response = JOptionPane.showConfirmDialog(null, question, "Confirme",
+					      JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);*/
+					int response = JOptionPane.showOptionDialog(null, 
+					        question, 
+					        lang.getString("TitleConfirm"), 
+					        JOptionPane.YES_NO_CANCEL_OPTION, 
+					        JOptionPane.QUESTION_MESSAGE, 
+					        null, 
+					        new String[]{
+								lang.getString("Persistence.btnOpen"),
+								lang.getString("Persistence.btnDelete"),
+								lang.getString("Persistence.btnCancel")
+							},
+							lang.getString("Persistence.btnOpen"));
 					
 					switch(response){
-						case JOptionPane.YES_OPTION:
+						case JOptionPane.YES_OPTION: //open
 						try {
 							object = (PersistentObject) objectClass
 									.getDeclaredConstructor(ViewController.class)
@@ -146,6 +162,11 @@ public class PersistenceManager {
 							e.printStackTrace();
 							continue;
 						}
+						case JOptionPane.NO_OPTION: //delete
+							objectFile.delete();
+							continue;
+						case JOptionPane.CANCEL_OPTION:
+							continue; //do nothing
 					}
 				 }
 			 }

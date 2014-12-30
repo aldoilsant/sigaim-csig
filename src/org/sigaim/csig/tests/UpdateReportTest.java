@@ -27,7 +27,7 @@ public class UpdateReportTest {
 		csig.fillSoipConcepts(r);
 		for(CSIGConcept c : r.getBiasedConcepts()){
 			List<CSIGConcept> synonyms = r.getSynonyms().get(c.getConceptId());
-			if(synonyms.size() > 1){
+			if(synonyms.size() > 1) {
 				c.replace(synonyms.get(1));
 			}
 		}

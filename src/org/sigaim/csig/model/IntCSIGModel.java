@@ -34,4 +34,7 @@ public interface IntCSIGModel {
 	
 	Cluster conceptsToCluster(CSIGReport r);
 	
+	String serialize(Cluster c);
+	Cluster deserializeCluster(String data);
+	
 }

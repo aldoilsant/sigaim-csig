@@ -1,15 +1,16 @@
 package org.sigaim.csig.model;
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+import org.sigaim.csig.CSIGFactory;
 import org.sigaim.siie.iso13606.rm.CDCV;
 import org.sigaim.siie.iso13606.rm.Cluster;
 import org.sigaim.siie.iso13606.rm.Element;
-import org.sigaim.siie.iso13606.rm.INT;
 import org.sigaim.siie.iso13606.rm.Item;
-import org.sigaim.siie.iso13606.rm.ST;
 
-public class CSIGConcept implements Serializable{	
+public class CSIGConcept implements Serializable {	
 	//public String code;
 	public CDCV cdcv;
 	//public String terminology;
@@ -21,8 +22,7 @@ public class CSIGConcept implements Serializable{
 	//public boolean detectionError = false;
 	public Cluster cluster; //associated element in SIIE
 	
-	public CSIGConcept(Cluster _cluster, int _start, int _end){
-		cluster = _cluster;
+	private void readCluster() {
 		for(Item param : cluster.getParts()){
 			Element el = (Element)param;
 			if(param.getMeaning().getCode().equals(ModelConstants.CD_CONCEPT_CODE)){
@@ -34,6 +34,11 @@ public class CSIGConcept implements Serializable{
 		/*if(terminology.equals("SCTSPA"))
 			terminology = "SNOMED-CT";*/
 		text = cdcv.getDisplayName().getValue();
+	}
+	
+	public CSIGConcept(Cluster _cluster, int _start, int _end){
+		cluster = _cluster;
+		readCluster();
 		start = _start;
 		end = _end;
 	}
@@ -96,5 +101,20 @@ public class CSIGConcept implements Serializable{
 	public Cluster getCluster(){
 		return cluster;
 	}
+	
+	/*Custom serialization, we don't want to serialize all data*/
+	private void writeObject(ObjectOutputStream oos) throws IOException {
+		// default serialization 
+		//oos.defaultWriteObject();
+		oos.writeInt(start);
+		oos.writeInt(end);
+		oos.writeObject(CSIGFactory.getModel().serialize(cluster));
+	}
+	private void readObject(java.io.ObjectInputStream stream) throws IOException, ClassNotFoundException {
+        start = (int)stream.readInt();
+        end = (int)stream.readInt();
+        cluster = CSIGFactory.getModel().deserializeCluster((String)stream.readObject());
+        readCluster();
+    }
 	
 }

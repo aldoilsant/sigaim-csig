@@ -679,6 +679,16 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 		}
 	}
 
+	/*Persistence manager*/
+	@Override
+	public boolean changed(){
+		if(!txtBiased.getText().isEmpty()) return true;
+		if(!txtUnbiased.getText().isEmpty()) return true;
+		if(!txtImpression.getText().isEmpty()) return true;
+		if(!txtPlan.getText().isEmpty()) return true;
+		return false;
+	}
+	
 	@Override
 	public byte[] toData() {
 		

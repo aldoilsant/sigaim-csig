@@ -29,6 +29,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import org.pushingpixels.substance.api.skin.SubstanceCremeCoffeeLookAndFeel;
 import org.pushingpixels.substance.api.skin.SubstanceCremeLookAndFeel;
 import org.pushingpixels.substance.api.skin.SubstanceGraphiteLookAndFeel;
+import org.sigaim.csig.CSIGFactory;
 import org.sigaim.csig.model.CSIGFacility;
 import org.sigaim.csig.model.CSIGFacultative;
 import org.sigaim.csig.model.CSIGModel;
@@ -111,7 +112,8 @@ public class Main implements ViewController {
 		self = this;
 		getLang();
 		
-		model = new CSIGModel(wsurl);
+		CSIGFactory.setBaseUrl(wsurl);
+		model = CSIGFactory.getModel();
 		
 		//WaitModal.setMessage("Conectando con el servidor SIIE...");
 		

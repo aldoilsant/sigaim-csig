@@ -11,7 +11,6 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +32,6 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 
-import com.jgoodies.forms.layout.Sizes;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -49,7 +47,7 @@ public class ConceptView extends JPanel {
 	
 	private boolean freezed = false;
 	private JCheckBox chkError;
-	private JComboBox ddlSynonym;
+	private JComboBox<String> ddlSynonym;
 	
 	private JLabel label;
 
@@ -139,7 +137,7 @@ public class ConceptView extends JPanel {
 		} else {
 			ddlList = new ArrayList<String>(0);
 		}
-		ddlSynonym = new JComboBox(ddlList.toArray());
+		ddlSynonym = new JComboBox<String>((String[])ddlList.toArray());
 		ddlSynonym.addMouseListener(mouseStillInside);
 		for (Component component : ddlSynonym.getComponents()) {
 			   component.addMouseListener(mouseStillInside);

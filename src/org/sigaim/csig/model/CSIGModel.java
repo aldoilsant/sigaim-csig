@@ -1,5 +1,6 @@
 package org.sigaim.csig.model;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -39,6 +40,7 @@ import org.sigaim.siie.rm.ReflectorReferenceModelManager;
 import org.sigaim.siie.rm.exceptions.ReferenceModelException;
 import org.sigaim.siie.rm.exceptions.RejectException;
 import org.sigaim.siie.dadl.OpenEHRDADLManager;
+import org.sigaim.siie.dadl.exceptions.SemanticDADLException;
 
 public class CSIGModel implements IntCSIGModel {
 
@@ -575,6 +577,31 @@ public class CSIGModel implements IntCSIGModel {
 			return r;
 		} else return null;
 		
+	}
+
+	@Override
+	public String serialize(Cluster c) {
+		ContentObject dadlObject;
+		try {
+			dadlObject = model.unbind(c);
+		} catch (ReferenceModelException e) {
+			e.printStackTrace();
+			return null;
+		}
+		String serialized = dadlManager.serialize(dadlObject, false);
+		return serialized;
+	}
+
+	@Override
+	public Cluster deserializeCluster(String data) {
+		Cluster c = null;
+		ContentObject object = dadlManager.parseDADL(new ByteArrayInputStream(data.getBytes()));
+		try {
+			c = (Cluster)model.bind(object);
+		} catch (SemanticDADLException | ReferenceModelException e) {
+			e.printStackTrace();
+		}
+		return c;
 	}
 
 }
