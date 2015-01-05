@@ -3,6 +3,7 @@ package org.sigaim.csig.view;
 import java.awt.Dimension;
 
 import javax.swing.UIManager.*;
+import javax.swing.plaf.synth.SynthLookAndFeel;
 
 import java.awt.EventQueue;
 import java.awt.GraphicsEnvironment;
@@ -205,9 +206,12 @@ public class Main implements ViewController {
 		SwingUtilities.invokeLater(new Runnable() {
 		    public void run() {
 		    	try {
-					UIManager.setLookAndFeel(new SubstanceCSIGLookAndFeel());
+					/*UIManager.setLookAndFeel(new SubstanceCSIGLookAndFeel());
 					JFrame.setDefaultLookAndFeelDecorated(true);
-					JDialog.setDefaultLookAndFeelDecorated(true);
+					JDialog.setDefaultLookAndFeelDecorated(true);*/
+		    		SynthLookAndFeel lookAndFeel = new SynthLookAndFeel();
+		    		lookAndFeel.load(CSIGTheme.class.getResourceAsStream("synth.xml"), CSIGTheme.class);
+		    		UIManager.setLookAndFeel(lookAndFeel);
 				} catch (Exception e) {
 					e.printStackTrace();
 					try {
