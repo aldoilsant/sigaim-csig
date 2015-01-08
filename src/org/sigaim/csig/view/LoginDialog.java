@@ -2,12 +2,10 @@ package org.sigaim.csig.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
@@ -21,21 +19,20 @@ import com.jgoodies.forms.layout.RowSpec;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 
-import org.sigaim.siie.clients.IntSIIE001EQLClient;
-import org.sigaim.siie.iso13606.rm.HealthcareFacility;
-
+import org.sigaim.csig.theme.ThemedWindow;
+import org.sigaim.csig.view.helper.BackgroundImage;
 import org.sigaim.csig.view.helper.TextPrompt;
+
 import java.awt.GridLayout;
 
-public class LoginDialog extends JDialog {
+public class LoginDialog extends JFrame {
 
-	private final JPanel contentPanel = new JPanel();
+	private final ThemedWindow contentPanel;
 	private JPasswordField txtPassword;
 	private JTextField txtUser;
 
@@ -46,16 +43,20 @@ public class LoginDialog extends JDialog {
 	 * Create the dialog.
 	 */
 	public LoginDialog(ViewController _controller, List<String> hospitals) {
+		contentPanel = new ThemedWindow("/org/sigaim/csig/resources/img/WindowBackground.png", this.getRootPane(), true);
+		setUndecorated(true);
+		setResizable(true);
+		setBackground(new Color(100,100,100,0));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		controller = _controller;
 
-		setBounds(100, 100, 331, 361);
+		setBounds(100, 100, 331, 400);
 
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new FormLayout(new ColumnSpec[] {
-				ColumnSpec.decode("6dlu"),
+				ColumnSpec.decode("12dlu"),
 				ColumnSpec.decode("188px:grow"),
 				ColumnSpec.decode("12dlu"),},
 				new RowSpec[] {

@@ -26,6 +26,7 @@ import com.jgoodies.forms.factories.FormFactory;
 import javax.swing.JLabel;
 
 import org.sigaim.csig.theme.ColorScheme;
+import org.sigaim.csig.theme.ThemedWindow;
 import org.sigaim.csig.view.helper.BackgroundImage;
 import org.sigaim.csig.view.helper.FontHelper;
 
@@ -91,7 +92,7 @@ public class WaitModal extends JDialog {
 	 * Create the dialog.
 	 */
 	private WaitModal() {
-		setContentPane(new BackgroundImage("/org/sigaim/csig/resources/img/WaitModal.png"));
+		setContentPane(new ThemedWindow("/org/sigaim/csig/resources/img/WaitModal.png"));
 		//setAlwaysOnTop(true);
 		//setModal(true);
 		setResizable(false);

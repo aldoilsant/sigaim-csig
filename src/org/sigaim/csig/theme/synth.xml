@@ -67,8 +67,9 @@
 	<bind style="textfield" type="region" key="PasswordField" />
 	<!-- ComboBox -->
 	<style id="comboBox">
-		<insets top="10" left="10" bottom="10" right="10" />
+		<insets top="6" left="10" bottom="6" right="10" />
 		<!-- <property key="TextField.margin" type="insets" value="7 7 7 7" /> -->
+		<property key="ComboBox.rendererUseListColors" type="boolean" value="false"/>
 		<state>
 			<!-- <color value="#FFFFFF" type="BACKGROUND" /> -->
 			<color value="#000000" type="TEXT_FOREGROUND" />
@@ -76,12 +77,24 @@
 		<imagePainter method="comboBoxBackground" path="images/comboBox.png"
 			sourceInsets="10 10 10 10" />
 		<imagePainter method="comboBoxBorder" path="images/comboBox.png"
-			sourceInsets="10 10 10 10" paintCenter="true" />
+			sourceInsets="5 5 5 5" paintCenter="false" />
 	</style>
 	<bind style="comboBox" type="region" key="ComboBox" />
 	<style id="comboBoxPicker">
 		<imagePainter method="arrowButtonForeground" path="images/comboBoxPicker.png"
 			sourceInsets="0 0 0 0" stretch="false" />
 	</style>
-	<bind style="comboBoxPicker" key="ComboBox.arrowButton" type="name"/>
+	<bind style="comboBoxPicker" key="ComboBox.arrowButton" type="name" />
+	<style id="comboBoxList">
+		<opaque value="true" />
+		<insets top="10" left="10" bottom="10" right="10" />
+		<state value="ENABLED">
+			<color type="TEXT_FOREGROUND" value="#000000" />
+		</state>
+		<state value="SELECTED">
+			<color type="TEXT_FOREGROUND" value="#CC6600" />
+			<color type="TEXT_BACKGROUND" value="#FFEEDD" />
+		</state>
+	</style>
+	<bind style="comboBoxList" type="name" key="ComboBox.listRenderer" />
 </synth>

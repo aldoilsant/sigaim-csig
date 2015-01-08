@@ -67,7 +67,7 @@ public class Main implements ViewController {
 	static public int transport = 8080;
 	
 	public JFrame frame;
-	private JDialog login;
+	private JFrame login;
 	private ReportList reportListWindow;
 	
 	List<CSIGReport> reportList;
