@@ -2,6 +2,7 @@ package org.sigaim.csig.view.helper;
 
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 
@@ -371,5 +372,12 @@ public class ComponentMover extends MouseAdapter
 				destination.validate();
 			}
 		}
+	}
+	
+	public static void center(java.awt.Window component){
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		component.setLocation(
+				  ((int) (screenSize.getWidth()) - component.getWidth())/2, 
+				  ((int) (screenSize.getHeight()) - component.getHeight())/2);
 	}
 }

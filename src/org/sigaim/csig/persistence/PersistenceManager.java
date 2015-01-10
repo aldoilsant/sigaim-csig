@@ -14,6 +14,8 @@ import java.util.TimerTask;
 import javax.swing.JOptionPane;
 
 import org.sigaim.csig.model.ModelConstants;
+import org.sigaim.csig.theme.CSIGDialog;
+import org.sigaim.csig.theme.CSIGTheme;
 import org.sigaim.csig.view.ViewController;
 
 public class PersistenceManager {
@@ -137,7 +139,7 @@ public class PersistenceManager {
 					question = question.replaceAll("%type", lang.getString("Persistence."+classFolder.getName()));
 					/*int response = JOptionPane.showConfirmDialog(null, question, "Confirme",
 					      JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);*/
-					int response = JOptionPane.showOptionDialog(null, 
+					/*int response = JOptionPane.showOptionDialog(null, 
 					        question, 
 					        lang.getString("TitleConfirm"), 
 					        JOptionPane.YES_NO_CANCEL_OPTION, 
@@ -148,7 +150,13 @@ public class PersistenceManager {
 								lang.getString("Persistence.btnDelete"),
 								lang.getString("Persistence.btnCancel")
 							},
-							lang.getString("Persistence.btnOpen"));
+							lang.getString("Persistence.btnOpen"));*/
+					int response = CSIGDialog.showOptions(
+							new String[] {
+								lang.getString("Persistence.btnOpen"),
+								lang.getString("Persistence.btnDelete"),
+								lang.getString("Persistence.btnCancel")
+							}, question, CSIGTheme.iconHelp());
 					
 					switch(response){
 						case JOptionPane.YES_OPTION: //open

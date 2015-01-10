@@ -28,6 +28,7 @@ import javax.swing.JLabel;
 import org.sigaim.csig.theme.ColorScheme;
 import org.sigaim.csig.theme.ThemedWindow;
 import org.sigaim.csig.view.helper.BackgroundImage;
+import org.sigaim.csig.view.helper.ComponentMover;
 import org.sigaim.csig.view.helper.FontHelper;
 
 public class WaitModal extends JDialog {
@@ -131,9 +132,6 @@ public class WaitModal extends JDialog {
 		lblMessage.setForeground(ColorScheme.textColor);
 		getContentPane().add(lblMessage, "1, 9, center, bottom");
 		
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		this.setLocation(
-				  ((int) (screenSize.getWidth()) - this.getWidth())/2, 
-				  ((int) (screenSize.getHeight()) - this.getHeight())/2);
+		ComponentMover.center(this);
 	}
 }

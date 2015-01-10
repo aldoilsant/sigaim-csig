@@ -12,24 +12,42 @@ import org.sigaim.csig.view.helper.ComponentResizer;
 public class ThemedWindow extends javax.swing.JComponent {
 
 	private static final long serialVersionUID = 1L;
-	private ImageIcon image;
+	private ImageIcon image = null;
 
 	private Point initialClick;
 	private final JComponent parent;
+	
+	public ThemedWindow(){
+		this(null);
+	}
+	public ThemedWindow(JComponent _parent, boolean move){
+		this(null, _parent, move);
+	}
+	public ThemedWindow(boolean move){
+		this(null, null, move);
+	}
 
 	public ThemedWindow(String imageUrl) {
 		this(imageUrl, null, false);
 	}
 	public ThemedWindow(String imageUrl, JComponent p, boolean move) {
-		image = new ImageIcon(getClass().getResource(imageUrl));
+		if(imageUrl != null)
+			image = new ImageIcon(getClass().getResource(imageUrl));
 		
-		if(p != null)
+		setOpaque(false);
+		setBackground(new Color(100,100,100,0));
+		if(p != null) {
+			p.setBackground(new Color(100,100,100,0));
 			parent = p;
-		else
+		} else
 			parent = this;
 		
-		if(move)
-			new ComponentMover(parent.getParent().getClass(), parent);
+		if(move){
+			Container container = parent.getParent();
+			if(container == null)
+				container = parent;
+			new ComponentMover(container.getClass(), parent);
+		}
 	}
 	
 	/*public void onInit(){
@@ -40,16 +58,39 @@ public class ThemedWindow extends javax.swing.JComponent {
         cr.setSnapSize(new Dimension(5, 5));
 	}*/
 
-	@Override
+	/*@Override
 	public void paintComponent(Graphics g) {
 		
 		Dimension size = getParent().getSize();
-		/*ImageIcon image = new ImageIcon(getClass()
-				.getResource(imageUrl));*/
 		g.drawImage(image.getImage(), 0, 0,
 				size.width, size.height, null);
-		setOpaque(false);
 		super.paintComponent(g);
-	}
+	}/**/
 
+	
+	protected void paintComponent(Graphics g) {
+		if(image != null){
+			Dimension size = getParent().getSize();
+			g.drawImage(image.getImage(), 0, 0,
+					size.width, size.height, null);
+			super.paintComponent(g);
+		} else {
+			Graphics2D g2 = (Graphics2D) g.create();
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+					RenderingHints.VALUE_ANTIALIAS_ON);
+
+			g2.setColor(Color.WHITE);
+			g2.fillRoundRect(0, 0, getWidth()-1, getHeight()-1, 15, 15);
+
+			g2.setStroke(new BasicStroke(1f));
+			g2.setColor(getForeground());
+			g2.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, 15, 15);
+			g2.dispose();
+		}
+	}
+	/*protected void paintBorder(Graphics g) {
+        g.setColor(getForeground());
+        g.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, 15, 15);
+	}*/
+	
 }

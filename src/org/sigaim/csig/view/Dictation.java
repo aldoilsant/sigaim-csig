@@ -49,6 +49,8 @@ import org.sigaim.csig.model.CSIGPatient;
 import org.sigaim.csig.model.CSIGReport;
 import org.sigaim.csig.persistence.PersistenceManager;
 import org.sigaim.csig.persistence.PersistentObject;
+import org.sigaim.csig.theme.CSIGDialog;
+import org.sigaim.csig.theme.CSIGTheme;
 
 import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -168,8 +170,10 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 	}
 	private void showSaveDialog(){
 		int response;
-		response = JOptionPane.showConfirmDialog(frame, lang.getString("Dictation.ConfirmExit"), lang.getString("TitleConfirmExit"),
-		      JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		/*response = JOptionPane.showConfirmDialog(frame, lang.getString("Dictation.ConfirmExit"), lang.getString("TitleConfirmExit"),
+		      JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);*/
+		response = CSIGDialog.showYesNo(lang.getString("Yes"), lang.getString("No"),
+				lang.getString("Dictation.ConfirmExit"), CSIGTheme.iconHelp());
 		
 		switch(response) {
 			/*case JOptionPane.YES_OPTION: before, it was a save? dialog

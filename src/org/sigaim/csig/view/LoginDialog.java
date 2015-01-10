@@ -43,10 +43,10 @@ public class LoginDialog extends JFrame {
 	 * Create the dialog.
 	 */
 	public LoginDialog(ViewController _controller, List<String> hospitals) {
-		contentPanel = new ThemedWindow("/org/sigaim/csig/resources/img/WindowBackground.png", this.getRootPane(), true);
+		contentPanel = new ThemedWindow(this.getRootPane(), true);
 		setUndecorated(true);
 		setResizable(true);
-		setBackground(new Color(100,100,100,0));
+		//setBackground(new Color(100,100,100,0));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		controller = _controller;
 

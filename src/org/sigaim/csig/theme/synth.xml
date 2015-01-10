@@ -2,7 +2,7 @@
 	<object id="standardFont" class="org.sigaim.csig.view.helper.FontHelper"
 		method="getTTF">
 		<string>Lato-Regular.ttf</string>
-		<int>18</int>
+		<int>16</int>
 	</object>
 	<!-- Style that all regions will use -->
 	<style id="backingStyle">
