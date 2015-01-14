@@ -2,23 +2,15 @@ package org.sigaim.csig.view;
 
 import java.awt.Dimension;
 
-import javax.swing.UIManager.*;
 import javax.swing.plaf.synth.SynthLookAndFeel;
 
 import java.awt.EventQueue;
-import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.DataLine;
-import javax.sound.sampled.Line;
-import javax.sound.sampled.Mixer;
-import javax.sound.sampled.Port;
 import javax.sound.sampled.TargetDataLine;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -27,25 +19,19 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import org.pushingpixels.substance.api.skin.SubstanceCremeCoffeeLookAndFeel;
-import org.pushingpixels.substance.api.skin.SubstanceCremeLookAndFeel;
-import org.pushingpixels.substance.api.skin.SubstanceGraphiteLookAndFeel;
 import org.sigaim.csig.CSIGFactory;
 import org.sigaim.csig.model.CSIGFacility;
 import org.sigaim.csig.model.CSIGFacultative;
-import org.sigaim.csig.model.CSIGModel;
 import org.sigaim.csig.model.CSIGPatient;
 import org.sigaim.csig.model.IntCSIGModel;
 import org.sigaim.csig.model.CSIGReport;
 import org.sigaim.csig.persistence.PersistenceManager;
+import org.sigaim.csig.theme.CSIGDialog;
 import org.sigaim.csig.theme.CSIGTheme;
-import org.sigaim.csig.theme.SubstanceCSIGLookAndFeel;
-import org.sigaim.csig.theme.SubstanceCSIGSkin;
 import org.sigaim.csig.view.helper.Audio;
 import org.sigaim.siie.iso13606.rm.CDCV;
 import org.sigaim.siie.iso13606.rm.FunctionalRole;
 import org.sigaim.siie.iso13606.rm.II;
-import org.sigaim.siie.rm.exceptions.RejectException;
 
 public class Main implements ViewController {
 	
@@ -66,7 +52,7 @@ public class Main implements ViewController {
 	static public String transip = "193.144.33.85";
 	static public int transport = 8080;
 	
-	public JFrame frame;
+	//public JFrame frame;
 	private JFrame login;
 	private ReportList reportListWindow;
 	
@@ -98,13 +84,14 @@ public class Main implements ViewController {
 			login = null;
 			//frame.removeAll();
 			if(reportListWindow==null)
-				reportListWindow = new ReportList(frame, this);
+				reportListWindow = new ReportList(this);
 			
 			PersistenceManager.check(this);
 			
 			return true;
 		} else {
-			JOptionPane.showMessageDialog(null, lang.getString("Error.InvalidLoginInfo"), "Error", JOptionPane.ERROR_MESSAGE);
+			//JOptionPane.showMessageDialog(null, lang.getString("Error.InvalidLoginInfo"), "Error", JOptionPane.ERROR_MESSAGE);
+			CSIGDialog.showError(lang.getString("Error.InvalidLoginInfo"), null);
 			return false;
 		}		
 	}
@@ -127,12 +114,14 @@ public class Main implements ViewController {
 				WaitModal.close();
 				try {
 					SwingUtilities.invokeAndWait(new Runnable(){
-						public void run() {					
-							JOptionPane.showMessageDialog(
+						public void run() {	
+							CSIGDialog.showError(
+									lang.getString("Error.SIIENotResponding"), null);
+							/*JOptionPane.showMessageDialog(
 									WaitModal.getModal(), 
 									lang.getString("Error.SIIENotResponding"), 
 									"Error", 
-									JOptionPane.ERROR_MESSAGE);
+									JOptionPane.ERROR_MESSAGE);*/
 						}
 					});
 				} catch (InvocationTargetException | InterruptedException e) {
@@ -149,7 +138,7 @@ public class Main implements ViewController {
 				public void run() {					
 					Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 					
-					frame = new JFrame();
+					//frame = new JFrame();
 					login = new LoginDialog(self, finalFacs);
 					login.setLocation(
 							  ((int) (screenSize.getWidth()) - login.getWidth())/2, 

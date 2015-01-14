@@ -4,20 +4,15 @@ import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 
-import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
-
 import javax.swing.ListSelectionModel;
 import javax.swing.BoxLayout;
 
 import java.awt.FlowLayout;
 
-import javax.swing.JToolBar;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.TableModel;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.GroupLayout;
@@ -29,11 +24,10 @@ import javax.swing.SwingConstants;
 import java.awt.BorderLayout;
 
 import javax.swing.ScrollPaneConstants;
-import javax.swing.JTextField;
-
 import org.sigaim.csig.model.CSIGReport;
+import org.sigaim.csig.theme.ThemedWindow;
+import org.sigaim.csig.view.helper.ComponentMover;
 
-import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionListener;
@@ -45,10 +39,10 @@ public class ReportList {
 	private List<CSIGReport> versionList;
 	private CSIGReport selectedReport;
 	
-	public JFrame frame;
-	private JTextField txtFiltrePatient;
+	public ThemedWindow frame;
+	/*private JTextField txtFiltrePatient;
 	private JTextField txtFiltreFacultative;
-	private JTextField txtKeywords;
+	private JTextField txtKeywords;*/
 	private JPanel pnlVistaInformes;
 	private JTable tblReports;
 	private ViewController controller;
@@ -58,10 +52,9 @@ public class ReportList {
 	private JButton btnNew;
 	private JTable tblVersions;
 	
-	private TableModel reportTableModel;
+	//private TableModel reportTableModel;
 	
-	public ReportList(JFrame container, ViewController _controller) {
-		frame = container;
+	public ReportList(ViewController _controller) {
 		controller = _controller;
 		reportList = controller.getReports();
 		initialize();
@@ -96,17 +89,25 @@ public class ReportList {
 	
 	public void show() {
 		frame.removeAll();
-		frame.getContentPane().add(pnlVistaInformes);
+		frame.add(pnlVistaInformes);
 		frame.setVisible(true);
 	}
 
 	private void initialize() {
-		//frame = new JFrame();
-		frame.getContentPane().removeAll();
-		frame.setTitle("Informes");
-		frame.setBounds(100, 100, 812, 554);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
+		//JFrame pane = new JFrame();
+		//pane.setUndecorated(true);
+		frame = new ThemedWindow(/*pane.getContentPane(), false*/);
+		frame.setTitleBar();
+		
+		/*pane.setTitle("Informes");
+		pane.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		pane.setContentPane(frame);
+		pane.setBounds(100, 100, 812, 554);*/
+		
+		//pane.setLayout(new BoxLayout(frame, BoxLayout.Y_AXIS));
+		//frame.setBounds(100, 100, 812, 554);
+		frame.setSize(800, 400);
+		frame.setLayout(new BoxLayout(frame, BoxLayout.Y_AXIS));
 		
 		pnlVistaInformes = new JPanel();
 		pnlVistaInformes.setLayout(new BorderLayout(0, 0));
@@ -241,7 +242,7 @@ public class ReportList {
 		toolFilter.add(txtKeywords);
 		txtKeywords.setColumns(10);*/
 		
-		frame.getContentPane().add(pnlVistaInformes);
+		frame.add(pnlVistaInformes);
 		
 		JPanel pnlActions = new JPanel();
 		pnlVistaInformes.add(pnlActions, BorderLayout.NORTH);
@@ -274,11 +275,8 @@ public class ReportList {
 		});
 		pnlActions.add(btnNew);
 		
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		frame.setLocation(
-				  ((int) (screenSize.getWidth()) - frame.getWidth())/2, 
-				  ((int) (screenSize.getHeight()) - frame.getHeight())/2);
-		frame.setVisible(true);		
+		//ComponentMover.center();
+		frame.setVisible(true);	
 		
 	}
 	

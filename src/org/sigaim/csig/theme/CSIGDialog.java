@@ -100,6 +100,7 @@ public class CSIGDialog extends JDialog {
 					}
 				});
 				btn3.setActionCommand("Cancel");
+				btn3.setName("Button.Gray");
 				buttonPane.add(btn3);
 			}
 		}
@@ -134,6 +135,22 @@ public class CSIGDialog extends JDialog {
 		ComponentMover.center(dia);
 		dia.setVisible(true);
 			
+		return dia.result;
+	}
+	
+	public static int showError(String message, String txtButton){
+		CSIGDialog dia = new CSIGDialog();
+		dia.icon.setIcon(CSIGTheme.iconHelp());
+		dia.lblMessage.setText("<html><div style=\"text-align: center;\">" + message + "</html>");
+		if(txtButton != null && !txtButton.isEmpty())
+			dia.btn1.setText(txtButton);
+		else
+			dia.btn1.setText("OK");
+		dia.btn2.setVisible(false);
+		dia.btn3.setVisible(false);
+		ComponentMover.center(dia);
+		dia.setVisible(true);
+		
 		return dia.result;
 	}
 }

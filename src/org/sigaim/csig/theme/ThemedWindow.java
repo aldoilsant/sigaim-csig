@@ -1,28 +1,29 @@
 package org.sigaim.csig.theme;
 
 import java.awt.*;
-import java.awt.event.*;
-
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
 import org.sigaim.csig.view.helper.ComponentMover;
-import org.sigaim.csig.view.helper.ComponentResizer;
 
 public class ThemedWindow extends javax.swing.JComponent {
 
 	private static final long serialVersionUID = 1L;
 	private ImageIcon image = null;
+	
+	//Title bar support
+	private JFrame mainFrame = null;
 
-	private Point initialClick;
-	private final JComponent parent;
+	//private Point initialClick;
+	private Component parent;
 	
 	public ThemedWindow(){
 		this(null);
 	}
-	public ThemedWindow(JComponent _parent, boolean move){
+	public ThemedWindow(java.awt.Component _parent, boolean move){
 		this(null, _parent, move);
 	}
+	
 	public ThemedWindow(boolean move){
 		this(null, null, move);
 	}
@@ -30,9 +31,12 @@ public class ThemedWindow extends javax.swing.JComponent {
 	public ThemedWindow(String imageUrl) {
 		this(imageUrl, null, false);
 	}
-	public ThemedWindow(String imageUrl, JComponent p, boolean move) {
+	public ThemedWindow(String imageUrl, java.awt.Component p, boolean move) {
 		if(imageUrl != null)
 			image = new ImageIcon(getClass().getResource(imageUrl));
+		
+		if(p instanceof Frame)
+			((Frame)p).setUndecorated(true);
 		
 		setOpaque(false);
 		setBackground(new Color(100,100,100,0));
@@ -43,11 +47,33 @@ public class ThemedWindow extends javax.swing.JComponent {
 			parent = this;
 		
 		if(move){
-			Container container = parent.getParent();
+			Component container = parent.getParent();
 			if(container == null)
 				container = parent;
 			new ComponentMover(container.getClass(), parent);
 		}
+	}
+	
+	public void setTitleBar(){
+		mainFrame = new JFrame();
+		mainFrame.setUndecorated(true);
+		mainFrame.setContentPane(new ThemedWindow());
+		mainFrame.setLayout(new BorderLayout(10,10));
+		//newFrame.setBorder(new LineBorder(Color.BLACK, 5));
+		JPanel titleBar = new JPanel();
+		JLabel label = new JLabel(" X ");
+        label.setOpaque(true);
+        label.setBackground(Color.RED);
+        label.setForeground(Color.WHITE);
+        titleBar.add(label);
+        titleBar.setBackground(Color.black);
+        titleBar.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        
+        mainFrame.add(titleBar, BorderLayout.NORTH);
+		mainFrame.add(this, BorderLayout.CENTER);
+		
+		parent = mainFrame;
+		new ComponentMover(mainFrame, titleBar);
 	}
 	
 	/*public void onInit(){
@@ -92,5 +118,22 @@ public class ThemedWindow extends javax.swing.JComponent {
         g.setColor(getForeground());
         g.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, 15, 15);
 	}*/
+	
+	@Override
+	public void setVisible(boolean b){
+		if(mainFrame != null){
+			mainFrame.setVisible(b);
+		} else {
+			super.setVisible(b);
+		}
+	}
+	
+	@Override
+	public void setSize(int a, int b){
+		if(mainFrame != null)
+			mainFrame.setSize(a,b);
+		else
+			super.setSize(a,b);
+	}
 	
 }
