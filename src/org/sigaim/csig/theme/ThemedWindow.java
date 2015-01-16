@@ -1,10 +1,16 @@
 package org.sigaim.csig.theme;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import org.sigaim.csig.view.helper.ComponentMover;
+import org.sigaim.csig.view.helper.ComponentResizer;
 
 public class ThemedWindow extends javax.swing.JComponent {
 
@@ -54,44 +60,26 @@ public class ThemedWindow extends javax.swing.JComponent {
 		}
 	}
 	
-	public void setTitleBar(){
+	public void setTitleBar(JPanel titleBar){
 		mainFrame = new JFrame();
 		mainFrame.setUndecorated(true);
-		mainFrame.setContentPane(new ThemedWindow());
+		mainFrame.setResizable(true);
+		ThemedWindow contentPanel = new ThemedWindow(mainFrame, false);
+		contentPanel.setBorder(new EmptyBorder(2, 2, 2, 2));
+		mainFrame.setContentPane(contentPanel);
 		mainFrame.setLayout(new BorderLayout(10,10));
-		//newFrame.setBorder(new LineBorder(Color.BLACK, 5));
-		JPanel titleBar = new JPanel();
-		JLabel label = new JLabel(" X ");
-        label.setOpaque(true);
-        label.setBackground(Color.RED);
-        label.setForeground(Color.WHITE);
-        titleBar.add(label);
-        titleBar.setBackground(Color.black);
-        titleBar.setLayout(new FlowLayout(FlowLayout.RIGHT));
         
-        mainFrame.add(titleBar, BorderLayout.NORTH);
-		mainFrame.add(this, BorderLayout.CENTER);
+        mainFrame.getContentPane().add(titleBar, BorderLayout.NORTH);
+		mainFrame.getContentPane().add(this, BorderLayout.CENTER);
 		
 		parent = mainFrame;
 		new ComponentMover(mainFrame, titleBar);
-	}
-	
-	/*public void onInit(){
-	 *         ComponentResizer cr = new ComponentResizer();
+		ComponentResizer cr = new ComponentResizer();
         cr.setMinimumSize(new Dimension(300, 300));
-        cr.setMaximumSize(new Dimension(800, 600));
-        cr.registerComponent(parent);
-        cr.setSnapSize(new Dimension(5, 5));
-	}*/
-
-	/*@Override
-	public void paintComponent(Graphics g) {
-		
-		Dimension size = getParent().getSize();
-		g.drawImage(image.getImage(), 0, 0,
-				size.width, size.height, null);
-		super.paintComponent(g);
-	}/**/
+        //cr.setMaximumSize(new Dimension(800, 600));
+        cr.registerComponent(mainFrame);
+        cr.setSnapSize(new Dimension(10, 10));
+	}
 
 	
 	protected void paintComponent(Graphics g) {
@@ -105,7 +93,7 @@ public class ThemedWindow extends javax.swing.JComponent {
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 					RenderingHints.VALUE_ANTIALIAS_ON);
 
-			g2.setColor(Color.WHITE);
+			g2.setColor(ColorScheme.backgroundColor);
 			g2.fillRoundRect(0, 0, getWidth()-1, getHeight()-1, 15, 15);
 
 			g2.setStroke(new BasicStroke(1f));
@@ -114,14 +102,11 @@ public class ThemedWindow extends javax.swing.JComponent {
 			g2.dispose();
 		}
 	}
-	/*protected void paintBorder(Graphics g) {
-        g.setColor(getForeground());
-        g.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, 15, 15);
-	}*/
 	
 	@Override
 	public void setVisible(boolean b){
 		if(mainFrame != null){
+			ComponentMover.center(mainFrame);
 			mainFrame.setVisible(b);
 		} else {
 			super.setVisible(b);
@@ -134,6 +119,33 @@ public class ThemedWindow extends javax.swing.JComponent {
 			mainFrame.setSize(a,b);
 		else
 			super.setSize(a,b);
+	}
+	
+	public static JPanel getDefaultTitleBar(){
+		
+		JPanel titleBar = new JPanel() {
+			BufferedImage logo = ColorScheme.titleBarLogo();
+			@Override
+			protected void paintComponent(Graphics g) {			
+					Graphics2D g2 = (Graphics2D) g.create();
+					g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+							RenderingHints.VALUE_ANTIALIAS_ON);
+
+					g2.setColor(this.getBackground());
+					g2.fillRoundRect(0, 0, getWidth()-1, getHeight()-1, 15, 15);
+
+					if (logo != null) {
+		                //int x = (getWidth() - logo.getWidth()) / 2;
+		                //int y = (getHeight() - logo.getHeight()) / 2;
+		                g2.drawImage(logo, 0, 0, logo.getWidth(), logo.getHeight(), null);
+		            }
+					
+					g2.dispose();
+			}
+		};
+		titleBar.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
+		titleBar.setBackground(ColorScheme.titleBackground);
+		return titleBar;
 	}
 	
 }

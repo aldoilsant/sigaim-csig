@@ -94,19 +94,8 @@ public class ReportList {
 	}
 
 	private void initialize() {
-		//JFrame pane = new JFrame();
-		//pane.setUndecorated(true);
 		frame = new ThemedWindow(/*pane.getContentPane(), false*/);
-		frame.setTitleBar();
 		
-		/*pane.setTitle("Informes");
-		pane.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		pane.setContentPane(frame);
-		pane.setBounds(100, 100, 812, 554);*/
-		
-		//pane.setLayout(new BoxLayout(frame, BoxLayout.Y_AXIS));
-		//frame.setBounds(100, 100, 812, 554);
-		frame.setSize(800, 400);
 		frame.setLayout(new BoxLayout(frame, BoxLayout.Y_AXIS));
 		
 		pnlVistaInformes = new JPanel();
@@ -244,9 +233,7 @@ public class ReportList {
 		
 		frame.add(pnlVistaInformes);
 		
-		JPanel pnlActions = new JPanel();
-		pnlVistaInformes.add(pnlActions, BorderLayout.NORTH);
-		pnlActions.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
+		JPanel pnlActions = ThemedWindow.getDefaultTitleBar();
 		
 		btnShow = new JButton("Ver");
 		btnShow.addActionListener(new ActionListener() {
@@ -275,7 +262,18 @@ public class ReportList {
 		});
 		pnlActions.add(btnNew);
 		
-		//ComponentMover.center();
+		JButton btnClose = new JButton("Salir");
+		btnClose.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);				
+			}
+		});
+		pnlActions.add(btnClose);
+		
+		frame.setTitleBar(pnlActions);
+		frame.setSize(800, 400);
+		
 		frame.setVisible(true);	
 		
 	}
