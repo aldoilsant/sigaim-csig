@@ -1,6 +1,7 @@
 package org.sigaim.csig.theme;
 
 import java.awt.AlphaComposite;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Composite;
@@ -17,12 +18,23 @@ import java.util.Map;
 
 import javax.swing.JScrollPane;
 import javax.swing.UIManager;
+import javax.swing.plaf.synth.SynthContext;
 import javax.swing.plaf.synth.SynthPainter;
 
-public class ElementBorderPainter extends SynthPainter {
+public class CSIGPainter extends SynthPainter {
 
     private static final int ARC = 22;
 
+    public void paintTableHeaderBorder(SynthContext context, Graphics g, int x, int y, int w, int h) {
+    	
+    	Graphics2D g2 = (Graphics2D) g;
+    	g2.setStroke(new BasicStroke(2));
+    	g.setColor(ColorScheme.tableBorderColor);
+    	g2.drawLine(0, 0, w, 0);
+    	g2.drawLine(0, h, w, h);
+    	g2.dispose();
+    }
+    
     public void paintTextFieldBorder(Component component, Graphics g, int a,
             int b, int c, int d){
     	paintBorder(component, g, a, b, c, d);

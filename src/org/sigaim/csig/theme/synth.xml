@@ -4,6 +4,7 @@
 		<string>Lato-Regular.ttf</string>
 		<int>16</int>
 	</object>
+	<object id="csigPainter" class="org.sigaim.csig.theme.CSIGPainter"/>
 	<!-- Style that all regions will use -->
 	<style id="backingStyle">
 		<!-- Make all the regions opaque -->
@@ -97,4 +98,39 @@
 		</state>
 	</style>
 	<bind style="comboBoxList" type="name" key="ComboBox.listRenderer" />
+	<!-- Scroll Panes -->
+	<style id="scroll">
+		<insets top="12" left="15" bottom="12" right="12" />
+		<imagePainter method="scrollPaneBorder" path="images/tableBackground.png"
+			sourceInsets="38 12 12 12" paintCenter="false" />
+	</style>
+	<bind style="scroll" type="region" key="ScrollPane" />
+	<!-- Tables -->
+	<style id="table_list">
+		<opaque value="TRUE" />
+		<!-- <insets top="20" left="0" bottom="6" right="0" /> -->
+		<property key="Table.rowHeight" type="integer" value="20" />
+		<state>
+			<color value="BLACK" type="TEXT_FOREGROUND" />
+			<color value="WHITE" type="TEXT_BACKGROUND" />
+			<!-- <color value="TRANSPARENT" type="BACKGROUND" /> -->
+		</state>
+		<state value="SELECTED">
+			<color value="RED" type="TEXT_FOREGROUND" />
+			<color value="WHITE" type="TEXT_BACKGROUND" />
+		</state>
+	</style>
+	<bind style="table_list" type="region" key="Table"/>
+  	<bind style="table_list" type="region" key="List"/>
+	<style id="table_header">
+		<property key="Table.rowHeight" type="integer" value="20" />
+		<painter idref="csigPainter" method="tableHeaderBorder"/>
+		<insets top="15" left="5" bottom="15" right="0" />
+		<state>
+			<color value="BLACK" type="TEXT_FOREGROUND" />
+			<color value="#FBFBFD" type="TEXT_BACKGROUND" />
+			<color value="#FBFBFD" type="BACKGROUND" />
+		</state>
+	</style>
+  	<bind style="table_header" type="region" key="TableHeader"/>
 </synth>

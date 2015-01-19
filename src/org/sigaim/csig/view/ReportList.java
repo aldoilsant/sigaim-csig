@@ -272,7 +272,7 @@ public class ReportList {
 		pnlActions.add(btnClose);
 		
 		frame.setTitleBar(pnlActions);
-		frame.setSize(800, 400);
+		frame.setSize(800, 600);
 		
 		frame.setVisible(true);	
 		

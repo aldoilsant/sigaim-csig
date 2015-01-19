@@ -14,6 +14,8 @@ public class ColorScheme {
 	public static final Color backgroundColor = new Color(255,255,255);
 	public static final Color titleBackground = new Color(242, 242, 242);
 	
+	public static Color tableBorderColor = new Color(227, 227, 231);
+	
 	private static BufferedImage titleBarLogo = null;
 	public static BufferedImage titleBarLogo(){
 		if(titleBarLogo == null){
