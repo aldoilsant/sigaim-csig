@@ -42,7 +42,7 @@ public class CSIGDialog extends JDialog {
 		contentPanel = new ThemedWindow(this.getRootPane(), true);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
-		setBounds(0, 0, 470, 270);
+		setBounds(0, 0, 470, 250);
 		//getContentPane().setLayout(new BorderLayout());
 		setContentPane(contentPanel);
 		//getContentPane().add(contentPanel, BorderLayout.CENTER);

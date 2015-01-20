@@ -59,11 +59,12 @@ import org.sigaim.csig.model.CSIGReport;
 import org.sigaim.csig.model.CSIGConcept;
 import org.sigaim.csig.persistence.PersistenceManager;
 import org.sigaim.csig.persistence.PersistentObject;
+import org.sigaim.csig.theme.ThemedWindow;
 
 import net.java.balloontip.*;
 import net.java.balloontip.styles.BalloonTipStyle;
 
-public class ShowReport extends JPanel implements PersistentObject {
+public class ShowReport /*extends JPanel*/ implements PersistentObject {
 	
 	private long uuid = (new Date()).getTime();
 	final ShowReport self;
@@ -71,7 +72,7 @@ public class ShowReport extends JPanel implements PersistentObject {
 	private static final String ELEM = AbstractDocument.ElementNameAttribute;
     private static final String COMP = StyleConstants.ComponentElementName;
 
-	private JFrame frame;
+	private ThemedWindow frame;
 	private CSIGReport report;
 	private ViewController controller;
 	
@@ -158,10 +159,10 @@ public class ShowReport extends JPanel implements PersistentObject {
 	//PersistenceManager constructor
 	public ShowReport(ViewController _controller){
 		self = this;
-		frame = new JFrame();
-		frame.setVisible(false);
-		frame.setAutoRequestFocus(false);
-		frame.setTitle(strTitle);
+		frame = new ThemedWindow();//new JFrame();
+		//frame.setVisible(false);
+		//frame.setAutoRequestFocus(false);
+		//frame.setTitle(strTitle);
 		controller = _controller;
 		lang = controller.getLang();
 		initialize();
@@ -186,7 +187,7 @@ public class ShowReport extends JPanel implements PersistentObject {
 			protected void done() {
 				updateReportView(r);
 				frame.setVisible(true);
-				WaitModal.close(self);
+				WaitModal.close(frame);
 				frame.toFront();
 			}
 			
@@ -293,14 +294,14 @@ public class ShowReport extends JPanel implements PersistentObject {
 						frame.dispose();
 					} else{
 						WaitModal.close();
-						self.setVisible(true);
+						frame.setVisible(true);
 						JOptionPane.showMessageDialog(frame, lang.getString("Error.CouldNotUpdateReport"), "Error", JOptionPane.ERROR_MESSAGE);
 					}
 				} catch (HeadlessException | InterruptedException
 						| ExecutionException e) {
 					e.printStackTrace();
 					WaitModal.close();
-					self.setVisible(true);
+					frame.setVisible(true);
 					JOptionPane.showMessageDialog(frame, lang.getString("Error.InternalError"), "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
@@ -347,8 +348,33 @@ public class ShowReport extends JPanel implements PersistentObject {
 	}
 
 	private void initialize() {
+		//Prepare Title bar
+		JPanel pnlActions = ThemedWindow.getDefaultTitleBar();
+		FlowLayout fl_pnlActions = (FlowLayout) pnlActions.getLayout();
+		fl_pnlActions.setAlignment(FlowLayout.RIGHT);
+		
+		btnAnalyze = new JButton(lang.getString("btnReanalize"));
+		btnAnalyze.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				saveReport();
+			}
+		});
+		pnlActions.add(btnAnalyze);
+		
+		btnFinalize = new JButton(lang.getString("btnFinalize"));
+		btnFinalize.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ev) {
+				if(edited)
+					saveReport();
+				else
+					frame.dispose();
+			}
+		});
+		pnlActions.add(btnFinalize);
+		frame.setTitleBar(pnlActions);
+		
 		//On exit ask saving if content changed
-		frame.addWindowListener(new java.awt.event.WindowAdapter() {
+		frame.getMainFrame().addWindowListener(new java.awt.event.WindowAdapter() {
 		    @Override
 		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
 		        if(edited)
@@ -357,12 +383,12 @@ public class ShowReport extends JPanel implements PersistentObject {
 		        	frame.dispose();
 		    }
 		});
-		frame.setBounds(100, 100, 812, 554);
-		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		frame.getContentPane().removeAll();
+		frame.setSize(900,550);
+		frame.getMainFrame().setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		//frame.removeAll();
 		
 		JPanel pnlVistaInformes = new JPanel();
-		frame.getContentPane().add(pnlVistaInformes);
+		frame.add(pnlVistaInformes);
 		pnlVistaInformes.setLayout(new GridLayout(4, 1, 5, 5));
 		
 		/*BIASED*/
@@ -487,35 +513,9 @@ public class ShowReport extends JPanel implements PersistentObject {
 		pnlPlan.setLayout(gl_pnlPlan);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		
-		JPanel pnlActions = new JPanel();
-		FlowLayout fl_pnlActions = (FlowLayout) pnlActions.getLayout();
-		fl_pnlActions.setAlignment(FlowLayout.RIGHT);
-		frame.getContentPane().add(pnlActions, BorderLayout.SOUTH);
-		
-		btnAnalyze = new JButton(lang.getString("btnReanalize"));
-		//btnAnalyze.setEnabled(false);
-		btnAnalyze.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ev) {
-				saveReport();
-			}
-		});
-		pnlActions.add(btnAnalyze);
-		
-		btnFinalize = new JButton(lang.getString("btnFinalize"));
-		//btnFinalize.setEnabled(true);
-		btnFinalize.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent ev) {
-				if(edited)
-					saveReport();
-				else
-					frame.dispose();
-			}
-		});
-		pnlActions.add(btnFinalize);
-		
-		frame.setLocation(
+		/*frame.setLocation(
 				  ((int) (screenSize.getWidth()) - frame.getWidth())/2, 
-				  ((int) (screenSize.getHeight()) - frame.getHeight())/2);
+				  ((int) (screenSize.getHeight()) - frame.getHeight())/2);*/
 		//frame.setVisible(true);
 	}
 	

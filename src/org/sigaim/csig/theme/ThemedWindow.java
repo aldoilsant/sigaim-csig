@@ -70,7 +70,7 @@ public class ThemedWindow extends javax.swing.JComponent {
 		mainFrame.setLayout(new BorderLayout(10,10));
         
         mainFrame.getContentPane().add(titleBar, BorderLayout.NORTH);
-		mainFrame.getContentPane().add(this, BorderLayout.CENTER);
+		mainFrame.getContentPane().add(parent, BorderLayout.CENTER);
 		
 		parent = mainFrame;
 		new ComponentMover(mainFrame, titleBar);
@@ -119,6 +119,22 @@ public class ThemedWindow extends javax.swing.JComponent {
 			mainFrame.setSize(a,b);
 		else
 			super.setSize(a,b);
+	}
+	
+	public void toFront(){
+		if(mainFrame != null)
+			mainFrame.toFront();
+		//TODO: else exception
+	}
+	
+	public void dispose() {
+		if(mainFrame != null)
+			mainFrame.dispose();
+		//TODO: else exception		
+	}
+	
+	public JFrame getMainFrame(){
+		return mainFrame;
 	}
 	
 	public static JPanel getDefaultTitleBar(){
