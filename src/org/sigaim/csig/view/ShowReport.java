@@ -4,17 +4,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.Cursor;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.HeadlessException;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -25,9 +19,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
@@ -35,21 +27,16 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
 
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JScrollPane;
+import javax.swing.BoxLayout;
 import javax.swing.JTextPane;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
 import javax.swing.text.Element;
 import javax.swing.text.ElementIterator;
 import javax.swing.text.StyleConstants;
@@ -59,10 +46,9 @@ import org.sigaim.csig.model.CSIGReport;
 import org.sigaim.csig.model.CSIGConcept;
 import org.sigaim.csig.persistence.PersistenceManager;
 import org.sigaim.csig.persistence.PersistentObject;
+import org.sigaim.csig.theme.CSIGDialog;
+import org.sigaim.csig.theme.CSIGTheme;
 import org.sigaim.csig.theme.ThemedWindow;
-
-import net.java.balloontip.*;
-import net.java.balloontip.styles.BalloonTipStyle;
 
 public class ShowReport /*extends JPanel*/ implements PersistentObject {
 	
@@ -75,6 +61,7 @@ public class ShowReport /*extends JPanel*/ implements PersistentObject {
 	private ThemedWindow frame;
 	private CSIGReport report;
 	private ViewController controller;
+	private ShowReportPanel pnlVistaInformes;
 	
 	private ResourceBundle lang;
 	
@@ -112,14 +99,11 @@ public class ShowReport /*extends JPanel*/ implements PersistentObject {
 	static String strNewVersion = "Esto creará una nueva versión del informe"; 
 	static String strTitleAskSave = "Confirme antes de cerrar el informe";
 	static String strTitle = "Ver informe";
-	private JTextPane txtUnbiased;
-	private JTextPane txtBiased;
-	private JTextPane txtImpression;
-	private JTextPane txtPlan;
 	private JButton btnFinalize;
 	private JButton btnAnalyze;
 	
 	private class ConceptLabel extends JLabel {
+		private static final long serialVersionUID = 1L;
 		private CSIGConcept concept;
 		private String originalText;
 		
@@ -203,10 +187,10 @@ public class ShowReport /*extends JPanel*/ implements PersistentObject {
 	}
 	
 	private void updateReportView(CSIGReport r) {
-		setTextPane(txtBiased, r.getBiased(), r.getBiasedConcepts());
-		setTextPane(txtUnbiased, r.getUnbiased(), r.getUnbiasedConcepts());
-		setTextPane(txtImpression, r.getImpressions(), r.getImpressionsConcepts());
-		setTextPane(txtPlan, r.getPlan(), r.getPlanConcepts());
+		setTextPane(pnlVistaInformes.txtBiased, r.getBiased(), r.getBiasedConcepts());
+		setTextPane(pnlVistaInformes.txtUnbiased, r.getUnbiased(), r.getUnbiasedConcepts());
+		setTextPane(pnlVistaInformes.txtImpression, r.getImpressions(), r.getImpressionsConcepts());
+		setTextPane(pnlVistaInformes.txtPlan, r.getPlan(), r.getPlanConcepts());
 		edited = false;
 		btnAnalyze.setEnabled(false);
 		btnFinalize.setEnabled(true);
@@ -214,11 +198,13 @@ public class ShowReport /*extends JPanel*/ implements PersistentObject {
 	private void showSaveDialog(){
 		int response;
 		if(report != null)
-			response = JOptionPane.showConfirmDialog(frame, new String[]{strAskSave, strNewVersion}, strTitleAskSave,
-		        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+			response = CSIGDialog.showYesNoCancel(
+					lang.getString("Yes"), lang.getString("No"), lang.getString("Cancel"),
+					strAskSave + "<br />" + strNewVersion, CSIGTheme.iconHelp());
 		else
-			response = JOptionPane.showConfirmDialog(frame, strAskSave, strTitleAskSave,
-			        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+			response = CSIGDialog.showYesNoCancel(
+					lang.getString("Yes"), lang.getString("No"), lang.getString("Cancel"),
+					strAskSave, CSIGTheme.iconHelp());
 		
 		switch(response) {
 			case JOptionPane.YES_OPTION:
@@ -238,7 +224,7 @@ public class ShowReport /*extends JPanel*/ implements PersistentObject {
 	 * JDK versions, so it remains separated here.
 	 * 
 	 * This will update the List<CSIGConcept> with the actual (non deleted from TextPane) concepts,
-	 * update their posisiton and...
+	 * update their position and...
 	 * returns the String with the full string (concatenating plain text and labels text).
 	 */
 	private String updatePart(JTextPane pane, String text, List<CSIGConcept> concepts){
@@ -276,13 +262,13 @@ public class ShowReport /*extends JPanel*/ implements PersistentObject {
 			@Override
 			protected Boolean doInBackground() throws Exception {
 				report.setBiased(
-						updatePart(txtBiased, report.getBiased(), report.getBiasedConcepts()));
+						updatePart(pnlVistaInformes.txtBiased, report.getBiased(), report.getBiasedConcepts()));
 				report.setUnbiased(
-						updatePart(txtUnbiased, report.getUnbiased(), report.getUnbiasedConcepts()));
+						updatePart(pnlVistaInformes.txtUnbiased, report.getUnbiased(), report.getUnbiasedConcepts()));
 				report.setPlan(
-						updatePart(txtPlan, report.getPlan(), report.getPlanConcepts()));
+						updatePart(pnlVistaInformes.txtPlan, report.getPlan(), report.getPlanConcepts()));
 				report.setImpressions(
-						updatePart(txtImpression, report.getImpressions(), report.getImpressionsConcepts()));
+						updatePart(pnlVistaInformes.txtImpression, report.getImpressions(), report.getImpressionsConcepts()));
 				return controller.updateReport(report, false);
 			}
 			
@@ -295,14 +281,14 @@ public class ShowReport /*extends JPanel*/ implements PersistentObject {
 					} else{
 						WaitModal.close();
 						frame.setVisible(true);
-						JOptionPane.showMessageDialog(frame, lang.getString("Error.CouldNotUpdateReport"), "Error", JOptionPane.ERROR_MESSAGE);
+						CSIGDialog.showError(lang.getString("Error.CouldNotUpdateReport"), lang.getString("OK"));
 					}
 				} catch (HeadlessException | InterruptedException
 						| ExecutionException e) {
 					e.printStackTrace();
 					WaitModal.close();
 					frame.setVisible(true);
-					JOptionPane.showMessageDialog(frame, lang.getString("Error.InternalError"), "Error", JOptionPane.ERROR_MESSAGE);
+					CSIGDialog.showError(lang.getString("Error.InternalError"), lang.getString("OK"));
 				}
 			}
 		};
@@ -383,140 +369,13 @@ public class ShowReport /*extends JPanel*/ implements PersistentObject {
 		        	frame.dispose();
 		    }
 		});
-		frame.setSize(900,550);
 		frame.getMainFrame().setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		//frame.removeAll();
+		frame.setLayout(new BoxLayout(frame, BoxLayout.Y_AXIS));
+		frame.setSize(900,550);
 		
-		JPanel pnlVistaInformes = new JPanel();
+		pnlVistaInformes = new ShowReportPanel(textChangeListener);
+		pnlVistaInformes.setVisible(true);
 		frame.add(pnlVistaInformes);
-		pnlVistaInformes.setLayout(new GridLayout(4, 1, 5, 5));
-		
-		/*BIASED*/
-		JPanel pnlBiased = new JPanel();
-		pnlVistaInformes.add(pnlBiased);
-		
-		JLabel lblBiased = new JLabel("Subjetivo");
-		
-		JScrollPane scrBiased = new JScrollPane();
-		GroupLayout gl_pnlBiased = new GroupLayout(pnlBiased);
-		gl_pnlBiased.setHorizontalGroup(
-			gl_pnlBiased.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_pnlBiased.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_pnlBiased.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrBiased, GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
-						.addComponent(lblBiased))
-					.addContainerGap())
-		);
-		gl_pnlBiased.setVerticalGroup(
-			gl_pnlBiased.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_pnlBiased.createSequentialGroup()
-					.addComponent(lblBiased)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(scrBiased, GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		
-		txtBiased = new JTextPane();
-		txtBiased.getDocument().addDocumentListener(textChangeListener);
-		scrBiased.setViewportView(txtBiased);
-		pnlBiased.setLayout(gl_pnlBiased);
-		
-		JPanel pnlUnbiased = new JPanel();
-		pnlVistaInformes.add(pnlUnbiased);
-		
-		JLabel lblUnbiased = new JLabel("Objetivo");
-		
-		JScrollPane scrUnbiased = new JScrollPane();
-		GroupLayout gl_pnlUnbiased = new GroupLayout(pnlUnbiased);
-		gl_pnlUnbiased.setHorizontalGroup(
-			gl_pnlUnbiased.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_pnlUnbiased.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_pnlUnbiased.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrUnbiased, GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
-						.addComponent(lblUnbiased))
-					.addContainerGap())
-		);
-		gl_pnlUnbiased.setVerticalGroup(
-			gl_pnlUnbiased.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_pnlUnbiased.createSequentialGroup()
-					.addComponent(lblUnbiased)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(scrUnbiased, GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		
-		txtUnbiased = new JTextPane();
-		txtUnbiased.getDocument().addDocumentListener(textChangeListener);
-		scrUnbiased.setViewportView(txtUnbiased);
-		pnlUnbiased.setLayout(gl_pnlUnbiased);
-		
-		JPanel pnlImpression = new JPanel();
-		pnlVistaInformes.add(pnlImpression);
-		
-		JLabel lblImpression = new JLabel("Impresión médica");
-		
-		JScrollPane scrImpression = new JScrollPane();
-		GroupLayout gl_pnlImpression = new GroupLayout(pnlImpression);
-		gl_pnlImpression.setHorizontalGroup(
-			gl_pnlImpression.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_pnlImpression.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_pnlImpression.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrImpression, GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
-						.addComponent(lblImpression))
-					.addContainerGap())
-		);
-		gl_pnlImpression.setVerticalGroup(
-			gl_pnlImpression.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_pnlImpression.createSequentialGroup()
-					.addComponent(lblImpression)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(scrImpression, GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		
-		txtImpression = new JTextPane();
-		txtImpression.getDocument().addDocumentListener(textChangeListener);
-		scrImpression.setViewportView(txtImpression);
-		pnlImpression.setLayout(gl_pnlImpression);
-		
-		JPanel pnlPlan = new JPanel();
-		pnlVistaInformes.add(pnlPlan);
-		
-		JLabel lblPlan = new JLabel("Plan terapéutico");
-		
-		JScrollPane scrPlan = new JScrollPane();
-		GroupLayout gl_pnlPlan = new GroupLayout(pnlPlan);
-		gl_pnlPlan.setHorizontalGroup(
-			gl_pnlPlan.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_pnlPlan.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_pnlPlan.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrPlan, GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
-						.addComponent(lblPlan))
-					.addContainerGap())
-		);
-		gl_pnlPlan.setVerticalGroup(
-			gl_pnlPlan.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_pnlPlan.createSequentialGroup()
-					.addComponent(lblPlan)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(scrPlan, GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		
-		txtPlan = new JTextPane();
-		txtPlan.getDocument().addDocumentListener(textChangeListener);
-		scrPlan.setViewportView(txtPlan);
-		pnlPlan.setLayout(gl_pnlPlan);
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		
-		/*frame.setLocation(
-				  ((int) (screenSize.getWidth()) - frame.getWidth())/2, 
-				  ((int) (screenSize.getHeight()) - frame.getHeight())/2);*/
-		//frame.setVisible(true);
 	}
 	
 	@Override
@@ -528,16 +387,16 @@ public class ShowReport /*extends JPanel*/ implements PersistentObject {
 		
 		List<CSIGConcept> clist = new ArrayList<CSIGConcept>();
 		
-		status.put("txtBiased", updatePart(txtBiased, report.getBiased(), clist));
+		status.put("txtBiased", updatePart(pnlVistaInformes.txtBiased, report.getBiased(), clist));
 		status.put("clistBiased", clist);
 		clist = new ArrayList<CSIGConcept>();
-		status.put("txtUnbiased", updatePart(txtUnbiased, report.getUnbiased(), clist));
+		status.put("txtUnbiased", updatePart(pnlVistaInformes.txtUnbiased, report.getUnbiased(), clist));
 		status.put("clistUnbiased", clist);
 		clist = new ArrayList<CSIGConcept>();
-		status.put("txtImpression", updatePart(txtImpression, report.getImpressions(), clist));
+		status.put("txtImpression", updatePart(pnlVistaInformes.txtImpression, report.getImpressions(), clist));
 		status.put("clistImpression", clist);
 		clist = new ArrayList<CSIGConcept>();
-		status.put("txtPlan", updatePart(txtPlan, report.getPlan(), clist));
+		status.put("txtPlan", updatePart(pnlVistaInformes.txtPlan, report.getPlan(), clist));
 		status.put("clistPlan", clist);
 			
 		ByteArrayOutputStream bs= new ByteArrayOutputStream();
@@ -575,16 +434,16 @@ public class ShowReport /*extends JPanel*/ implements PersistentObject {
 		Long reportId = (Long) status.get("reportId");
 		report = controller.getReport(reportId.longValue());
 		
-		setTextPane(txtBiased, 
+		setTextPane(pnlVistaInformes.txtBiased, 
 				(String) status.get("txtBiased"), 
 				(List<CSIGConcept>) status.get("clistBiased"));
-		setTextPane(txtUnbiased, 
+		setTextPane(pnlVistaInformes.txtUnbiased, 
 				(String) status.get("txtUnbiased"), 
 				(List<CSIGConcept>) status.get("clistUnbiased"));
-		setTextPane(txtImpression, 
+		setTextPane(pnlVistaInformes.txtImpression, 
 				(String) status.get("txtImpression"), 
 				(List<CSIGConcept>) status.get("clistImpression"));
-		setTextPane(txtPlan, 
+		setTextPane(pnlVistaInformes.txtPlan, 
 				(String) status.get("txtPlan"), 
 				(List<CSIGConcept>) status.get("clistPlan"));
 		

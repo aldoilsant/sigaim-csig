@@ -137,7 +137,7 @@ public class ConceptView extends JPanel {
 		} else {
 			ddlList = new ArrayList<String>(0);
 		}
-		ddlSynonym = new JComboBox<String>((String[])ddlList.toArray());
+		ddlSynonym = new JComboBox<String>(ddlList.toArray(new String[ddlList.size()]));
 		ddlSynonym.addMouseListener(mouseStillInside);
 		for (Component component : ddlSynonym.getComponents()) {
 			   component.addMouseListener(mouseStillInside);

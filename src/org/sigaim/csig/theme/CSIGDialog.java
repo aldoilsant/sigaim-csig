@@ -153,4 +153,18 @@ public class CSIGDialog extends JDialog {
 		
 		return dia.result;
 	}
+
+
+	public static int showYesNoCancel(String txtYes, String txtNo, String txtCancel, String message, Icon icon) {
+		CSIGDialog dia = new CSIGDialog();
+		dia.icon.setIcon(icon);
+		dia.lblMessage.setText("<html><div style=\"text-align: center;\">" + message + "</html>");
+		dia.btn1.setText(txtYes);
+		dia.btn2.setText(txtNo);
+		dia.btn3.setText(txtCancel);
+		dia.btn3.setVisible(true);
+		ComponentMover.center(dia);
+		dia.setVisible(true);
+		return 0;
+	}
 }
