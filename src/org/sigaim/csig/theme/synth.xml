@@ -94,7 +94,7 @@
 		</state>
 		<state value="SELECTED">
 			<color type="TEXT_FOREGROUND" value="#CC6600" />
-			<color type="TEXT_BACKGROUND" value="#FFEEDD" />
+			<color type="TEXT_BACKGROUND" value="#f2f2f2" />
 		</state>
 	</style>
 	<bind style="comboBoxList" type="name" key="ComboBox.listRenderer" />
@@ -116,8 +116,8 @@
 			<!-- <color value="TRANSPARENT" type="BACKGROUND" /> -->
 		</state>
 		<state value="SELECTED">
-			<color value="RED" type="TEXT_FOREGROUND" />
-			<color value="WHITE" type="TEXT_BACKGROUND" />
+			<color value="BLACK" type="TEXT_FOREGROUND" />
+			<color value="#f2f2f2" type="TEXT_BACKGROUND" />
 		</state>
 	</style>
 	<bind style="table_list" type="region" key="Table"/>

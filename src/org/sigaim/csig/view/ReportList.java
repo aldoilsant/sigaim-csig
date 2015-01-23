@@ -4,16 +4,22 @@ import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridLayout;
+
 import javax.swing.ListSelectionModel;
 import javax.swing.BoxLayout;
-
-import java.awt.FlowLayout;
-
 import javax.swing.JPanel;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JTextArea;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -24,9 +30,10 @@ import javax.swing.SwingConstants;
 import java.awt.BorderLayout;
 
 import javax.swing.ScrollPaneConstants;
+
 import org.sigaim.csig.model.CSIGReport;
+import org.sigaim.csig.theme.ColorScheme;
 import org.sigaim.csig.theme.ThemedWindow;
-import org.sigaim.csig.view.helper.ComponentMover;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,18 +71,18 @@ public class ReportList {
 		reportList = newList;
 		tblReports.setModel(new ReportTableModel(reportList));
 		tblReports.getColumnModel().getColumn(0).setPreferredWidth(100);
-		tblReports.getColumnModel().getColumn(0).setMinWidth(100);
-		tblReports.getColumnModel().getColumn(0).setMaxWidth(100);
+		tblReports.getColumnModel().getColumn(0).setMinWidth(150);
+		tblReports.getColumnModel().getColumn(0).setMaxWidth(150);
 		tblReports.getColumnModel().getColumn(1).setPreferredWidth(100);
-		tblReports.getColumnModel().getColumn(1).setMinWidth(100);
-		tblReports.getColumnModel().getColumn(1).setMaxWidth(100);
+		tblReports.getColumnModel().getColumn(1).setMinWidth(150);
+		tblReports.getColumnModel().getColumn(1).setMaxWidth(150);
 		tblReports.getColumnModel().getColumn(2).setResizable(false);
 		tblReports.getColumnModel().getColumn(2).setPreferredWidth(200);
 		tblReports.getColumnModel().getColumn(2).setMinWidth(200);
 		tblReports.getColumnModel().getColumn(2).setMaxWidth(200);
-		tblReports.getColumnModel().getColumn(3).setPreferredWidth(200);
-		tblReports.getColumnModel().getColumn(3).setMinWidth(200);
-		tblReports.getColumnModel().getColumn(3).setMaxWidth(200);
+		tblReports.getColumnModel().getColumn(3).setPreferredWidth(250);
+		tblReports.getColumnModel().getColumn(3).setMinWidth(50);
+		//tblReports.getColumnModel().getColumn(3).setMaxWidth(200);
 	}
 	public void updateVersionList(List<CSIGReport> newList){
 		versionList = newList;
@@ -94,7 +101,7 @@ public class ReportList {
 	}
 
 	private void initialize() {
-		frame = new ThemedWindow(/*pane.getContentPane(), false*/);
+		frame = new ThemedWindow();
 		
 		frame.setLayout(new BoxLayout(frame, BoxLayout.Y_AXIS));
 		
@@ -113,7 +120,27 @@ public class ReportList {
 		
 		//reportTableModel = ;
 		
-		tblReports = new JTable();
+		tblReports = new JTable(){
+			//private Border outside = new MatteBorder(1, 0, 1, 0, Color.RED);
+			private Border emptyBorder = new EmptyBorder(0, 1, 0, 1);
+			//private Border highlight = new CompoundBorder(outside, inside);
+
+			public Component prepareRenderer(TableCellRenderer renderer, int row, int column)
+			{
+				Component c = super.prepareRenderer(renderer, row, column);
+				JComponent jc = (JComponent)c;
+				jc.setBorder(emptyBorder);
+
+				if (isRowSelected(row))
+					jc.setBackground(ColorScheme.selectedBackground);
+				else
+					jc.setBackground(ColorScheme.backgroundColor);
+
+				return c;
+			}
+		};
+		tblReports.setShowGrid(false);
+		tblReports.setIntercellSpacing(new Dimension(0, 0));
 		tblReports.setAutoCreateRowSorter(true);
 		updateList(reportList);  //Set TableModel and column sizes
 		tblReports.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -163,6 +190,8 @@ public class ReportList {
 		);
 		
 		tblVersions = new JTable();
+		tblVersions.setShowGrid(false);
+		tblVersions.setIntercellSpacing(new Dimension(0, 0));
 		lsm = tblVersions.getSelectionModel();
 		lsm.addListSelectionListener(new TblVersionListSelectionHandler(tblVersions));
 		
@@ -272,6 +301,7 @@ public class ReportList {
 		pnlActions.add(btnClose);
 		
 		frame.setTitleBar(pnlActions);
+		frame.getMainFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(800, 600);
 		
 		frame.setVisible(true);	
