@@ -8,7 +8,7 @@
 	<!-- Style that all regions will use -->
 	<style id="backingStyle">
 		<!-- Make all the regions opaque -->
-		<opaque value="TRUE" />
+		<opaque value="FALSE" />
 		<font name="Dialog" size="16" />
 		<state>
 			<!-- Provide default colors -->
@@ -22,7 +22,7 @@
 	<style id="buttonStyle">
 		<!-- Shift the text one pixel when pressed -->
 		<property key="Button.textShiftOffset" type="integer" value="1" />
-		<insets top="17" left="30" right="30" bottom="20" />
+		<insets top="17" left="20" right="20" bottom="20" />
 		<state>
 			<imagePainter method="buttonBackground" path="images/buttonBlack.png"
 				sourceInsets="11 11 11 11" />
@@ -37,7 +37,7 @@
 	<bind style="buttonStyle" type="region" key="button" />
 	<style id="buttonStyleGray">
 		<property key="Button.textShiftOffset" type="integer" value="1" />
-		<insets top="17" left="30" right="30" bottom="20" />
+		<insets top="17" left="20" right="20" bottom="20" />
 		<state>
 			<imagePainter method="buttonBackground" path="images/buttonGray.png"
 				sourceInsets="11 11 11 11" />
@@ -52,7 +52,7 @@
 	<bind style="buttonStyleGray" type="name" key="Button.Gray" />
 	<!-- TextField & Password -->
 	<style id="textfield">
-		<insets top="10" left="10" bottom="10" right="10" />
+		<insets top="5" left="10" bottom="5" right="10" />
 		<property key="TextField.margin" type="insets" value="5 5 5 5" />
 		<property key="PasswordField.margin" type="insets" value="5 5 5 5" />
 		<state>
@@ -68,7 +68,7 @@
 	<bind style="textfield" type="region" key="PasswordField" />
 	<!-- ComboBox -->
 	<style id="comboBox">
-		<insets top="6" left="10" bottom="6" right="10" />
+		<insets top="1" left="10" bottom="1" right="10" />
 		<!-- <property key="TextField.margin" type="insets" value="7 7 7 7" /> -->
 		<property key="ComboBox.rendererUseListColors" type="boolean" value="false"/>
 		<state>
@@ -127,7 +127,7 @@
 		<painter idref="csigPainter" method="tableHeaderBorder"/>
 		<insets top="15" left="5" bottom="15" right="0" />
 		<state>
-			<color value="BLACK" type="TEXT_FOREGROUND" />
+			<color value="#4A596B" type="TEXT_FOREGROUND" />
 			<color value="#FBFBFD" type="TEXT_BACKGROUND" />
 			<color value="#FBFBFD" type="BACKGROUND" />
 		</state>

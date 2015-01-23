@@ -83,6 +83,7 @@ public class ThemedWindow extends javax.swing.JComponent {
 
 	
 	protected void paintComponent(Graphics g) {
+		if(mainFrame != null) return;
 		if(image != null){
 			Dimension size = getParent().getSize();
 			g.drawImage(image.getImage(), 0, 0,

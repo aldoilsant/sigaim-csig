@@ -2,8 +2,8 @@ package org.sigaim.csig.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
+import java.awt.Frame;
+import java.awt.GraphicsEnvironment;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -31,18 +31,15 @@ import javaFlacEncoder.FLACFileWriter;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.TargetDataLine;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingWorker;
 
 import org.sigaim.csig.model.CSIGPatient;
@@ -51,6 +48,7 @@ import org.sigaim.csig.persistence.PersistenceManager;
 import org.sigaim.csig.persistence.PersistentObject;
 import org.sigaim.csig.theme.CSIGDialog;
 import org.sigaim.csig.theme.CSIGTheme;
+import org.sigaim.csig.theme.ThemedWindow;
 
 import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -66,18 +64,14 @@ import es.udc.tic.rnasa.sigaim_transcriptor.client.ui.event.*;
 
 public class Dictation extends JPanel implements TranscriptionListener, PersistentObject {
 	
-	//private String transcriptionServiceUrl = "193.147.36.199";
-
+	private static final long serialVersionUID = 1L;
 	private ResourceBundle lang;
 	private long uuid = (new Date()).getTime();
 	
-	private JFrame frame;
+	private ThemedWindow frame;
+	DictationPanel panel;
 	private CSIGReport report;
 	private ViewController controller;
-	private JTextArea txtUnbiased;
-	private JTextArea txtBiased;
-	private JTextArea txtImpression;
-	private JTextArea txtPlan;
 	
 	private boolean isRecording = false;
 	private boolean isPaused = false;
@@ -101,8 +95,8 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 		controller = _controller;
 		lang = controller.getLang();
 		
-		frame = new JFrame();
-		frame.setTitle(lang.getString("Dictation.TitleEdit"));
+		frame = new ThemedWindow();
+		//frame.setTitle(lang.getString("Dictation.TitleEdit"));
 		initialize();
 		connectTranscriptionService();
 	}
@@ -115,12 +109,12 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 		controller = _controller;
 		lang = controller.getLang();
 		
-		frame = new JFrame();
+		frame = new ThemedWindow();
 
-		if(r != null)
+		/*if(r != null)
 			frame.setTitle(lang.getString("Dictation.TitleEdit"));
 		else
-			frame.setTitle(lang.getString("Dictation.TitleNew"));
+			frame.setTitle(lang.getString("Dictation.TitleNew"));*/
 		report = r;
 		initialize();
 		if(r != null)
@@ -163,10 +157,10 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 	}
 	
 	private void updateReportView(CSIGReport r) {
-		txtBiased.setText(r.getBiased());
-		txtUnbiased.setText(r.getUnbiased());
-		txtPlan.setText(r.getPlan());
-		txtImpression.setText(r.getImpressions());
+		panel.txtBiased.setText(r.getBiased());
+		panel.txtUnbiased.setText(r.getUnbiased());
+		panel.txtPlan.setText(r.getPlan());
+		panel.txtImpression.setText(r.getImpressions());
 	}
 	private void showSaveDialog(){
 		int response;
@@ -189,7 +183,7 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 		}
 	}
 	
-	private void saveReport(){
+	public void saveReport(){
 		final Dictation self = this;
 		if(report == null) { //New report
 			if(ddlPatient.getSelectedIndex() > 0) {
@@ -198,7 +192,9 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 
 					@Override
 					protected Boolean doInBackground() throws Exception {
-						return controller.createReport(txtBiased.getText(), txtUnbiased.getText(), txtImpression.getText(), txtPlan.getText(),
+						return controller.createReport(
+								panel.txtBiased.getText(), panel.txtUnbiased.getText(), 
+								panel.txtImpression.getText(), panel.txtPlan.getText(),
 								(String)ddlPatient.getSelectedItem());
 					}
 					
@@ -237,10 +233,10 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 					try {
 						//Update CSIGReport in memory
 						cleanR = report.clone();
-						cleanR.setBiased(txtBiased.getText());
-						cleanR.setUnbiased(txtUnbiased.getText());
-						cleanR.setImpressions(txtImpression.getText());
-						cleanR.setPlan(txtPlan.getText());
+						cleanR.setBiased(panel.txtBiased.getText());
+						cleanR.setUnbiased(panel.txtUnbiased.getText());
+						cleanR.setImpressions(panel.txtImpression.getText());
+						cleanR.setPlan(panel.txtPlan.getText());
 					} catch (CloneNotSupportedException e) {
 						e.printStackTrace();
 						JOptionPane.showMessageDialog(frame, lang.getString("Error.InternalError"), "Error", JOptionPane.ERROR_MESSAGE);
@@ -326,20 +322,20 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 
 	private void initialize() {
 		//On exit ask saving if content changed
-		frame.addWindowListener(new java.awt.event.WindowAdapter() {
+		/*frame.addWindowListener(new java.awt.event.WindowAdapter() {
 		    @Override
 		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
 		        if(report != null) {
-		        	if( (!report.getBiased().equals(txtBiased.getText())) ||
-		        		(!report.getUnbiased().equals(txtUnbiased.getText())) ||
-		        		(!report.getPlan().equals(txtPlan.getText())) ||
-		        		(!report.getImpressions().equals(txtImpression.getText())) )
+		        	if( (!report.getBiased().equals(panel.txtBiased.getText())) ||
+		        		(!report.getUnbiased().equals(panel.txtUnbiased.getText())) ||
+		        		(!report.getPlan().equals(panel.txtPlan.getText())) ||
+		        		(!report.getImpressions().equals(panel.txtImpression.getText())) )
 		        		askSave = true;
 		        } else {
-		        	if( (!txtBiased.getText().isEmpty()) ||
-	        			(!txtUnbiased.getText().isEmpty()) ||
-	        			(!txtPlan.getText().isEmpty()) ||
-	        			(!txtImpression.getText().isEmpty()) )
+		        	if( (!panel.txtBiased.getText().isEmpty()) ||
+	        			(!panel.txtUnbiased.getText().isEmpty()) ||
+	        			(!panel.txtPlan.getText().isEmpty()) ||
+	        			(!panel.txtImpression.getText().isEmpty()) )
 		        		askSave = true;
 		        }
 		        if(askSave)
@@ -347,31 +343,25 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 		        else
 		        	frame.dispose();
 		    }
-		});
-		//frame.setTitle("Informes");
+		});*/
 		frame.setBounds(100, 100, 812, 554);
-		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		frame.getContentPane().removeAll();
 		
-		/*JPanel pnlDictation = new JPanel();
-		frame.getContentPane().add(pnlDictation);*/
-		
-		JPanel pnlReportInfo = new JPanel();
-		frame.getContentPane().add(pnlReportInfo, BorderLayout.NORTH);
+		JPanel pnlReportInfo = ThemedWindow.getDefaultTitleBar();;
+		frame.setTitleBar(pnlReportInfo);
 		pnlReportInfo.setLayout(new FormLayout(new ColumnSpec[] {
-				new ColumnSpec(ColumnSpec.FILL, Sizes.bounded(Sizes.DEFAULT, Sizes.constant("5dlu", true), Sizes.constant("5dlu", true)), 0),
+				new ColumnSpec(ColumnSpec.FILL, Sizes.bounded(Sizes.MINIMUM, Sizes.constant("5dlu", true), Sizes.constant("5dlu", true)), 0),
 				FormFactory.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(31dlu;default)"),
+				ColumnSpec.decode("right:max(31dlu;min):grow"),
 				FormFactory.RELATED_GAP_COLSPEC,
-				new ColumnSpec(ColumnSpec.FILL, Sizes.bounded(Sizes.MINIMUM, Sizes.constant("100dlu", true), Sizes.constant("200dlu", true)), 1),
+				new ColumnSpec(ColumnSpec.FILL, Sizes.bounded(Sizes.PREFERRED, Sizes.constant("75dlu", true), Sizes.constant("75dlu", true)), 0),
+				FormFactory.RELATED_GAP_COLSPEC,
+				FormFactory.DEFAULT_COLSPEC,
 				FormFactory.RELATED_GAP_COLSPEC,
 				FormFactory.DEFAULT_COLSPEC,
 				FormFactory.RELATED_GAP_COLSPEC,
 				FormFactory.DEFAULT_COLSPEC,
 				FormFactory.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(90dlu;default)"),
-				FormFactory.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(90dlu;default)"),
+				FormFactory.DEFAULT_COLSPEC,
 				new ColumnSpec(ColumnSpec.FILL, Sizes.bounded(Sizes.DEFAULT, Sizes.constant("5dlu", true), Sizes.constant("5dlu", true)), 0),},
 			new RowSpec[] {
 				RowSpec.decode("4px"),
@@ -379,7 +369,7 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 				RowSpec.decode("max(4dlu;default)"),}));
 		
 		JLabel lblPatient = new JLabel(lang.getString("lblPatient"));
-		pnlReportInfo.add(lblPatient, "3, 2, fill, fill");
+		pnlReportInfo.add(lblPatient, "3, 2, right, default");
 		
 		ddlPatient = new JComboBox<String>();
 		pnlReportInfo.add(ddlPatient, "5, 2, fill, default");
@@ -414,129 +404,6 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 		});
 		btnRecord.setEnabled(false);
 		pnlReportInfo.add(btnRecord, "13, 2");
-		JPanel pnlVistaInformes = new JPanel();
-		frame.getContentPane().add(pnlVistaInformes);
-		pnlVistaInformes.setLayout(new GridLayout(4, 1, 5, 5));
-		
-		JPanel pnlBiased = new JPanel();
-		pnlVistaInformes.add(pnlBiased);
-		
-		JLabel lblSubjetivo = new JLabel(lang.getString("lblBiased"));
-		
-		JScrollPane scrBiased = new JScrollPane();
-		GroupLayout gl_pnlBiased = new GroupLayout(pnlBiased);
-		gl_pnlBiased.setHorizontalGroup(
-			gl_pnlBiased.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_pnlBiased.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_pnlBiased.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrBiased, GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
-						.addComponent(lblSubjetivo))
-					.addContainerGap())
-		);
-		gl_pnlBiased.setVerticalGroup(
-			gl_pnlBiased.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_pnlBiased.createSequentialGroup()
-					.addComponent(lblSubjetivo)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(scrBiased, GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		
-		txtBiased = new JTextArea();
-		txtBiased.setLineWrap(true);
-		scrBiased.setViewportView(txtBiased);
-		pnlBiased.setLayout(gl_pnlBiased);
-		
-		JPanel pnlUnbiased = new JPanel();
-		pnlVistaInformes.add(pnlUnbiased);
-		
-		JLabel lblObjetivo = new JLabel(lang.getString("lblUnbiased"));
-		
-		JScrollPane scrUnbiased = new JScrollPane();
-		GroupLayout gl_pnlUnbiased = new GroupLayout(pnlUnbiased);
-		gl_pnlUnbiased.setHorizontalGroup(
-			gl_pnlUnbiased.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_pnlUnbiased.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_pnlUnbiased.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrUnbiased, GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
-						.addComponent(lblObjetivo))
-					.addContainerGap())
-		);
-		gl_pnlUnbiased.setVerticalGroup(
-			gl_pnlUnbiased.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_pnlUnbiased.createSequentialGroup()
-					.addComponent(lblObjetivo)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(scrUnbiased, GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		
-		txtUnbiased = new JTextArea();
-		txtUnbiased.setLineWrap(true);
-		scrUnbiased.setViewportView(txtUnbiased);
-		pnlUnbiased.setLayout(gl_pnlUnbiased);
-		
-		JPanel pnlImpression = new JPanel();
-		pnlVistaInformes.add(pnlImpression);
-		
-		JLabel lblImpression = new JLabel(lang.getString("lblImpression"));
-		
-		JScrollPane scrImpression = new JScrollPane();
-		GroupLayout gl_pnlImpression = new GroupLayout(pnlImpression);
-		gl_pnlImpression.setHorizontalGroup(
-			gl_pnlImpression.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_pnlImpression.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_pnlImpression.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrImpression, GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
-						.addComponent(lblImpression))
-					.addContainerGap())
-		);
-		gl_pnlImpression.setVerticalGroup(
-			gl_pnlImpression.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_pnlImpression.createSequentialGroup()
-					.addComponent(lblImpression)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(scrImpression, GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		
-		txtImpression = new JTextArea();
-		txtImpression.setLineWrap(true);
-		scrImpression.setViewportView(txtImpression);
-		pnlImpression.setLayout(gl_pnlImpression);
-		
-		JPanel pnlPlan = new JPanel();
-		pnlVistaInformes.add(pnlPlan);
-		
-		JLabel lblPlan = new JLabel(lang.getString("lblPlan"));
-		
-		JScrollPane scrPlan = new JScrollPane();
-		GroupLayout gl_pnlPlan = new GroupLayout(pnlPlan);
-		gl_pnlPlan.setHorizontalGroup(
-			gl_pnlPlan.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_pnlPlan.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_pnlPlan.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrPlan, GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
-						.addComponent(lblPlan))
-					.addContainerGap())
-		);
-		gl_pnlPlan.setVerticalGroup(
-			gl_pnlPlan.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_pnlPlan.createSequentialGroup()
-					.addComponent(lblPlan)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(scrPlan, GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		
-		txtPlan = new JTextArea();
-		txtPlan.setLineWrap(true);
-		scrPlan.setViewportView(txtPlan);
-		pnlPlan.setLayout(gl_pnlPlan);
 		
 		if(report != null) {
 			ddlPatient.setEnabled(false);
@@ -549,28 +416,22 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 				ddlPatient.addItem(pat.toString());
 		}
 		
-		mantainCaretFocusListener.addTextArea(txtBiased);
-		mantainCaretFocusListener.addTextArea(txtUnbiased);
-		mantainCaretFocusListener.addTextArea(txtImpression);
-		mantainCaretFocusListener.addTextArea(txtPlan);
+		panel = new DictationPanel(this, lang);
+		frame.setLayout(new BoxLayout(frame, BoxLayout.Y_AXIS));
+		frame.add(panel);
+		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		frame.getMainFrame().setMaximizedBounds(env.getMaximumWindowBounds());
+		frame.getMainFrame().setExtendedState(Frame.MAXIMIZED_BOTH);
 		
-		JPanel pnlActions = new JPanel();
-		FlowLayout fl_pnlActions = (FlowLayout) pnlActions.getLayout();
-		fl_pnlActions.setAlignment(FlowLayout.RIGHT);
-		frame.getContentPane().add(pnlActions, BorderLayout.SOUTH);
+		mantainCaretFocusListener.addTextArea(panel.txtBiased);
+		mantainCaretFocusListener.addTextArea(panel.txtUnbiased);
+		mantainCaretFocusListener.addTextArea(panel.txtImpression);
+		mantainCaretFocusListener.addTextArea(panel.txtPlan);
 		
-		final JButton btnAnalyze = new JButton(lang.getString("Dictation.btnAnalyze"));
-		btnAnalyze.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ev) {
-				saveReport();
-			}
-		});
-		pnlActions.add(btnAnalyze);
-		
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		/*Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setLocation(
 				  ((int) (screenSize.getWidth()) - frame.getWidth())/2, 
-				  ((int) (screenSize.getHeight()) - frame.getHeight())/2);
+				  ((int) (screenSize.getHeight()) - frame.getHeight())/2);*/
 		frame.setVisible(true);
 	}
 	
@@ -686,10 +547,10 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 	/*Persistence manager*/
 	@Override
 	public boolean changed(){
-		if(!txtBiased.getText().isEmpty()) return true;
-		if(!txtUnbiased.getText().isEmpty()) return true;
-		if(!txtImpression.getText().isEmpty()) return true;
-		if(!txtPlan.getText().isEmpty()) return true;
+		if(!panel.txtBiased.getText().isEmpty()) return true;
+		if(!panel.txtUnbiased.getText().isEmpty()) return true;
+		if(!panel.txtImpression.getText().isEmpty()) return true;
+		if(!panel.txtPlan.getText().isEmpty()) return true;
 		return false;
 	}
 	
@@ -698,10 +559,10 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 		
 		Hashtable<String, Object> status = new Hashtable<String,Object>();
 		status.put("uuid", new Long(uuid));
-		status.put("txtBiased", txtBiased.getText());
-		status.put("txtUnbiased", txtUnbiased.getText());
-		status.put("txtImpression", txtImpression.getText());
-		status.put("txtPlan", txtPlan.getText());
+		status.put("txtBiased", panel.txtBiased.getText());
+		status.put("txtUnbiased", panel.txtUnbiased.getText());
+		status.put("txtImpression", panel.txtImpression.getText());
+		status.put("txtPlan", panel.txtPlan.getText());
 		if(report != null)
 			status.put("reportId", new Long(report.getId()));
 		else //If not enabled, patient is already set
@@ -746,10 +607,10 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 				ddlPatient.setSelectedItem(patientSelected);
 		}
 		
-		txtBiased.setText((String)status.get("txtBiased"));
-		txtUnbiased.setText((String)status.get("txtUnbiased"));
-		txtImpression.setText((String)status.get("txtImpression"));
-		txtPlan.setText((String)status.get("txtPlan"));
+		panel.txtBiased.setText((String)status.get("txtBiased"));
+		panel.txtUnbiased.setText((String)status.get("txtUnbiased"));
+		panel.txtImpression.setText((String)status.get("txtImpression"));
+		panel.txtPlan.setText((String)status.get("txtPlan"));
 		
 		frame.requestFocus();
 	}

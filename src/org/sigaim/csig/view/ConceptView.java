@@ -160,9 +160,7 @@ public class ConceptView extends JPanel {
 		
 		
 		BalloonTipStyle edgedLook = new EdgedBalloonStyle(contentPanel.getBackground(), Color.BLUE);
-		final BalloonTip b =  new BalloonTip((JComponent) parent, (JComponent) this, edgedLook, false);
-		
-		
+		final BalloonTip b =  new BalloonTip((JComponent) parent, (JComponent) this, edgedLook, false);		
 		
 		contentPanel.requestFocus();
 		contentPanel.addFocusListener(new FocusListener() {
