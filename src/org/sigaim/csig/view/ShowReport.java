@@ -80,7 +80,7 @@ public class ShowReport /*extends JPanel*/ implements PersistentObject {
 		
         @Override
         public void removeUpdate(DocumentEvent e) {
-        	edited();        		
+        	edited();
         }
 
         @Override

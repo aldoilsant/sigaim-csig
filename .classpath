@@ -19,5 +19,6 @@
 	<classpathentry kind="lib" path="lib/dadl-parser-1.0.2-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="lib/substance-6.1.jar"/>
 	<classpathentry kind="lib" path="lib/trident.jar"/>
+	<classpathentry kind="lib" path="lib/sigaim_voice_command.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

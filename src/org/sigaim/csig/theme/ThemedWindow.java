@@ -1,6 +1,7 @@
 package org.sigaim.csig.theme;
 
 import java.awt.*;
+import java.awt.event.WindowAdapter;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -163,6 +164,9 @@ public class ThemedWindow extends javax.swing.JComponent {
 		titleBar.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		titleBar.setBackground(ColorScheme.titleBackground);
 		return titleBar;
+	}
+	public void addWindowListener(WindowAdapter windowAdapter) {
+		mainFrame.addWindowListener(windowAdapter);
 	}
 	
 }

@@ -88,10 +88,16 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 	private JButton btnRecord;
 	private JButton btnPause;
 	
+	private final Dictation self;
+	
 	private MantainCaretFocusListener mantainCaretFocusListener = new MantainCaretFocusListener();
 	
 	//Persistence manager
+	/**
+	 * @wbp.parser.constructor
+	 */
 	public Dictation(ViewController _controller){
+		self = this;
 		controller = _controller;
 		lang = controller.getLang();
 		
@@ -106,6 +112,7 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 	 * Create the panel.
 	 */
 	public Dictation(CSIGReport r, ViewController _controller) {
+		self = this;
 		controller = _controller;
 		lang = controller.getLang();
 		
@@ -321,29 +328,6 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 	}
 
 	private void initialize() {
-		//On exit ask saving if content changed
-		/*frame.addWindowListener(new java.awt.event.WindowAdapter() {
-		    @Override
-		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-		        if(report != null) {
-		        	if( (!report.getBiased().equals(panel.txtBiased.getText())) ||
-		        		(!report.getUnbiased().equals(panel.txtUnbiased.getText())) ||
-		        		(!report.getPlan().equals(panel.txtPlan.getText())) ||
-		        		(!report.getImpressions().equals(panel.txtImpression.getText())) )
-		        		askSave = true;
-		        } else {
-		        	if( (!panel.txtBiased.getText().isEmpty()) ||
-	        			(!panel.txtUnbiased.getText().isEmpty()) ||
-	        			(!panel.txtPlan.getText().isEmpty()) ||
-	        			(!panel.txtImpression.getText().isEmpty()) )
-		        		askSave = true;
-		        }
-		        if(askSave)
-		        	showSaveDialog();
-		        else
-		        	frame.dispose();
-		    }
-		});*/
 		frame.setBounds(100, 100, 812, 554);
 		
 		JPanel pnlReportInfo = ThemedWindow.getDefaultTitleBar();;
@@ -354,6 +338,8 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 				ColumnSpec.decode("right:max(31dlu;min):grow"),
 				FormFactory.RELATED_GAP_COLSPEC,
 				new ColumnSpec(ColumnSpec.FILL, Sizes.bounded(Sizes.PREFERRED, Sizes.constant("75dlu", true), Sizes.constant("75dlu", true)), 0),
+				FormFactory.RELATED_GAP_COLSPEC,
+				FormFactory.DEFAULT_COLSPEC,
 				FormFactory.RELATED_GAP_COLSPEC,
 				FormFactory.DEFAULT_COLSPEC,
 				FormFactory.RELATED_GAP_COLSPEC,
@@ -404,6 +390,15 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 		});
 		btnRecord.setEnabled(false);
 		pnlReportInfo.add(btnRecord, "13, 2");
+		
+		JButton btnExit = new JButton(lang.getString("btnClose"));
+		btnExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				onCloseAction();
+			}
+		});
+		btnExit.setEnabled(true);
+		pnlReportInfo.add(btnExit, "15, 2");
 		
 		if(report != null) {
 			ddlPatient.setEnabled(false);
@@ -512,7 +507,35 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 		default:
 			System.err.println("[Transcription] Unknown response, is jar same version?");
 			break;
-		}		
+		}	
+		
+		//On exit ask saving if content changed
+		frame.addWindowListener(new java.awt.event.WindowAdapter() {
+				    @Override
+				    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+				        onCloseAction();
+				    }
+				});
+	}
+	
+	private void onCloseAction() {
+		if(report != null) {
+        	if( (!report.getBiased().equals(panel.txtBiased.getText())) ||
+        		(!report.getUnbiased().equals(panel.txtUnbiased.getText())) ||
+        		(!report.getPlan().equals(panel.txtPlan.getText())) ||
+        		(!report.getImpressions().equals(panel.txtImpression.getText())) )
+        		askSave = true;
+        } else {
+        	if( (!panel.txtBiased.getText().isEmpty()) ||
+    			(!panel.txtUnbiased.getText().isEmpty()) ||
+    			(!panel.txtPlan.getText().isEmpty()) ||
+    			(!panel.txtImpression.getText().isEmpty()) )
+        		askSave = true;
+        }
+        if(askSave)
+        	showSaveDialog();
+        else
+        	frame.dispose();
 	}
 	
 	//Audio capture thread
