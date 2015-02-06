@@ -41,6 +41,7 @@ public class ConceptView extends JPanel {
 	private final JPanel contentPanel = this;
 	private JTextField txtSnomed;
 	private JTextField txtDictation;
+	private ShowReport listener;
 	
 	private CSIGConcept concept;
 	private List<CSIGConcept> synonyms;
@@ -50,6 +51,7 @@ public class ConceptView extends JPanel {
 	private JComboBox<String> ddlSynonym;
 	
 	private JLabel label;
+	protected BalloonTip b;
 
 	
 	private void updateParentLabel() {
@@ -57,19 +59,23 @@ public class ConceptView extends JPanel {
 		//label.setText((String)ddlSynonym.getSelectedItem());
 		label.setText(selected.toString());
 		concept.replace(selected);
+		listener.onChange();
 		
 		if(chkError.isSelected())
 			label.setForeground(Color.RED);
 		else
 			label.setForeground(Color.BLUE);
+		
+		b.closeBalloon();
 	}
 
 	/**
 	 * Create the dialog.
 	 */
-	public ConceptView(CSIGConcept concept, String text, final Component parent, List<CSIGConcept> synonyms) {
+	public ConceptView(ShowReport listener, CSIGConcept concept, String text, final Component parent, List<CSIGConcept> synonyms) {
 		this.concept = concept;
 		this.synonyms = synonyms;
+		this.listener = listener;
 		
 		label = (JLabel) parent;
 		contentPanel.setLayout(new FormLayout(new ColumnSpec[] {
@@ -160,7 +166,7 @@ public class ConceptView extends JPanel {
 		
 		
 		BalloonTipStyle edgedLook = new EdgedBalloonStyle(contentPanel.getBackground(), Color.BLUE);
-		final BalloonTip b =  new BalloonTip((JComponent) parent, (JComponent) this, edgedLook, false);		
+		b =  new BalloonTip((JComponent) parent, (JComponent) this, edgedLook, false);		
 		
 		contentPanel.requestFocus();
 		contentPanel.addFocusListener(new FocusListener() {

@@ -153,6 +153,10 @@ public class CSIGDialog extends JDialog {
 		
 		return dia.result;
 	}
+	
+	public static int showWarning(String message, String txtButton) {
+		return showError(message, txtButton);
+	}
 
 
 	public static int showYesNoCancel(String txtYes, String txtNo, String txtCancel, String message, Icon icon) {
@@ -165,6 +169,6 @@ public class CSIGDialog extends JDialog {
 		dia.btn3.setVisible(true);
 		ComponentMover.center(dia);
 		dia.setVisible(true);
-		return 0;
+		return dia.result;
 	}
 }

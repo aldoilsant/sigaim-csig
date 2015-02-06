@@ -213,14 +213,16 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 							else{
 								WaitModal.close();
 								self.setVisible(true);
-								JOptionPane.showMessageDialog(frame, lang.getString("Error.CouldNotCreateReport"), "Error", JOptionPane.ERROR_MESSAGE);
+								CSIGDialog.showError(lang.getString("Error.CouldNotCreateReport"), lang.getString("OK"));
+								//JOptionPane.showMessageDialog(frame, lang.getString("Error.CouldNotCreateReport"), "Error", JOptionPane.ERROR_MESSAGE);
 							}
 						} catch (HeadlessException | InterruptedException
 								| ExecutionException e) {
 							e.printStackTrace();
 							WaitModal.close();
 							self.setVisible(true);
-							JOptionPane.showMessageDialog(frame, lang.getString("Error.InternalError"), "Error", JOptionPane.ERROR_MESSAGE);
+							CSIGDialog.showError(lang.getString("Error.InternalError"), lang.getString("OK"));
+							//JOptionPane.showMessageDialog(frame, lang.getString("Error.InternalError"), "Error", JOptionPane.ERROR_MESSAGE);
 						}
 					}
 				};
@@ -229,7 +231,8 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 				this.setVisible(false);
 				createWorker.execute();
 			} else {
-				JOptionPane.showMessageDialog(frame, lang.getString("Warning.PatientNotSelected"), "Aviso", JOptionPane.WARNING_MESSAGE);
+				CSIGDialog.showWarning(lang.getString("Warning.PatientNotSelected"), lang.getString("OK"));
+				//JOptionPane.showMessageDialog(frame, lang.getString("Warning.PatientNotSelected"), "Aviso", JOptionPane.WARNING_MESSAGE);
 			}		
 		} else { //Existing report
 			SwingWorker<Boolean,Void> updateWorker = new SwingWorker<Boolean,Void>(){
@@ -246,7 +249,8 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 						cleanR.setPlan(panel.txtPlan.getText());
 					} catch (CloneNotSupportedException e) {
 						e.printStackTrace();
-						JOptionPane.showMessageDialog(frame, lang.getString("Error.InternalError"), "Error", JOptionPane.ERROR_MESSAGE);
+						CSIGDialog.showError(lang.getString("Error.InternalError"), lang.getString("OK"));
+						//JOptionPane.showMessageDialog(frame, lang.getString("Error.InternalError"), "Error", JOptionPane.ERROR_MESSAGE);
 						return false;
 					}
 					
@@ -261,14 +265,16 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 						else{
 							WaitModal.close();
 							self.setVisible(true);
-							JOptionPane.showMessageDialog(frame, lang.getString("Error.CouldNotUpdateReport"), "Error", JOptionPane.ERROR_MESSAGE);
+							CSIGDialog.showError(lang.getString("Error.CouldNotUpdateReport"), lang.getString("OK"));
+							//JOptionPane.showMessageDialog(frame, lang.getString("Error.CouldNotUpdateReport"), "Error", JOptionPane.ERROR_MESSAGE);
 						}
 					} catch (HeadlessException | InterruptedException
 							| ExecutionException e) {
 						e.printStackTrace();
 						WaitModal.close();
 						self.setVisible(true);
-						JOptionPane.showMessageDialog(frame, lang.getString("Error.InternalError"), "Error", JOptionPane.ERROR_MESSAGE);
+						CSIGDialog.showError(lang.getString("Error.InternalError"), lang.getString("OK"));
+						//JOptionPane.showMessageDialog(frame, lang.getString("Error.InternalError"), "Error", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			};

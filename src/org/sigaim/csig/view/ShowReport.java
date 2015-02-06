@@ -69,35 +69,32 @@ public class ShowReport /*extends JPanel*/ implements PersistentObject {
 	
 	private boolean edited = false; //Is any concept edited?
 	private DocumentListener textChangeListener = new DocumentListener() {
-
-		private void edited(){
-			if(!edited){
-				edited = true;
-				btnAnalyze.setEnabled(true);
-				btnFinalize.setEnabled(false);
-			}
-		}
 		
         @Override
         public void removeUpdate(DocumentEvent e) {
-        	edited();
+        	onChange();
         }
 
         @Override
         public void insertUpdate(DocumentEvent e) {
-        	edited();
+        	onChange();
         }
 
         @Override
         public void changedUpdate(DocumentEvent arg0) {
-        	edited();
+        	onChange();
         }
     };
 	
+	public void onChange(){
+		if(!edited){
+			edited = true;
+			btnAnalyze.setEnabled(true);
+			//btnFinalize.setEnabled(false);
+		}
+	}
+    
 	//String constants
-	static String strAskSave = "¿Quiere guardar los cambios realizados en el informe antes de cerrarlo?";
-	static String strNewVersion = "Esto creará una nueva versión del informe"; 
-	static String strTitleAskSave = "Confirme antes de cerrar el informe";
 	static String strTitle = "Ver informe";
 	private JButton btnFinalize;
 	private JButton btnAnalyze;
@@ -107,7 +104,7 @@ public class ShowReport /*extends JPanel*/ implements PersistentObject {
 		private CSIGConcept concept;
 		private String originalText;
 		
-		public ConceptLabel(String ot, final CSIGReport report, CSIGConcept c){
+		public ConceptLabel(final ShowReport listener, String ot, final CSIGReport report, CSIGConcept c){
 			concept = c;
 			this.originalText = ot;
 			//final JLabel rtn = new JLabel(concept.text);
@@ -122,9 +119,10 @@ public class ShowReport /*extends JPanel*/ implements PersistentObject {
 			this.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
+					System.out.println("Click on concept: "+ concept.text);
 					//CSIGConcept con = concept;
 					try {
-					/*ConceptView c = */new ConceptView(concept, originalText, self, 
+					/*ConceptView c = */new ConceptView(listener, concept, originalText, self, 
 							report.getSynonyms().get(concept.getConceptId()));
 					} catch(NullPointerException npe) {
 						System.err.println("Synonyms for report are not set (ShowReport:"+
@@ -200,11 +198,12 @@ public class ShowReport /*extends JPanel*/ implements PersistentObject {
 		if(report != null)
 			response = CSIGDialog.showYesNoCancel(
 					lang.getString("Yes"), lang.getString("No"), lang.getString("Cancel"),
-					strAskSave + "<br />" + strNewVersion, CSIGTheme.iconHelp());
+					lang.getString("ShowReport.strAskSave") + "<br />" +
+					lang.getString("ShowReport.strNewVersion"), CSIGTheme.iconHelp());
 		else
 			response = CSIGDialog.showYesNoCancel(
 					lang.getString("Yes"), lang.getString("No"), lang.getString("Cancel"),
-					strAskSave, CSIGTheme.iconHelp());
+					lang.getString("ShowReport.strAskSave"), CSIGTheme.iconHelp());
 		
 		switch(response) {
 			case JOptionPane.YES_OPTION:
@@ -212,6 +211,7 @@ public class ShowReport /*extends JPanel*/ implements PersistentObject {
 				frame.dispose();
 				break;
 			case JOptionPane.NO_OPTION:
+				PersistenceManager.discard(self);
 				frame.dispose();
 			/*case JOptionPane.CANCEL_OPTION:
 			case JOptionPane.CLOSED_OPTION:*/// Do nothing				
@@ -323,7 +323,7 @@ public class ShowReport /*extends JPanel*/ implements PersistentObject {
 					System.err.println("[Error] Concept out of bounds, skipping: "+c.getCode());
 					continue;
 				}
-				pane.insertComponent(new ConceptLabel(text.substring(c.start, c.end), report, c));
+				pane.insertComponent(new ConceptLabel(self, text.substring(c.start, c.end), report, c));
 				textPointer = c.end;
 			}
 			if(textPointer < text.length())
@@ -351,7 +351,7 @@ public class ShowReport /*extends JPanel*/ implements PersistentObject {
 		btnFinalize.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent ev) {
 				if(edited)
-					saveReport();
+					showSaveDialog();
 				else
 					frame.dispose();
 			}
@@ -449,7 +449,7 @@ public class ShowReport /*extends JPanel*/ implements PersistentObject {
 		
 		edited = false;
 		btnAnalyze.setEnabled(false);
-		btnFinalize.setEnabled(true);
+		//btnFinalize.setEnabled(true);
 		
 		frame.setVisible(true);
 		frame.requestFocus();
