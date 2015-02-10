@@ -143,4 +143,14 @@
 		</state>
 	</style>
   	<bind style="table_header" type="region" key="TableHeader"/>
+  	<!-- Checkboxes -->
+  	<style id="checkbox">
+    	<imageIcon id="check_off" path="images/checkbox_off.png"/>
+    	<imageIcon id="check_on" path="images/checkbox_on.png"/>
+    	<property key="CheckBox.icon" value="check_off"/>
+    	<state value="SELECTED">   
+    	  <property key="CheckBox.icon" value="check_on"/>
+    	</state>
+	</style>
+ 	<bind style="checkbox" type="region" key="Checkbox"/>    
 </synth>

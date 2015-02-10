@@ -63,7 +63,7 @@ public class ThemedWindow extends javax.swing.JComponent {
 	
 	public void setTitleBar(JPanel titleBar){
 		mainFrame = new JFrame();
-		mainFrame.setUndecorated(true);
+		//mainFrame.setUndecorated(true);
 		mainFrame.setResizable(true);
 		ThemedWindow contentPanel = new ThemedWindow(mainFrame, false);
 		contentPanel.setBorder(new EmptyBorder(2, 2, 2, 2));

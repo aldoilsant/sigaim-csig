@@ -27,6 +27,7 @@ import org.sigaim.csig.model.CSIGConcept;
 import net.java.balloontip.BalloonTip;
 import net.java.balloontip.styles.BalloonTipStyle;
 import net.java.balloontip.styles.EdgedBalloonStyle;
+import net.java.balloontip.styles.RoundedBalloonStyle;
 
 import javax.swing.JComboBox;
 import javax.swing.JButton;
@@ -165,8 +166,10 @@ public class ConceptView extends JPanel {
 		add(btnSave, "4, 10, right, default");
 		
 		
-		BalloonTipStyle edgedLook = new EdgedBalloonStyle(contentPanel.getBackground(), Color.BLUE);
-		b =  new BalloonTip((JComponent) parent, (JComponent) this, edgedLook, false);		
+		/*BalloonTipStyle edgedLook = new EdgedBalloonStyle(contentPanel.getBackground(), Color.BLUE);*/
+		BalloonTipStyle edgedLook = new RoundedBalloonStyle(5, 5, contentPanel.getBackground(), contentPanel.getForeground());
+		b =  new BalloonTip((JComponent) parent, (JComponent) this, edgedLook, false);
+		b.setVisible(true);
 		
 		contentPanel.requestFocus();
 		contentPanel.addFocusListener(new FocusListener() {

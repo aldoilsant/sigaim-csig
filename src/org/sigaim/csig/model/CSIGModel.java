@@ -12,7 +12,6 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 import org.openehr.am.parser.ContentObject;
-import org.sigaim.csig.view.ReportList;
 import org.sigaim.siie.clients.IntSIIE001EQLClient;
 import org.sigaim.siie.clients.IntSIIE004ReportManagementClient;
 import org.sigaim.siie.clients.IntSIIEReportSummary;
@@ -28,7 +27,6 @@ import org.sigaim.siie.iso13606.rm.EHRExtract;
 import org.sigaim.siie.iso13606.rm.Element;
 import org.sigaim.siie.iso13606.rm.FunctionalRole;
 import org.sigaim.siie.iso13606.rm.HealthcareFacility;
-import org.sigaim.siie.iso13606.rm.HealthcareProfessionalRole;
 import org.sigaim.siie.iso13606.rm.II;
 import org.sigaim.siie.iso13606.rm.INT;
 import org.sigaim.siie.iso13606.rm.Item;
@@ -39,7 +37,6 @@ import org.sigaim.siie.rm.ReferenceModelManager;
 import org.sigaim.siie.rm.ReflectorReferenceModelManager;
 import org.sigaim.siie.rm.exceptions.ReferenceModelException;
 import org.sigaim.siie.rm.exceptions.RejectException;
-import org.sigaim.siie.dadl.OpenEHRDADLManager;
 import org.sigaim.siie.dadl.exceptions.SemanticDADLException;
 
 public class CSIGModel implements IntCSIGModel {
@@ -340,6 +337,7 @@ public class CSIGModel implements IntCSIGModel {
 			Cluster conceptCluster = (Cluster)i;
 			CDCV code=null;
 			INT start=null, end=null;
+			ST status=null;
 			for(Item param : conceptCluster.getParts()){
 				Element el = (Element)param;
 				if(param.getMeaning().getCode().equals(ModelConstants.CD_CONCEPT_CODE)){
@@ -348,12 +346,15 @@ public class CSIGModel implements IntCSIGModel {
 					start = (INT)el.getValue();
 				} else if(param.getMeaning().getCode().equals(ModelConstants.CD_CONCEPT_END)) {
 					end = (INT)el.getValue();
+				} else if(param.getMeaning().getCode().equals(ModelConstants.CD_CONCEPT_STATUS)) {
+					status = (ST)el.getValue();
 				}
 				//TODO add path & node
 			}
 			
 			System.out.println("Concept: "+code.getCode()+" codeSystemName: "+code.getCodeSystemName()+
-					" codeSystemVersion: "+code.getCodeSystemVersion()+" - "+code.getDisplayName().getValue());
+					" codeSystemVersion: "+code.getCodeSystemVersion()+" - "+code.getDisplayName().getValue() +
+					"("+ status.getValue()+")");
 			
 			try {
 				//if(code.getCodeSystemName().equals("MED")) break;
@@ -598,7 +599,9 @@ public class CSIGModel implements IntCSIGModel {
 		ContentObject object = dadlManager.parseDADL(new ByteArrayInputStream(data.getBytes()));
 		try {
 			c = (Cluster)model.bind(object);
-		} catch (SemanticDADLException | ReferenceModelException e) {
+		} catch (SemanticDADLException e) {
+			e.printStackTrace();
+		} catch (ReferenceModelException e){
 			e.printStackTrace();
 		}
 		return c;

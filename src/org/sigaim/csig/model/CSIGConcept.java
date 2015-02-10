@@ -11,6 +11,7 @@ import org.sigaim.siie.iso13606.rm.Element;
 import org.sigaim.siie.iso13606.rm.Item;
 
 public class CSIGConcept implements Serializable {	
+	private static final long serialVersionUID = 1L;
 	//public String code;
 	public CDCV cdcv;
 	//public String terminology;

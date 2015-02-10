@@ -338,8 +338,24 @@ public class Main implements ViewController {
 	@Override
 	public boolean updateReport(CSIGReport report, boolean confirmed) {
 		FunctionalRole composer = currentComposer();
-		CSIGReport newReport = model.updateReport(report, composer, confirmed);
-		return newReport != null;
+		final CSIGReport newReport = model.updateReport(report, composer, confirmed);
+		if(newReport == null)
+			return false;
+		else {
+			if(SwingUtilities.isEventDispatchThread())
+				this.showReport(newReport);
+			else
+				SwingUtilities.invokeLater(new Runnable(){
+					@Override
+					public void run() {
+						showReport(newReport);
+					}
+				});
+			if(reportListWindow != null) {
+				reportListWindow.updateList(this.getReports());
+			}
+			return true;
+		}
 	}	
 	
 	@Override

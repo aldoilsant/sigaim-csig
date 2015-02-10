@@ -10,7 +10,6 @@ import java.util.List;
 
 
 
-import org.sigaim.siie.iso13606.rm.CD;
 import org.sigaim.siie.iso13606.rm.CDCV;
 //import org.openehr.rm.datastructure.itemstructure.representation.Item;
 import org.sigaim.siie.iso13606.rm.Cluster;

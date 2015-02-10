@@ -276,6 +276,7 @@ public class ShowReport /*extends JPanel*/ implements PersistentObject {
 			protected void done(){
 				try {
 					if(this.get()){
+						WaitModal.close();
 						PersistenceManager.discard(self);
 						frame.dispose();
 					} else{
