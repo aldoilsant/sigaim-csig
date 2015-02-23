@@ -152,5 +152,43 @@
     	  <property key="CheckBox.icon" value="check_on"/>
     	</state>
 	</style>
- 	<bind style="checkbox" type="region" key="Checkbox"/>    
+ 	<bind style="checkbox" type="region" key="Checkbox"/>
+ 	<!-- Scrollbar For now we only have a thumb picker -->
+ 	<style id="scrollBarThumbStyle">
+	<state>
+		<!-- <imagePainter method="scrollBarThumbBackground" direction="horizontal" 
+			path="images/scrollBar-thumb-horizontal.png" sourceInsets="0 7 0 7" /> -->
+		<!-- <imagePainter method="scrollBarThumbBackground" direction="vertical" 
+			path="images/scrollBar-thumb-vertical.png" sourceInsets="7 0 7 0" /> -->
+		<!-- <imagePainter method="scrollBarThumbBackground" direction="horizontal" 
+			path="images/scrollBar-thumb-horizontal-grip.png" center="true" /> -->
+		<imagePainter method="scrollBarThumbBackground"
+			direction="vertical" path="images/scrollBar-thumb.png" center="true" />
+	</state>
+	<state value="MOUSE_OVER">
+		<!-- <imagePainter method="scrollBarThumbBackground" direction="horizontal" 
+			path="images/scrollBar-thumb-horizontal-mouseover.png" sourceInsets="0 7 
+			0 7" /> -->
+		<!-- <imagePainter method="scrollBarThumbBackground" direction="vertical" 
+			path="images/scrollBar-thumb-vertical-mouseover.png" sourceInsets="7 0 7 
+			0" /> -->
+		<!-- <imagePainter method="scrollBarThumbBackground" direction="horizontal" 
+			path="images/scrollBar-thumb-horizontal-grip.png" center="true" /> -->
+		<imagePainter method="scrollBarThumbBackground"
+			direction="vertical" path="images/scrollBar-thumb-press.png" center="true" />
+	</state>
+	<state value="DISABLED">
+	</state>
+	</style>
+	<style id="scrollBarArrowStyle">
+    <state>
+        <!-- <imagePainter method="arrowButtonForeground" path="images/empty.png" center="true" direction="north" />
+        <imagePainter method="arrowButtonForeground" path="images/empty.png" center="true" direction="south" />
+        <imagePainter method="arrowButtonForeground" path="images/empty.png" center="true" direction="west" />
+        <imagePainter method="arrowButtonForeground" path="images/empty.png" center="true" direction="east" />
+        <property key="ArrowButton.size" type="integer" value="1" /> -->
+    </state>
+	</style>
+	<bind style="scrollBarArrowStyle" type="REGION" key="ArrowButton" />
+	<bind style="scrollBarThumbStyle" type="REGION" key="ScrollBarThumb" />   
 </synth>

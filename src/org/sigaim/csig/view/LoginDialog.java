@@ -24,6 +24,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 
+import org.sigaim.csig.theme.ColorScheme;
 import org.sigaim.csig.theme.ThemedWindow;
 import org.sigaim.csig.view.helper.BackgroundImage;
 import org.sigaim.csig.view.helper.TextPrompt;
@@ -43,14 +44,16 @@ public class LoginDialog extends JFrame {
 	 * Create the dialog.
 	 */
 	public LoginDialog(ViewController _controller, List<String> hospitals) {
-		contentPanel = new ThemedWindow(this.getRootPane(), true);
+		contentPanel = new ThemedWindow("/org/sigaim/csig/theme/images/login_logo.png",
+				this.getRootPane(), true);
+		contentPanel.setTitleBarMode(true);
 		setUndecorated(true);
 		setResizable(true);
 		//setBackground(new Color(100,100,100,0));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		controller = _controller;
 
-		setBounds(100, 100, 331, 400);
+		setBounds(100, 100, 331, 415);
 
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -61,7 +64,7 @@ public class LoginDialog extends JFrame {
 				ColumnSpec.decode("12dlu"),},
 				new RowSpec[] {
 				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
+				RowSpec.decode("bottom:max(70dlu;default)"),//FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.RELATED_GAP_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.PARAGRAPH_GAP_ROWSPEC,
@@ -73,9 +76,11 @@ public class LoginDialog extends JFrame {
 				FormFactory.RELATED_GAP_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,}));
 
-		JLabel lblLogo = new JLabel("[SIGAIM logo]");
-		lblLogo.setIcon(new ImageIcon(LoginDialog.class.getResource("/org/sigaim/csig/resources/img/logo_trans.png")));
-		contentPanel.add(lblLogo, "2, 2, center, center");
+		JLabel lblLogo = new JLabel("Acceso Sigaim");
+		lblLogo.setForeground(ColorScheme.textColor);
+		lblLogo.setFont(lblLogo.getFont().deriveFont(20.0f));
+		//lblLogo.setIcon(new ImageIcon(LoginDialog.class.getResource("/org/sigaim/csig/resources/img/logo_trans.png")));
+		contentPanel.add(lblLogo, "2, 2, center, bottom");
 
 		txtUser = new JTextField();
 		TextPrompt tpUser = new TextPrompt("Usuario", txtUser);
