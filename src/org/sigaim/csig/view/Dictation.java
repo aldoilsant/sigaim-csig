@@ -304,7 +304,7 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
        
         Path path = Paths.get("session.flac").toAbsolutePath();
         System.out.println("Sending audio and waiting for transcription...");
-        //transcriptor.transcribeFlac(path);
+        transcriptor.transcribeFlac(path);
 	}
 	
 	private void switchRecord(){
@@ -510,6 +510,15 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 			System.out.println("EXCEPTION");
 			System.out.println(stateEvent.getDescription());
 			break;
+		case CONNECTED:
+			System.out.println("Connected to transcription service");
+			break;
+		case HANDSHAKE_ISSUED:
+			System.out.println("Handshaking");
+			break;
+		case HANDSHAKE_COMPLETE:
+			System.out.println("Handshaking completed");
+			break;
 		default:
 			System.err.println("[Transcription] Unknown response, is jar same version?");
 			break;
@@ -559,10 +568,10 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 						ais, //new AudioInputStream(line),
 						FLACFileWriter.FLAC,//fileType,
 						new File("session.flac"));
-				AudioSystem.write(
+				/*AudioSystem.write(
 						ais, //new AudioInputStream(line), 
 						FLACFileWriter.FLAC,
-						new File("session2.flac"));
+						new File("session2.flac"));*/
 			} catch (Exception e){
 				e.printStackTrace();
 			}

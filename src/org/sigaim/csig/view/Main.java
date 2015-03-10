@@ -49,7 +49,8 @@ public class Main implements ViewController {
 	//static public String wsurl = "http://localhost:8080/SIIEWS3";
 	
 	//static public String transip = "193.147.36.199";
-	static public String transip = "193.144.33.85";
+	//static public String transip = "193.144.33.85";
+	static public String transip = "sigaim-srtv.int-scale.cesga.es"; // srtv-lb.cesga.es
 	static public int transport = 8080;
 	
 	//public JFrame frame;
