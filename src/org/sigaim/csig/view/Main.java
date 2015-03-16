@@ -46,12 +46,15 @@ public class Main implements ViewController {
 	private Session session;
 	private IntCSIGModel model;
 	static public String wsurl = "http://sigaim.siie.cesga.es:8080/SIIEWS3";
-	//static public String wsurl = "http://localhost:8080/SIIEWS3";
+	//static public String wsurl = "http://sigaim-siie-lb.cesga.es:8080/SIIEWS3";
 	
 	//static public String transip = "193.147.36.199";
 	//static public String transip = "193.144.33.85";
 	static public String transip = "sigaim-srtv.int-scale.cesga.es"; // srtv-lb.cesga.es
 	static public int transport = 8080;
+	
+	//If true, one static window will allow user to create facultatives/centres
+	static final private boolean testingBuild = false;
 	
 	//public JFrame frame;
 	private JFrame login;
@@ -149,9 +152,11 @@ public class Main implements ViewController {
 					WaitModal.close();
 					
 					//Testing window
-					JDialog creator = new LoginCreator(self);
-					creator.setLocation(0, 0);
-					creator.setVisible(true);
+					if(testingBuild){
+						JDialog creator = new LoginCreator(self);
+						creator.setLocation(0, 0);
+						creator.setVisible(true);
+					}
 				}			
 
 			});

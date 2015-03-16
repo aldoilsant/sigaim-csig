@@ -4,7 +4,6 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.GroupLayout;
@@ -13,16 +12,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextPane;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.event.DocumentListener;
-
-import org.sigaim.csig.model.CSIGPatient;
 
 
 public class DictationPanel extends JPanel {
-
+	private static final long serialVersionUID = -3948699274138483056L;
 
 	final private Dictation dict;
 	

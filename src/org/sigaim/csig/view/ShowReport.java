@@ -161,7 +161,11 @@ public class ShowReport /*extends JPanel*/ implements PersistentObject {
 
 			@Override
 			protected Void doInBackground() throws Exception {
+				long endTime;
+				long startTime = System.currentTimeMillis();
 				r.fillConcepts();
+				endTime = System.currentTimeMillis();
+				System.out.println("Getting concepts took(ms): "+ (endTime-startTime));
 				return null;
 			}
 			

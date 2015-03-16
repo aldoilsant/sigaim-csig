@@ -1,7 +1,5 @@
 package org.sigaim.csig.view;
 
-import java.awt.EventQueue;
-
 import javax.swing.JDialog;
 
 import com.jgoodies.forms.layout.FormLayout;
@@ -12,28 +10,12 @@ import com.jgoodies.forms.factories.FormFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
-import org.sigaim.csig.model.IntCSIGModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class LoginCreator extends JDialog {
+	private static final long serialVersionUID = 7572962271902189189L;
 
-	/**
-	 * Launch the application.
-	 */
-	/*public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LoginCreator dialog = new LoginCreator();
-					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-					dialog.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
 	private ViewController controller;
 	private JLabel lblNewMedic;
 	private JLabel lblNewCentre;

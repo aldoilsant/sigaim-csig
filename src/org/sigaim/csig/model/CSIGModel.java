@@ -332,55 +332,60 @@ public class CSIGModel implements IntCSIGModel {
 			e.printStackTrace();
 			return null;
 		}
-		if(concepts != null)
-		for(Item i : concepts.getParts()) {
-			Cluster conceptCluster = (Cluster)i;
-			CDCV code=null;
-			INT start=null, end=null;
-			ST status=null;
-			for(Item param : conceptCluster.getParts()){
-				Element el = (Element)param;
-				if(param.getMeaning().getCode().equals(ModelConstants.CD_CONCEPT_CODE)){
-					code = (CDCV)el.getValue();
-				} else if(param.getMeaning().getCode().equals(ModelConstants.CD_CONCEPT_START)) {
-					start = (INT)el.getValue();
-				} else if(param.getMeaning().getCode().equals(ModelConstants.CD_CONCEPT_END)) {
-					end = (INT)el.getValue();
-				} else if(param.getMeaning().getCode().equals(ModelConstants.CD_CONCEPT_STATUS)) {
-					status = (ST)el.getValue();
+		
+		long endTime;
+		long startTime = System.currentTimeMillis();
+		
+		if(concepts != null){
+			for(Item i : concepts.getParts()) {
+				Cluster conceptCluster = (Cluster)i;
+				CDCV code=null;
+				INT start=null, end=null;
+				ST status=null;
+				for(Item param : conceptCluster.getParts()){
+					Element el = (Element)param;
+					if(param.getMeaning().getCode().equals(ModelConstants.CD_CONCEPT_CODE)){
+						code = (CDCV)el.getValue();
+					} else if(param.getMeaning().getCode().equals(ModelConstants.CD_CONCEPT_START)) {
+						start = (INT)el.getValue();
+					} else if(param.getMeaning().getCode().equals(ModelConstants.CD_CONCEPT_END)) {
+						end = (INT)el.getValue();
+					} else if(param.getMeaning().getCode().equals(ModelConstants.CD_CONCEPT_STATUS)) {
+						status = (ST)el.getValue();
+					}
+					//TODO add path & node
 				}
-				//TODO add path & node
+
+				System.out.println("Concept: "+code.getCode()+" codeSystemName: "+code.getCodeSystemName()+
+						" codeSystemVersion: "+code.getCodeSystemVersion()+" - "+code.getDisplayName().getValue() +
+						"("+ status.getValue()+")");
+
+				try {
+					//if(code.getCodeSystemName().equals("MED")) break;
+					conceptsCDCV.add(dadlManager.serialize(model.unbind(code),false));	
+				} catch (ReferenceModelException e) {
+					System.err.println("Error serializing CDCV concept");
+					e.printStackTrace();
+				}
+
+				//ST term = (ST)((Element)params.get(5)).getValue();
+				if(start.getValue() < biasEnd)
+					biasConcepts.add(new CSIGConcept(conceptCluster,
+							start.getValue()-ModelConstants.OFFSET_BIAS, 
+							end.getValue()-ModelConstants.OFFSET_BIAS));
+				else if (start.getValue() < unbiasEnd)
+					unbiasConcepts.add(new CSIGConcept(conceptCluster,
+							start.getValue()-biasEnd-ModelConstants.OFFSET_UNBIAS, 
+							end.getValue()-biasEnd-ModelConstants.OFFSET_UNBIAS));
+				else if(start.getValue() < impresEnd)
+					impresConcepts.add(new CSIGConcept(conceptCluster, 
+							start.getValue()-unbiasEnd-ModelConstants.OFFSET_IMPRESSION,
+							end.getValue()-unbiasEnd-ModelConstants.OFFSET_IMPRESSION));
+				else
+					planConcepts.add(new CSIGConcept(conceptCluster,
+							start.getValue()-impresEnd-ModelConstants.OFFSET_PLAN,
+							end.getValue()-impresEnd-ModelConstants.OFFSET_PLAN));	
 			}
-			
-			System.out.println("Concept: "+code.getCode()+" codeSystemName: "+code.getCodeSystemName()+
-					" codeSystemVersion: "+code.getCodeSystemVersion()+" - "+code.getDisplayName().getValue() +
-					"("+ status.getValue()+")");
-			
-			try {
-				//if(code.getCodeSystemName().equals("MED")) break;
-				conceptsCDCV.add(dadlManager.serialize(model.unbind(code),false));	
-			} catch (ReferenceModelException e) {
-				System.err.println("Error serializing CDCV concept");
-				e.printStackTrace();
-			}
-			
-			//ST term = (ST)((Element)params.get(5)).getValue();
-			if(start.getValue() < biasEnd)
-				biasConcepts.add(new CSIGConcept(conceptCluster,
-						start.getValue()-ModelConstants.OFFSET_BIAS, 
-						end.getValue()-ModelConstants.OFFSET_BIAS));
-			else if (start.getValue() < unbiasEnd)
-				unbiasConcepts.add(new CSIGConcept(conceptCluster,
-						start.getValue()-biasEnd-ModelConstants.OFFSET_UNBIAS, 
-						end.getValue()-biasEnd-ModelConstants.OFFSET_UNBIAS));
-			else if(start.getValue() < impresEnd)
-				impresConcepts.add(new CSIGConcept(conceptCluster, 
-						start.getValue()-unbiasEnd-ModelConstants.OFFSET_IMPRESSION,
-						end.getValue()-unbiasEnd-ModelConstants.OFFSET_IMPRESSION));
-			else
-				planConcepts.add(new CSIGConcept(conceptCluster,
-						start.getValue()-impresEnd-ModelConstants.OFFSET_PLAN,
-						end.getValue()-impresEnd-ModelConstants.OFFSET_PLAN));	
 		}
 		
 		ConceptsOrderer orderer = new ConceptsOrderer();
@@ -388,6 +393,11 @@ public class CSIGModel implements IntCSIGModel {
 		Collections.sort(unbiasConcepts, orderer);
 		Collections.sort(impresConcepts, orderer);
 		Collections.sort(planConcepts, orderer);
+		
+		endTime = System.currentTimeMillis();
+		System.out.println("Parsing concepts to model took(ms): "+ (endTime-startTime));
+		
+		startTime = System.currentTimeMillis();
 		
 		try {
 			Map<CDCV,Set<CDCV>> syn=termiClient.getSynonymsForConcepts("", new ArrayList<String>(conceptsCDCV));
@@ -407,6 +417,9 @@ public class CSIGModel implements IntCSIGModel {
 			System.err.println("Error getting synonyms for Report");
 			e.printStackTrace();
 		}
+		
+		endTime = System.currentTimeMillis();
+		System.out.println("Getting concepts synonyms("+synonyms.size()+") took(ms): "+ (endTime-startTime));
 			
 		return report;
 	}

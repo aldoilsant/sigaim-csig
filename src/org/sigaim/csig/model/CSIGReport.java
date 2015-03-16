@@ -81,8 +81,7 @@ public class CSIGReport extends CSIGIdentifiedObject implements Cloneable {
 	
 	/* GETERS & SETTERS */
 	public List<CSIGConcept> getBiasedConcepts() {
-		if(biasedConcepts == null)
-			modelController.fillSoipConcepts(this);
+		fillConcepts();
 		return biasedConcepts;
 	}
 	public void setBiasedConcepts(ArrayList<CSIGConcept> biased) {
@@ -90,24 +89,21 @@ public class CSIGReport extends CSIGIdentifiedObject implements Cloneable {
 	}
 
 	public List<CSIGConcept> getUnbiasedConcepts() {
-		if(unbiasedConcepts == null)
-			modelController.fillSoipConcepts(this);
+		fillConcepts();
 		return unbiasedConcepts;
 	}
 	public void setUnbiasedConcepts(ArrayList<CSIGConcept> unbiased) {
 		this.unbiasedConcepts = unbiased;
 	}
 	public List<CSIGConcept> getImpressionsConcepts() {
-		if(impressionsConcepts == null)
-			modelController.fillSoipConcepts(this);
+		fillConcepts();
 		return impressionsConcepts;
 	}
 	public void setImpressionsConcepts(ArrayList<CSIGConcept> impressions) {
 		this.impressionsConcepts = impressions;
 	}
 	public List<CSIGConcept> getPlanConcepts() {
-		if(planConcepts == null)
-			modelController.fillSoipConcepts(this);
+		fillConcepts();
 		return planConcepts;
 	}
 	public void setPlanConcepts(ArrayList<CSIGConcept> plan) {

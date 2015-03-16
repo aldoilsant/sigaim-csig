@@ -2,7 +2,11 @@ package org.sigaim.csig.view;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Frame;
+import java.awt.GraphicsEnvironment;
 import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -23,8 +27,13 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import org.sigaim.csig.model.CSIGConcept;
+import org.sigaim.csig.view.helper.ConceptPositioner;
 
 import net.java.balloontip.BalloonTip;
+import net.java.balloontip.BalloonTip.AttachLocation;
+import net.java.balloontip.BalloonTip.Orientation;
+import net.java.balloontip.CustomBalloonTip;
+import net.java.balloontip.positioners.BalloonTipPositioner;
 import net.java.balloontip.styles.BalloonTipStyle;
 import net.java.balloontip.styles.EdgedBalloonStyle;
 import net.java.balloontip.styles.RoundedBalloonStyle;
@@ -32,6 +41,9 @@ import net.java.balloontip.styles.RoundedBalloonStyle;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JWindow;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -43,6 +55,8 @@ public class ConceptView extends JPanel {
 	private JTextField txtSnomed;
 	private JTextField txtDictation;
 	private ShowReport listener;
+	
+	private JDialog glass;
 	
 	private CSIGConcept concept;
 	private List<CSIGConcept> synonyms;
@@ -165,18 +179,35 @@ public class ConceptView extends JPanel {
 		btnSave.addMouseListener(mouseStillInside);
 		add(btnSave, "4, 10, right, default");
 		
+		//Full screen transparent container:
+		glass = new JDialog();
+		glass.setBounds(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
+		glass.setUndecorated(true);
+		glass.setBackground(new Color(0,0,0,0));
+		//glass.setOpacity(0);
+		glass.setVisible(true);
+		Rectangle anchor = new Rectangle(parent.getBounds());
+		anchor.x = parent.getLocationOnScreen().x;
+		anchor.y = parent.getLocationOnScreen().y;
 		
 		/*BalloonTipStyle edgedLook = new EdgedBalloonStyle(contentPanel.getBackground(), Color.BLUE);*/
 		BalloonTipStyle edgedLook = new RoundedBalloonStyle(5, 5, contentPanel.getBackground(), contentPanel.getForeground());
-		b =  new BalloonTip((JComponent) parent, (JComponent) this, edgedLook, false);
+
+		b = new CustomBalloonTip((JComponent)glass.getContentPane(), this, anchor, edgedLook, BalloonTip.Orientation.LEFT_ABOVE,  BalloonTip.AttachLocation.ALIGNED, 20, 20,false);
+		//b =  new BalloonTip((JComponent)glass.getContentPane(), (JComponent) this,	edgedLook, false);
+		//b = new BalloonTip((JComponent) parent, (JComponent) this, edgedLook, (BalloonTipPositioner) (new ConceptPositioner()), (JButton) null);
+		/*b = new BalloonTip((JComponent) parent, (JComponent) this, edgedLook, Orientation.LEFT_ABOVE,
+					AttachLocation.ALIGNED, 20, 20, false);*/
 		b.setVisible(true);
 		
 		contentPanel.requestFocus();
 		contentPanel.addFocusListener(new FocusListener() {
 				@Override
 		        public void focusLost(FocusEvent e) {
-					if(!freezed)
+					if(!freezed) {
 						b.closeBalloon();
+						glass.dispose();
+					}
 		        }
 
 				@Override

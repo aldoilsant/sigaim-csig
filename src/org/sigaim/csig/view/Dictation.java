@@ -1,11 +1,8 @@
 package org.sigaim.csig.view;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
 import java.awt.HeadlessException;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -34,7 +31,6 @@ import javax.sound.sampled.TargetDataLine;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -616,6 +612,7 @@ public class Dictation extends JPanel implements TranscriptionListener, Persiste
 		return bs.toByteArray();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void restore(byte[] data) {
 		ByteArrayInputStream is = new ByteArrayInputStream(data);
